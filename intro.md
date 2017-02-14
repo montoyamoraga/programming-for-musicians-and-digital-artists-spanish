@@ -31,4 +31,14 @@ COCREADOR DEL LENGUAJE DE PROGRAMACIÓN PROCESSING
 
 # Prefacio
 
+¡Bienvenido a ChucK!
+
+Tendemos a realizar nuestro mejor esfuerzo cuando seguimos nuestros reales intereses. ChucK fue creado porque amamos de manera genuina tanto la música como la programación - y para cada cualquier persona que quiera hacer música con computadores (o que quiera aprender a hacerlo). Como el creador y el diseñador principal de Chuck, estoy convencido firmemente que programar es (o debería ser) una tarea creativa en sí misma. Debería ser entretenida, expresiva y gratificante. Y crear música a través de la programación, es doblemente asombroso.
+
+Empecé a trabajar en ChucK en el año 2002, habiendo empezado el programa de doctorado en Ciencias de la Computación de Princeton University un año atrás. Si la música rock fue mi drogra de entrada a hacer música (y mi alma mater de pregrado Duke University mi iniciación a la programación), entonces Princeton fue donde empecé a combinar ambos elementos. Aunque no lo podía articular en ese momento, estaba atraído por la elegancia de ciertas características de los lenguajes de programación, y aspiraba a crear cosas, cosas programables con software, que empoderaran a a otros para hacer música, pero de manera estéticamente elegante y entretenida. Quería rockear, y ayudar a otra gente a rockear - con el computador.
+
+Perry R. Cook era mi tutor (una de las mejores cosas que me han pasado a nivel personal y profesional); su trabajo en diseño de interacción física y su Synthesis ToolKit (STK) fueron una gran inspiración. También su personalidad divertida, fantástica e imaginativa ayudó a definir el tono y alentó la libertad en la exploración. Todavía recuerdo cuando le mostré a Perry mis ideas iniciales de un "nuevo lenguaje de programación para música" cuya cohesión se basaba en el operador ChucK (que se ve así =>, lo verás mucho en este libro), y a Perry diciendo, "Bueno, eso parece una locura. ¡Hazlo!"
+
+HEREIAM page xviii
+
 # Agradecimiento
