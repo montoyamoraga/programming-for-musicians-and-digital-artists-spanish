@@ -143,6 +143,92 @@ Finalmente, le agradecemos a todos los usuarios de ChucK a través de los años,
 
 # Acerca de este libro
 
+Escribimos este libro para enseñar programación en ChucK a programadores sin experiencia. Por esto, empezamos desde el principio, así que no tengas miedo. Enseñaremos a programar a través de ejemplos musicales. Creemos que ser capaz de "escuchar" lo que estás programando te ayudará a entender los conceptos cables, además de hacer el proceso más ameno. Si eres un programador con experiencia, puedes saltar algunos de los primeros capítulos según tu nivel, pero ten en cuenta que Chuck es bastante diferente de otros lenguajes. Te prometemos que hay enseñanzas para todos aquí.
+
+Si eres un programador avanzado que ya está familiarizado con otro lenguaje, "¿Qué es lo diferente de ChucK?", más adelante en esta materia, te da una estrategia para aproximarte a ChucK desde tu nivel.
+
+## Cómo está organizado el libro
+
+A través de los capítulos hay ejercicios de composición sugeridos para expandir lo que has aprendido. De una forma, puedes ver cada capítulo como "desbloquear" nuevas partes del lenguaje que puedes usar en tus composiciones.
+
+En el capítulo 0 (los científicos de la computación casi siempre enumeran desde cero), te diremos cuál es la diferencia entre ChucK y otros lenguajes, y cómo nosotros, y muchos otros lo han usado en múltiples proyectos musicales y artísticos.
+
+Los siguientes dos capítulos son para el programador novato, introduciendo conceptos clave necesarios para ser capaces de empezar a programar. El capítulo 1 empieza con los fundamentos de ciencias de la computación, lenguajes y ChucK, incluyendo variables, tipos, expresiones condicionales y estructuras de bucle. Por supuesto, también hacemos música y sonido usando ChucK. El capítulo 2 introduce bibliotecas (herramientas) internas a ChucK, y muestra cómo números aleatorios y expresiones matemáticas pueden ser usados para realizar programas y canciones con mayor expresividad.
+
+En el capítulo 3 introducimos los arreglos, y mostramos cómo hacer más fácil la creación, almacenamiento y reproducción de melodías y control de otros parámetros en ChucK.
+
+En el captíulo 4 introducimos cómo usar archivos de sonido en ChucK y cómo puedes usarlos para crear paisajes sonoros e incluso una pieza de música electrónica bailable.
+
+En el capítulo 5 introducimos el concepto de funciones y cómo pueden ser usadas para modularizar y organizar tu código, lo que puede resultar en composiciones aún más expresivas y programas más ordenados.
+
+El capítulo 6 se adentra más profundamente en Unit Generators (UGens), objetos de procesamiento y síntesis de audio incorporados en ChucK. Aquí aprenderás más sobre osciladores, generadores de envolvente, síntesis FM, síntesis de modelamiento físico y efectos de audio. El capítulo 7 continúa esto, introduciendo muchos UGens de síntesis de partículas físicas, modales (resonantes) y UGens de síntesis de partículas.
+
+El capítulo 8 introduce multithreading y concurrencia y aprenderás cómo hacer que tus programas puedan manejar múltiples cosas al mismo tiempo, todo en perfecta sincronía.
+
+El capítulo 9 introduce programación orientada a objetos (POO) y enseña cómo tú puedes crear tus propios Objetos y Clases para usar en tu código.
+
+El capítulo 10 cubre Eventos, que le permiten a los programas de Chuck mandar señales entre ellos. Los Eventos también le permiten a ChucK responder a señales y datos desde el "mundo exterior". Esto nos permite empezar a concebir a ChucK como una herramienta de performance en vivo, introduciendo el uso de tu teclado y ratón para controlar en tiempo real tus composiciones.
+
+El capítulo 11 profundiza en las maneras en que ChucK se puede comunicar con otros programas, computadors y dispositivos de control. Brevemente cubrimos cómo MIDI puede ser usado con ChucK, usando un dispositivo externo MIDI (como un teclado) para tocar ChucK como un sintetizador, y cómo ChucK puede controlar otros sintetizadores, tanto en formatos software como hardware externo. También introducimos Open Sound Control (OSC), que es otra manera standard para comunicación de programas y dispositivos musicales. Luego observamos entradas y salidas por puerto serial, que nos permite conversar con aún más dispositivos.
+
+Los apéndices cubren muchos detalles e incluyen más ejemplos de las características y capacidades de ChucK. El apéndice A cubre la instalación y puesta en marcha del entorno integrado de desarrollo (IDE, por Integrated Development Environment) miniAudicle, y el apéndice G cubre cómo usar ChucK en la línea de comandos (interfaz de texto).
+
+El apéndice B documenta todas las funcioens de la biblioteca interna de ChucK. El apéndice C documenta todos los UGens incluidos. El apéndice G cubre ChucK en la línea de comandos. El apéndice D cubre OSC. El apéndice E cubre entrada y salida de archivos y el apéndice F cubre entrada y salida por puerto serial. El apéndice H elabora sobre formas de extender el idioma ChucK en sí mismo con nuevos UGens.
+
+### PARA AQUELLOS INTERESADOS EN LA SATISFACCIÓN INSTANTÁNEA
+
+Si eres impaciente y quieres ver el poder de lo que ChucK es capaz de hacer (incluso sin entender exactamente cómo), una vez que hayas instalado el miniAudicle (apéndice A) y ejecutado tus dos primeros programas ("Hello World" y "Hello Sine", sección 1.2), puedes escribir y ejecutar el ejemplo de final de capítulo del listado 6.15. Inspirado por este poderoso programa de ChucK, puedes entonces volver atrás y sistemáticamente trabajar al ritmo del libro.
+
+### PARA LOS PROGRAMADORES FAMILIARIZADOS CON OTROS LENGUAJES
+
+El apéndice A habla de cómo instalar y ejecutar el miniAudicle IDE (entorno de desarrollo integrado), y cómo instalar y correr ChucK desde la línea de comandos (Terminal, Command, etc.). Si no has instalado aún ChucK y/o miniAudicle en tu máquina, deberías empezar por el apéndice A.
+
+La sección 1.2 ("Tus primeros programas en ChucK") muestra el miniAudicle y te introduce al operador ChucK y la manera que tiene ChucK de manejar el tiempo. Si eres alguien que prefiere la línea de comandos, consulta el apéndice G ("ChucK en la línea de comandos") para revisar las instrucciones.
+
+### ¿CUÁL ES LA DIFERENCIA QUE CHUCK HACE?
+
+En la superficie, ChucK se parece mucho a otros lenguajes como Java y Objective C, con unas pocas diferencias principales. La primera y más importante, el operador ChucK (=>) es usado para asignación, conexión de Unit Generators (UGens) de audio, entre otros. Diseñado para parecerse a una flecha indicando dirección, el operador ChucK promueve el flujo de conexiones de audio de izquierda a derecha, asignación y tiempo, entre otros. En Chuck el signo igual (=) no tiene utilidad, así que si estás familiarizado con un lenguaje que tiene una sintaxis como:
+
+```
+float temp = 0.0;
+```
+
+en ChucK tendrás que acostumbrarte a
+
+```
+0.0 => float temp;
+```
+
+Otra cosa de ChucK que probablemente te será nueva es cómo ChucK maneja el tiempo. Como programador tienes que explícitamente controlar el tiempo en tu código, así que te recomendamos que revises detalladamente la sección 1.4 ("Tiempo en ChucK: se trata de now"). Los tipos de datos time y duration son fundamentales para ChucK, son lo que lo hacen tan particular, y no serás capaz de programar con éxito (ni escuchar algún sonido) a menos que los aprendas.
+
+Desde aquí, puedes motivarte con un par de ejemplos del poder de ChucK, escribiendo y ejecutando ejemplos, como los del listado 3.8 y/o del listado 6.15.
+
+Deberías entonces volver atrás y trabajar con el capítulo 4 para aprender cómo ChucK maneja archivos de audio. Terminarás este capítulo con las máquinas de ritmo (drum machines) del listado 4.11.
+
+Si estás satisfecho con tener experiencia con los ejemplos hasta el momento, estás probablemente listo para saltar directamente a la parte 2 (empezando en el capítulo 6), y aprender todo sobre los poderosos UGens disponibles en ChucK. Desde este punto todo será nuevo, así que sigue leyendo y ejecutando los ejemplos. La siguiente cosa fundamentalmente nueva sobre ChucK que te encontrarás será cubierta en el capítulo 8 donde aprenderás sobre sporking (como forking) shreds (como threads, pero en ChucK). Objetos y clases (capítulo 8) pueden parecerte familiares, así como también los eventos (capítulo 10), pero ChucK es único ya que los eventos pueden ser generados por múltiples dispositivos externos (palance de mando, MIDI, Open Sound Control), así que te debería parecer distinto a lo que conoces. El capítulo 11 termina con MIDI, OSC y serial, para usuarios y programadores avanzados.
+
+Existen también apéndices muy completos al final con referencias a prácticamente todo lo relacionado con ChucK, así que recuerda que puedes revisarlo, así como también el índice. 
+
+## Sobre el código
+
+Todo el código en este libro tiene una tipografía especial, que lo separa del texto circundante. En muchos listados, el código es comentado para destacar los conceptos clave, y a veces se usa un numerado de las líneas para proveer de más información sobre el código.
+
+En el libro digital, algunos términos y texto y código aparecen de color, tal como los verías si lo escribieras en la ventana del editor miniAudicle. Esto se debe a que miniAudicle reconoce las palabras reservadas y las colorea según su tipo.
+
+Prácticamente todo el código mostrado en el libro puede ser encontrado en varios formas en el código fuente de ejemplo que acompaña este libro. El código de ejemplo puede ser descargado de forma gratuita desde el sitio web de Manning en www.manning.com/ProgrammingforMusiciansandDigitalArtists.
+
+El código de ejemplo (incluyendo los archivos de audio relacionados) es instalado automáticamente cuando instalas ChucK. En un Mac puedes encontrarlo en /Library/ChucK/examples/book/digital-artists/, mientras que en Windows está ubicado en C:\Program Files/ChucK/examples/book/digital-artists\. En Linux, si sigues el procedimiento de instalación del apéndice A, el código de ejemplo se encuentra en /usr/local/share/doc/chuck/examples/book/digital-artists/.
+
+Todo el código de ejemplo de este libro puede ser accedido directamente desde el miniAudicle navegando a File > Open Example y encontrando book/digital-artists en el Example Browser.
+
+NOTA: ChucK funcoina en Mac OS X 10.5+ o posterior, Windows XP o posterior, o un sistema Linux apropiado.
+
+## Author Online
+
+La compra de Programación para músicos y artistas digitales incluye acceso gratuito a un foro privado en línea administrado por Manning Publications, donde puedes hacer comentarios sobre el libro, preguntar aspectos técnicos, y recibir ayuda de los autores y de otros usuarios. Para acceder este foro y subscribirte a él, dirígite a www.manning.com/ProgrammingforMusiciansandDigitalArtists. Esta página brinda información sobre cómo acceder al foro una vez que te has registrado, qué tipo de ayuda está disponible y las reglas de conducta en el foro.
+
+El compromiso de Manning hacia nuestros lectores es proveer un espacio donde se puede llevar a cabo un diálogo significativo entre lectores individuales y autores. No es un compromiso a una cantidad específica de participación de parte de los autores, cuyas contribuciones a AO continúan siendo voluntarias (y sin pago). Sugerimos que le preguntes a los autores cuestiones desafiantes para que no se desvíe su interés.
+
 # Acerca de los autores
 
 Ajay Kapur
