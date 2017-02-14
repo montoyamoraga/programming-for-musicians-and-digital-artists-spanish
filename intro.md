@@ -115,7 +115,7 @@ En representación de mis coautores,
 
 GE WANG
 
-PROFESOR asistentes
+PROFESOR ASISTENTE
 
 CENTER FOR COMPUTER RESEARCH IN MUSIC AND ACOUSTICS (CCRMA)
 
@@ -125,9 +125,21 @@ CREADOR DE CHUCK, COFUNDADOR DE SMULE
 
 # Agradecimientos
 
-Los autores le agradecen a los editores de Manning que trabajaron estrechamente con nosotros para hacer hacer este libro mejor
+Los autores le agradecen a los editores de Manning que trabajaron estrechamente con nosotros para mejorar este libro de introducción a todo tipo de gente a ChucK, especialmente a Susanna Kline, Bert Bates y Jeff Bleiel, y a los muchos otros que trabajaron con nosotros en la producción de este libro.
 
-Finalmente
+También le agradecemos a los siguientes revisores externos por todos sus comentarios y sugerencias útiles: Edward Borasky, Brent Boylan, Matthew Dickinson, Boyan Dzhorgov, Pierre Jolivet, Hector Lee, James Matlock, Ari Pappas, Patrick Regan, Gabriel Rey-Goodlatte, Alvin Scudder, Sergiy Seletskyy, Nathan Smutz, David Sumberg, Danny Vinson, Dan Warren y Stephen Wolff. Agradecimientos especiales a Doug Sparling, quien hizo una revisión técnica detallada del manuscrito justo antes de que empezara la producción.
+
+Como Ge mencionó en el prefacio, es mucha la gente que ayudó con la creación, desarrollo y maduración de ChucK, pero debemos agradecer particularmente a Ari Lazier, Philip Davidson, Dan Trueman, Scott Smallwood, Rebecca Fiebrink, Ananya Misra, Kassen Oud y Chris Chafe.
+
+También le agradecemos a las generaciones actuales de estudiantes de LOrk (orquesta de computadores), profesores asistentes, y a los compositores que han usado ChucK con nosotros y lo han convertido en un mejor lenguaje de programación. Estos incluyen a los miembros de la Princeton Laptop Orchestra (PLOrk), Stanford Laptop Orchestra (SLOrk), Stanford CCRMA, y a la comunidad de usuarios de ChucK.
+
+También le agradecemos a los estudiantes de CalArts y a los profesores asistentes que nos han ayudado a corregir errores en nuestro currículum de ChucK, los códigos de ejemplo, este libro y en nuestro curso masivo en línea de Chuck. Estos incluyen a Jordan Hochenbaum, Owen Vallis, Dimitri Diakopoulos, Ness Morris, Bruce Lott y Rodrigo Sena.
+
+Agradecimientos especiales a Casey Reas de UCLA, cocreador del lenguaje de programación Processing, por contribuir con las palabras previas de nuestro libro.
+
+Este libro fue desarrollado en parte con apoyo de la National Science Foundation bajo la Grant No. 1140336. Cualquier opinión, hallazgo y conclusiiones o recomendaciones expresadas en este material son de los autores y no necesariamente reflejan la visión de la National Science Foundation.
+
+Finalmente, le agradecemos a todos los usuarios de ChucK a través de los años, a lo largo del mundo, por compartir en los foros de desarrolladores y usuarios de ChucK, por acompañar a nuestra banda de programadores artistas, o artistas programadores, sugiriendo, reclamando y alabando el lenguaje, y por ayudarnos a a hacerlo aún mejor en el proceso.
 
 # Acerca de este libro
 
