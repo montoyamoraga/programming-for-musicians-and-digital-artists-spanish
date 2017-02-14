@@ -23,6 +23,14 @@ Empezamos con una discusión en por qué creemos que músicos y artistas necesit
 
 ## 0.1 ¿Por qué músicos y artistas necesitan programar?
 
+Como lo mencionamos anteriormente, muchos artistas están contentos con sistemas de software tradicionales y controladores para presentaciones en vivo tradicionales. Y hay muchos que solo usan computadores para producir productos estáticos finales en la forma de archivos .wav/.mp3, CDs o colecciones de canciones, bandas sonoras para videos, y más. Un gran número de artistas están contentos con aprender y usar los paquetes y herramientas de fuentes comerciales o gratuitas.
+
+Pero hay muchos, y estamos apostando a que eres uno de ellos, que quieren más. Quizás estás llegando a este libro con una gran idea (o muchas grandes ideas) y quieres las herramientas que te ayuden a hacerla(s) realidad. Quizás estás buscando cambiar de dirección en tu práctica artística. O quizás ya sabes cómo programar en un lenguaje como Java, pero encuentras que no puedes hacer lo que quieres hacer.
+
+Algunos creen que aprender a programar les ayudará a encontrar trabajo. Aunque no podemos prometer que encuentres trabajo apenas termines este libro, podemos decirte que tenemos buenos trabajos, y nuestros estudiantes tienen buenos trabajos (al menos los que los quieren), debido en no menor parte a su habilidad para programar y resolver problemas con computadores.
+
+Nosotros, en nuestros proyectos individuales, obras de arte, y
+
 ## 0.2 ¿Qué es Chuck? ¿Por qué es diferente?
 
 ## 0.3 ¿Por qué programar en ChucK?
