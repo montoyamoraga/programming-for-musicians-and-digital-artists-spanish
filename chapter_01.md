@@ -651,6 +651,17 @@ Existen otras maneras de avanzar el tiempo; por ejemplo, haciendo ChucKing de un
 
 Ahora que conoces los tipos de datos int, float, time y dur, deberíamos mencionar que ChucK incluye otro tipos de datos (llamados primitivos), incluyendo a string (una secuencia de caracteres como "hello world") y void (vacío, un tipo sin tipo, en caso que necesites una variable pero no necesites un tipo). Sabemos que esta noción de un tipo de datos void puede ser confuso, pero lo necesitarás más adelante en el libro. La tabla 1.2 resume todos los tipos de datos incluidos en ChucK.
 
+Tabla 1.2 Tipos de datos de ChucK
+
+| Tipo de dato | Descripción | Ejemplo | Comentario |
+| :----------- | :---------- | :------ | :--------- |
+| int          | entero                  | 3, 3541                | sin punto decimal |
+| float        | flotante                | 2.23, 3.14159, 22.0    | con punto decimal |
+| string       | descripción             | "hello" "data/a.wav"   | comentario o texto |
+| dur          | distancia entre tiempos | 1 :: second, ms, 3*day | duración |
+| time         | tiempo en ChucK         | 22050.0                | tiempo en samples |
+| void         | sin tipo                |                        |          |
+
 HEREIAM
 page 35
 page 36
