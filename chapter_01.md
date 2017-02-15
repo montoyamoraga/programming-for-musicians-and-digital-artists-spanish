@@ -42,6 +42,37 @@ Físicamente, un clarinete tocando su nota más grave oscila muy parecidamente a
 
 ## 1.2 Tus primeros programas de ChucK
 
+Es tiempo de empezar a aprender a programar. En este punto, deberías haber leído las intrucciones del apéndice A sobre cómo instalar miniAudicle y la funcionalidad básica del entorno de programación. Una vez que ha sido instalado, abre miniAudicle y te guiaremos para escribir tus primeros programas. La figura 1.6 muestra al miniAudicle listo para ejecutar código en ChucK.
+
+Existen tres ventanas principales en el miniAudicle. La ventana prinicpal que ves en la parte superior de la figura 1.6 se llama inicialmente Untitled (sin título), y es la ventana en la que escribes tus programas. Puedes cambiar el nombre de la ventana, lo que haremos dentro de poco cuando escribamos y grabemos nuestro primer programa. La ventana de la esquina inferior derecha es el monitor de la máquina virtual (VM, por Virtual Machine), que muestra el estado del servidor de la VM mientras tu código en ChucK es ejecutado. Una vez iniciada, la VM está siempre ahí corriendo, esperando cosas que hacer.
+
+Cuando haces click en Start Virtual Machine (iniciar la máquina virtual), crea una ventana llamada Console Monitor (monitor de consola), mostrada en la esquina inferior izquierda de la figura 1.6. Aquí es donde recibirás mensajes del computador para ayudarte con tu programa. Si hay algún error en el código, aquí es donde el computador te dirá que existen problemas y específicamente dónde (en cuáles líneas) ocurren. También puedes imprimir mensajes en el Monitor Console a ti mismo desde tu código en ejecución para ayudarte a corregir errores en tu programa o para mantenerte informado sobre lo que está pasando.
+
+### 1.2.1 Tu primer programa: "Hello World"
+
+En casi todos los lenguajes, el primer programa que escribes es "Hello World" (Hola Mundo), así que empezaremos mostrándote cómo lograr esto en ChucK. Dirígite a la ventana llamada Untitled, grábala con el nombre helloworld.ck usando el menú File (Archivo), y luego escribe esta línea:
+
+```
+<<< "Hello World" >>>;
+```
+
+No te olvides de incluir el punto y coma, que es importante para señalar el término de cada línea de código en ChucK.
+
+
+Luego, asegúrate de que tu VM esté corriendo (verás el tiempo transcurrido: el valor aumenta constantemente), y luego haz click en Add Shred (Añadir Shred) en la ventana principal, que ahora se llama helloworld.ck. De forma instantánea verás que "Hello World" aparece en el Console Monitor. ¡Felicidades, has ejecutado correctamente tu primer programa en ChucK! Haciendo click en el botón Add Shred le dice ChucK que ejecute el código "Hello World" que escribiste en la ventana principal. Harás click en este botón cada vez que quieras ejecutar un programa en ChucK.
+
+Aunque siempre estarás escribiendo y ejecutando código desde la ventana principal, desde ahora solo mostraremos el código como texto, con etiquetas y comentarios. No mostraremos la ventana principal completa con los botones de control, pero mostraremos partes de la figura 1.6 en el futuro para señalar algunos de los controles. Todas las ventanas pueden ser movidas en tu escritorio según prefieras, tal como muchos de los programas con los que estás acostumbrados a trabajar con en tu computador.
+
+Tal como fue discutido anteriormente, es útil para ti como programador imprimir al Console Monitor para efectos de detectar y corregir errores y como compositor para saber en qué parte de la canción va la ejecución. Desde este primer ejemplo sabes que poner ítemes dentro de <<< >>> te permite imprimirlos. Poneros entre comillas dentro de los triples <<< >>> los imprime directamente. Te daremos técnicas más avanzadas pra imprimir otras cosas a lo largo de este capítulo.
+
+### 1.2.2 Tu primer programa sonoro: "Hello Sine!"
+
+HEREIAM
+
+### 1.2.3 Ahora hagamos música
+
+### 1.2.4 Probando nuevas formas de onda
+
 ## 1.3 Tipos de datos y variables
 
 ## 1.4 Tiempo en ChucK: se trata de now
@@ -54,7 +85,6 @@ Físicamente, un clarinete tocando su nota más grave oscila muy parecidamente a
 
 ## 1.8 Resumen
 
-page 16
 page 17
 page 18
 page 19
