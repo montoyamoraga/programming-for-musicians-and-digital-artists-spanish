@@ -111,6 +111,71 @@ Uno de los aspectos más poderosos de ChucK es que como programador tienes absol
 
 ### 1.2.3 Ahora hagamos música
 
+Tocar un única onda sinusoidal es una gran cosa, pero ahora expandamos nuestro programa para que pueda tocar cuatro notas. El siguiente paso es construir nuestra partitura de alturas y duraciones que queremos que nuestro SinOsc haga. Primero, añade un comentario al principio del programa, para ayudar a documentarlo. Luego, extiende tu previo programa como mostramos a continuación.
+
+Listado 1.2 Música con onda sinusoidal
+```chuck
+//Bloque 1
+/* Música con onda sinusoidal
+por un programador de ChucK
+Enero 2025
+*/
+
+//Bloque 2
+//Conecta una onda sinusoidal al dac
+SinOsc s => dac;
+
+//Bloque 3
+//Toca una nota
+//Define la ganancia como 1.0 y la frecuencia como 220 Hz.
+//Deja que se ejecute por 0.3 segundos haciendo ChucKing a now.
+220 => s.freq;
+1.0 => s.gain;
+0.3 :: second => now;
+
+//Bloque 4
+//Calla tu oscilador por 0.3 segundos para separarlo de la siguiente nota
+0.0 => s.gain;
+0.3 :: second => now;
+
+//Bloque 5
+//Toca una nota, con la misma altura
+//Repite el proceso de los bloques 1 y 2
+1.0 => s.gain;
+0.3 :: second => now;
+
+0.0 => s.gain;
+0.3 :: second => now;
+
+//Bloque 6
+//Toca dos notas adicionales, más altas, menor volumen
+//Repite el mismo patrón de los bloques 1, 3 y 4
+//pero con una diferente frecuencia y volumen
+330 => s.freq;
+0.3 => s.gain;
+0.3 :: second => now;
+
+0.0 => s.gain;
+0.3 :: second => now;
+
+0.3 => s.gain;
+0.3 :: second => now;
+
+0.0 => s.gain;
+0.3 :: second => now;
+```
+
+Observa que estás creando tu primera nota individual definiendo la ganancia del oscilador de onda sinusoidal conectado al dac a 1.0 y luego a 0.0, dejando que tu patch se ejecuta por un pequeño lapso de tiempo por medio de ChucKing 0.3 secounds a now. Repites la misma nota en el bloque 5. Tienes que hacer el silencio entre notas (definiendo .gain como 0.0) para que esas dos primeras notas repetidas no suenen como una sola nota larga. En el bloque 6, repites de forma completa la secuencia de dos notas pero con una altura un poco mayor (el segundo "twinkle" de tu canción) y a un volumen más bajo (la ganancia de un oscilador está correlacionada con el volumen, a mayor ganancia mayor volumen). Puedes problamente imaginarte creando una composición completa, hilando comandos como estos. Pero eso es mucho trabajo, y para el final de este capítulo te habremos mostrado muchas técnicas para crear notas como esta de una forma más concisa y poderosa.
+
+Chuck es un lenguaje de programación de verdad
+
+> Para aquellos de ustedes que han trabajado con softwares musicales, como GarageBand pra Mac o FruityLoops para PC u otros programas, pareciera ser mucho trabajo el escribir tanto para producir solo unos cuantos tonos sinusoidales. ¿Recuerdas cuando mencionamos en la introducción ("¿Qué es ChucK? ¿Por qué es diferente?") que como ChucK está basado en texto, teclear es parte del trato? Pero como es posible y se alienta copiar y pegar, y en verdad la cantidad de escritura requerida en ChucK es mucho menor que cualquier otro lenguaje basado en texto, incluso en los que fueron diseñados para fines musicales.
+
+> Por ahora, para darte un vistazo del poder de ChucK, puedes escribir (o copiar y pegar) y correr este programa corto. No te preocues si hay cosas que no entiendes; solo ten cuidado de escribirlo tal como lo ves aquí:
+
+
+
+
 HEREIAM
 
 ### 1.2.4 Probando nuevas formas de onda
@@ -127,7 +192,6 @@ HEREIAM
 
 ## 1.8 Resumen
 
-page 20
 page 21
 page 22
 page 23
