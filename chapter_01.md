@@ -74,7 +74,7 @@ Cuando ingresas el código de la sección 1.1, asegúrate de grabarlo como un nu
 También nota que mientras escribes el programa del listado 1.1 en el editor de miniAudicle, algunas de las palabras mágicamente cambian de color. Esto ocurre porque el miniAudicle reconoce estas palabras reservadas y las colorea según su tipo. Aprenderemos más de esto más adelante.
 
 Listado 1.1 Hello Sine!
-```
+```chuck
 //Conecta una onda sinusoidal
 SinOsc s => dac;
 //Define la ganancia del oscilador como 0.6
