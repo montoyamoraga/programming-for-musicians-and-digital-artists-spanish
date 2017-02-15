@@ -523,8 +523,54 @@ Hasta el momento has estado haciendo sonido conectando una onda sinusoidal u otr
 
 ### 1.4.1 Variables de tipo dur
 
+Ya has hecho ChucKing de duraciones de tiempo a la palabra clave de ChucK now para controlar tiempo en todos los ejemplos anteriores, pero puedes mejorar la canción "Twinkle" aún más usando un nuevo tipo de datos llamado dur, por duración.
+
+Listado 1.11 Twinkle con variables tipo dur
+
+```chuck
+/* Música Sinusoidal usando variables dur
+pro un programador de ChucK
+enero 2025
+
+SinOsc s => dac;
+
+//Bloque 1
+//Define como variables las duraciones de las notas
+220.0 => float twinkle;
+0.55 :: second => dur onDur;
+0.05 :: second => dur offDur;
+
+1 => int onGain;
+0 => int offGain;
+
+//Toca una nota
+twinkle => s.freq;
+//Bloque 2
+//Espera mientras el sonido suena
+onGain => s.gain;
+ondur => now;
+
+//Bloque 3
+//Luego espera durante el espacio ente notas
+offGain => s.gain;
+offDur => now;
+
+//Bloque 4
+//Frecuencia de la siguiente nota
+1.5 *=> twinkle;
+
+//Bloque 5
+//Toca otra nota del segundo "twinkle"
+twinkle => s.freq;
+onGain => s.gain;
+onDur => now;
+
+offGain => s.gain;
+offDur => now;
+*/
+```
+
 HEREIAM
-page 30
 page 31
 page 32
 page 33
