@@ -694,6 +694,11 @@ while (true)
 
 Ahora juega con los números (30, 1000) del bloque 2. Cada vez que hagas un cambio, presiona el botón Replace Shred en el miniAudicle, para que el código que estabas ejecutando sea reemplazado con el nuevo código. Si has hecho cambios significativos, ¡inmediatamente escucharás la diferencia! Esto es otro aspecto extremadamente potente de ChucK - la habilidad de modificar tu código sobre la marcha mientras el sonido todavía está siendo sintetizado.
 
+Prueba esto
+
+> No hagas click enel botón Replace Shred cada vez que le hagas un cambio al código del listado 1.12. En vez de eso, haz click en Add Shred. Ahora escucharás más magia de ChucK, que logra corriendo múltiples programas, llamados shreds, ¡al mismo tiempo! Puedes añadir más programas aleatorios sinusoidales, casi tantos como quieras, y escuchar que ChucK está felizmente generando muchos sonidos al mismo tiempo. Usarás este poder de ChucK y aprenderás pronto mucho sobre esto, pero por ahora, ¿no es acaso asombroso cuánto sonido/música puedes hacer con tan solo un poco de código? Hemos prometido que el cuociente entre sonido y escribir aumentaría.
+
+Una vez que te hayas cansado de esto y estés listo para continuar
 
 HEREIAM
 page 36
