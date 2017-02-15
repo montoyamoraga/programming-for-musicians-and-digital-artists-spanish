@@ -570,6 +570,12 @@ offDur => now;
 */
 ```
 
+En el bloque 1, haces dos variables de tipo dur, que inicializas a distintos valores. Una controla la cantidad de tiempo en que la onda sonora está sonando en el bloque 2, mientras que la otra controla el tiempo en que no suena en el bloque 3; este tiempo en silencio es a menudo llamado descanso entre los músicos. En el bloque 4, puedes usar aritmética de variable en el lugar para cambiar la frecuencia de twinkle para poder usarla con el segunda par de notas twinkle2; para músicos y físicos, este intervalo musica es llamado quinta perfecta. en el bloque 5 se prende y apaga nuevamente el oscilador, avanzando el tiempo usando tus variables tipo dur, para tocar la siguiente nota.
+
+Entender tanto tiempo como duración (y variables tipo float e int) es esencial para programadores de ChucK. Por defecto, ChucK provee las palabras clave especiales de duración mostradas en la tabla 1.1. Probablemente sabes qué significan minute, hour, day y week, pero los valores en las tabla que podrías no conocer son ms y samp. Una milésima de segundo es llamada milisegundo, y su abreviación es ms. Entonces 1000 :: ms es equivalente a 1 :: second.
+
+La duración de samp depende de la tasa de muestreo a la que tu hardware de sonido está corriendo, pero es siempre la unidad fundamental de tiempo en cualquier sistema de audio digital. Un samp es usualmente 1/44100 de segundo (porque se usan 44100 muestras de audio para capturar un segundo de audio). Por razones que son tanto técnicas (sincronización de audio a los formatos de video más comunes) como perceptuales (una tasa de muestreo que sea suficientemente alta para capturar el rango audible de escucha humana), 44100 es la tasa de muestreo más común usada en CDs, MP3s y otros dispositivos de almacenamiento.
+
 Tabla 1.1 Palabras clave especiales de ChucK para duración y su correspondiente duración
 
 | Palabra clave  | Duración |
@@ -582,9 +588,27 @@ Tabla 1.1 Palabras clave especiales de ChucK para duración y su correspondiente
 | day    | 1 día         |
 | week   | 1 semana      |
 
+PROBLEMA
+> ¿Por qué los diseñadores de ChucK no definieron una palabra clave "year" (año) o "month" (mes)? Respuesta: mes y año no tienen una duración específica. Los meses pueden variar entre 28 y 31 días, mientras que los años pueden tener 365 o 366 días. ChucK es muy preciso con el tiempo, por lo que mes y año no fueron incluidos.
+
+### 1.4.2 La importancia del tiempo
+
+Ahora que has usado un poco tanto time como dur, hablemos un poco más en profundidad sobre por qué el tiempo es tan importante en ChucK y por qué es tan importante para ti como programador que entiendas cómo ChucK maneja el tiempo. El sonido es un medio basado en el tiempo. El sonido, y por extensión, la música, ocurren a través del tiempo. Sin el paso del tiempo, no habría sonido. Esta relación fundamental entre tiempo y sonido está en el núcleo del lenguaje ChucK, y permite el gobierno de cómo el tiempo fluye para así lograr que el sonido ocurra - y para controlar el sonido de forma precisa a lo largo del tiempo.
+
+Existen unas pocas cosas en ChucK que funcionan en conjunto para hacer esto posible:
+
+* time y dur son tipos de datos nativos, tal como lo son int y float.
+* La palabra clave now contiene el tiempo de ChucK actual, que empieza en cero cuando haces click en el botón Start Virtual Machine del miniAudicle.
+* Por medio de la manipulación de now (haciendo ChucKing de una duración a ella), y solo por la manipulación de now, puedes causar el paso del tiempo en un programa de ChucK para generar sonido.
+
+En ChucK, el tiempo (time) y la duración (dur) son tipos de datos básicos con los que puedes trabajar tal como números enteros y de punto flotante. Ellos representan valores de un tipo particular. Puedes declarar variables de estos tipos y definir sus valores y hacer aritmética sobre ellas.
+
+### 1.4.3 Variables de tipo time
+
+
+### 1.4.4 Trabajando con now
 
 HEREIAM
-page 31
 page 32
 page 33
 page 34
