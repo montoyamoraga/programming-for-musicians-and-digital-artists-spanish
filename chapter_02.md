@@ -8,7 +8,9 @@ Este capitulo cubre:
 * Generación de números aleatorios con la biblioteca de matemáticas y función sinusoidal
 * Uso de funciones de bibliotecas para hacer música más expresiva
 
-HERERIAM
+
+
+HEREIAM
 page 47
 page 48
 page 49
@@ -23,3 +25,13 @@ page 57
 page 58
 page 59
 page 60
+
+## 2.1
+
+## 2.2
+
+## 2.3
+
+## 2.4
+
+## 2.5
