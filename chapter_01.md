@@ -523,8 +523,6 @@ Hasta el momento has estado haciendo sonido conectando una onda sinusoidal u otr
 
 ### 1.4.1 Variables de tipo dur
 
-
-
 HEREIAM
 page 30
 page 31
