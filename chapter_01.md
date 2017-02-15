@@ -935,12 +935,37 @@ Observa que si te olvidas de incluir la línea de incremento (4) en el bloque de
 
 ## 1.6 Uso de múltiples osciladores en tu música
 
+Hasta el momento en tus programas has tocado notas solas y melodías usando un oscilador. Como la música involucra más que melodías y ritmos, te podrás preguntar, ¿cómo puedo controlar y tocar múltiples osciladores al mismo tiempo? Esto es sencillo en ChucK, como se muestra en el siguiente listado.
+
+Lsitado 1.19 Usando más de un oscilador
+
+```chuck
+//Tu onda sinusoidal usual
+SinOsc s => dac;
+/(1) Un nuevo oscilador de onda sinusoidal
+SinOsc s2 => dac;
+
+//Definir las frecuencias y ganancias
+//(2) Definir la frecuencia de la primera onda
+220 => s.freq;
+//(3) Definir la frecuencia de la segunda onda
+1030 => s2.freq;
+//Hacer que las ganancias sean 1/2.
+0.5 => s.gain;
+0.5 => s2.gain;
+
+//Hacer que el tiempo transcurra para poder escuchar el sonido
+second => now;
+```
+
+Un aspecto agradable de ChucK es que cuando conectas más de una fuente de sonido a algo, como el dac, los sonidos son automáticamente sumados. Los ingenieros de sonido le llaman a esto mezcla. En este ejempo, cuando conectas el segundo SinOsc, s2, al dac (1), automáticamente será mezcoado con el otro SinOsc, y escucharás el sonido de ambos osciladores. Cofiguras las frecuencias para que sean distintas (2), (3), para que puedas escuchar que son dos osciladores distintos. Si defines que las frecuencias sean idénticas, escucharías un sonido a mayor volumen, porque mezclar dos señales idénticas genera una versión de mayor volumen de esas señales. En (4), haces que sus ganancias sean 0.5, porque quieres evitar saturar la salida de audio. Una buena regla de oro cuando mezcles un número de fuentes sonoras es escalar sus ganancias para que la suma de todos resulta en aproximadamente 1.0. Si añades otros oscilador SinOsc, s3, a esta mezcla, deberías hacer que las ganancias sean 0.3, o quizás una 0.5 y las otras dos 0.25.
+
+## 1.7 Un ejemplo final: "Twinkle" con osciladores, variables, lógica y estructuras de control
+
 HEREIAM
 page 43
 page 44
 page 45
 page 46
-
-## 1.7 Un ejemplo final: "Twinkle" con osciladores, variables, lógica y estructuras de control
 
 ## 1.8 Resumen
