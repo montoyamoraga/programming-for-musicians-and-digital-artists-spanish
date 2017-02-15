@@ -37,3 +37,19 @@ translation to spanish of book programming for musicians and digital artists, cr
 * [Chapter 10](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_10.md)
 
 * [Chapter 11](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_11.md)
+
+* [Apéndice A](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#apendice-A)
+
+* [Apéndice B](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#apendice-B)
+
+* [Apéndice C](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#apendice-C)
+
+* [Apéndice D](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#apendice-D)
+
+* [Apéndice E](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#apendice-E)
+
+* [Apéndice F](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#apendice-F)
+
+* [Apéndice G](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#apendice-G)
+
+* [Apéndice H](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#apendice-H)
