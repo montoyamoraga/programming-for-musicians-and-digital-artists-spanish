@@ -75,6 +75,7 @@ También nota que mientras escribes el programa del listado 1.1 en el editor de 
 
 Listado 1.1 Hello Sine!
 ```
+%Conecta una onda sinusoidal
 SinOsc s => dac;
 0.6 => s.gain;
 220 => s.freq;
