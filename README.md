@@ -14,6 +14,8 @@ translation to spanish of book programming for musicians and digital artists, cr
 
 * [Chapter 0](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_00.md)
 
+* [Part 1](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/part_1.md)
+
 * [Chapter 1](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_01.md)
 
 * [Chapter 2](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_02.md)

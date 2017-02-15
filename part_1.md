@@ -1,0 +1,7 @@
+# Parte 1: introducción a la programación en ChucK
+
+En el capítulo 0 te contamos por qué escribimos ChucK, por qué nos gusta tanto programar con él, y algunas de las cosas que hacemos en nuestra práctic artística.
+
+Ahora, en estos primeros cinco capítulos te enseñaremos los fundamentos de la programación en ChucK. El capítulo 1 empieza con los fundamentos de ChucK, incluyendo variables, typos, declaraciones condicionales y estructuras de bucle. Con estas características de ChucK, pronto estarás montando un programa para sintetizazr las primeras notas y los primeros compases de una canción. El capítulo 2 introduce las bibliotecas (herramientas) incluidas en ChucK. Usando estas funciones, serás capaz de definir y modificar alturas, volúmenes y duraciones de las notas en tus canciones. También aprenderás cómo los números aleatorios y los cálculos matemáticos pueden ser usados para hacer automáticamente que la música sea mucho más interesante, dejando que el computador haga la mayor parte del trabajo.
+
+En el capítulo 3 introducimos los arreglos, y mostramos cómo crear, almacenar y tocar melodías más fácilmente. También mostramos cómo controlar otros parámetros en ChucK. En el capítulo 4 te mostramos cómo usar archivos de sonido en ChucK y cómo puedes usarlos para crear paisajes sonoros e incluso una interesante pieza de música electrónica bailable. En el capítulo 5 introducimos el concepto de funciones y cómo pueden ser usadas para modularizar y organizar tu código.
