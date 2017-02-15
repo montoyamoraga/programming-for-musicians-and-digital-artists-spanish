@@ -698,11 +698,74 @@ Prueba esto
 
 > No hagas click enel botón Replace Shred cada vez que le hagas un cambio al código del listado 1.12. En vez de eso, haz click en Add Shred. Ahora escucharás más magia de ChucK, que logra corriendo múltiples programas, llamados shreds, ¡al mismo tiempo! Puedes añadir más programas aleatorios sinusoidales, casi tantos como quieras, y escuchar que ChucK está felizmente generando muchos sonidos al mismo tiempo. Usarás este poder de ChucK y aprenderás pronto mucho sobre esto, pero por ahora, ¿no es acaso asombroso cuánto sonido/música puedes hacer con tan solo un poco de código? Hemos prometido que el cuociente entre sonido y escribir aumentaría.
 
-Una vez que te hayas cansado de esto y estés listo para continuar
+Una vez que te hayas cansado de escuchar esto y estés listo para seguir, haz click en el botón Clear Virtual Machine (señalado con una gran X en la esquina superior derecha de tu ventana principal, como se muestra en la figura 1.9), y esto hará que el sonido se detenga.
+
+¡Vaya! Con tan solo cuatro líneas reales de código ChucK del listado 1.12 has hecho más notas que las que podrías teclear. Vas a aprender un poco sobre lo que es posible a continuación, y aprenderás el resto en el capítulo 2.
+
+El programa del listado 1.12 cambia aleatoriamente la frecuencia de una onda triangular en el bloque . Cada frecuencia nueva es aleatoria, y el tiempo que transcurre hasta que la siguiente es tocada es también aleatoria. La línea while (true) del bloque 1 empieza lo que los programadores llaman un bucle infinito, lo que significa esencialmente "ejecuta para siempre todo lo que está dentro de las llaves". Mostraremos pronto más maneras de hacer bucles. En la última línea en el bloque 3 del cuerpo del bucle while, estás avanzando now en una cantidad aleatoria, punto en el que ChucK sabe que tiene que automáticamente suspender el código, dejar que el tiempo pase según la duración, y mientras tanto generar sonido. Precisamente después de que ese tiempo ha pasado, ChucK retoma la ejecución de tu código. Haciendo click en el botón Clear Virtual Machine le pone fin al bucle infinito y detiene el sonido.
+
+Has escrito ahora tu primer bucle usando la palabra clave while. La palabra clave while en combinación con las llaves, se llama una estructura de contorl. A continuación revisaremos la forma exacta en que este bucle y otros funcionan. Aprenderás sobre lógica y estructuras de control, que son esenciales para hacer composiciones expresivas e interesantes a partir de tu código en ChucK.
+
+### 1.5.1 El poder de la programación con declaraciones lógicas: if
+
+Las declaraciones lógicas son verdaderas (true) o falsas (false) del tipo "siete no es iguala dos" o "-3 es un número negativo, y los números negativos son menores que cero". Las estructuras de control usan lógic para determinar cómo el código se ejecuta y cuáles son los efectos que tendrá. ChucK usa muchas estructuras de control standard presentes también en otros lenguajes de programación, incluyendo if (si), else (en otro caso), for (para cada) y while (mientras).
+
+Empezaremos por observar detenidamente la declaración if. Todos usamos declaraciones if en la vida cotidiana, como "si tengo suficiente hambre, haré una parada y conseguiré comida". Las declaraciones if en ChucK pueden ser usadas para tomar decisiones en el código, basado en condiciones de variables u otros que almacenen valores. La figura 1.10 muestra un diagrama de lo que pasa con una condición if, avanzando procedimentalmente (línea por línea) a lo largo del códig (mostrado en el listado 1.13).
+
+Listado 1.13 ejemplo de declaración if
+
+```chuck
+//Cadena de sonido
+SinOsc s => dac;
+
+//Definir la frecuencia
+220.0 => s.freq;
+//Definir el volumen
+0.6 => s.gain;
+
+//Bloque 1
+//Define un entero llamado chance para usar como variable lógica
+//Su valor será 1 o 0
+1 => int chance;
+
+//Bloque 2
+//Declaración if
+//Si el valor dentro del paréntesis es igual a 1
+//Ejecuta lo que está dentro de las llaves
+//Si no lo es, omítelo
+if (chance == 1)
+{
+  //Bloque 3
+  //El sonido se reproduce solo si chance == 1
+  1 :: second => now;
+}
+
+//Definir una nueva frecuencia para una nota distinta
+330.0 => s.freq;
+//Toca la siguiente nota
+1 :: second => now;
+```
+
+Traduciendo el diagrama de la figura 1.10 a código, verás en el listado un programa simple que usa variable entera llamada chance en el bloque 1, que es inicializada a 1. Si chance es igual a 1 (chance == 1), entonces algo sucederá.
+
+Con las estructuras de control que estás aprendiendo en esta sección, están usando los caracteres { y }. Puedes considerarlos como si fueran párrafos, pero los programadores los llaman bloques. En este caso, si la condición es true (verdad), entonces entras y ejecutas el código del bloque 3. Si la condición no es true, entonces sigues. También observa que se usan dos signos igual para expresar la prueba del condicional. Esta es la convención in ChucK, y en muchos otros lenguajes de programación, usar el símbolo == para indicar que estás haciendo una prueba lógica de igualdad, en este caso "¿es la variable llamada chance igual a 1?"
+
+Existen más condiciones lógicas además de igual a, como menor que, mayor que, no igual a. Para esto, ChucK provee otros símbolos (llamados operadores relacionales) para probar valores, como se resume en la tabla 1.3.
+
+Tabla 1.3 Condicionales lógicos
+
+| Símbolo| Significado en palabras | Ejemplo de uso |
+| :------ | :--------------------- | :------------- |
+| ==      | es igual a             | if (x == 0)    |
+| !=      | no es igual a          | if (x != 0)    |
+| <       | es menor que           | if (x < y)     |
+| >       | es mayor que           | if (x > y)     |
+| >=      | es mayor o igual a     | if (x >= y)    |
+| <=      | es menor o igual a     | if (x <= y)    |
+
+
 
 HEREIAM
-page 36
-page 37
 page 38
 page 39
 page 40
@@ -712,8 +775,6 @@ page 43
 page 44
 page 45
 page 46
-
-### 1.5.1
 
 ### 1.5.2
 
