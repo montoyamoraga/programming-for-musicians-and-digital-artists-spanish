@@ -1079,11 +1079,20 @@ onGain => t.gain;
 second => now;
 ```
 
-Para concluir la canción, mostrado a continuación, usa un bucle for (25) para barrer las frecuencias de ambos osciladores en forma descendente hasta ser cero. Una vez más, actualiza las frecuencias de los osciladores solo un poco (una caída de 1 Hz por cada pasada del bucle) pero muy seguido (cada 1/10 de segundo (28)).
+Para concluir la canción, mostrado a continuación, usa un bucle for (25) para barrer las frecuencias de ambos osciladores en forma descendente hasta ser cero. Una vez más, actualiza las frecuencias de los osciladores solo un poco (una caída de 1 Hz por cada pasada del bucle) pero muy seguido (cada 1/100 de segundo (26)).
 
 Listado 1.20f Armando "Twinkle"
 
 ```chuck
+//(25) usa un bucle for para barrer de forma descendente desde los 330 Hz
+for (330 => int i; i > 0; i--) {
+  
+  i => t.freq;
+  i*1.333 => s.freq;
+
+  //(26) refresca cada 1/100 de segundo
+  0.01 :: second => now;
+}
 ```
 
 
