@@ -107,9 +107,11 @@ Unidades de tiempo y duración en ChucK
 
 > el sonido se reproduciría por 2 segundos. Los dos puntos le indican a ChucK que quieres hablar sobre unidades de tiempo (duration en segundos), entonces 2 :: second es 2 segundos, 0.1 :: second es 1/10 de un segundo, y así. También observa que pueden haber espacios (o no) alrededor del par de dos puntos. Discutiremos pronto más sobre otras unidades de tiempo/duración en ChucK.
 
-HEREIAM
+Uno de los aspectos más poderosos de ChucK es que como programador tienes absoluto control del tiempo. Pero también estas obligado a controlar el tiempo para hacer sonidos. Discutiremos tiempo y el objeto now en más detalle en la sección 1.4.
 
 ### 1.2.3 Ahora hagamos música
+
+HEREIAM
 
 ### 1.2.4 Probando nuevas formas de onda
 
