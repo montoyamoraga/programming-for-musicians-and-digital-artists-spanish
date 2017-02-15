@@ -193,6 +193,15 @@ while (1) {
 
 ### 1.2.4 Probando nuevas formas de onda
 
+Como estás listo para empezar a componer usando un oscilador, queremos permitirte que uses más que solo un objeto SinOsc para hacer música. Como lo discutimos en la seccción 1.1, es posible hacer sonido usando distintos tipos de formas de onda. Prueba las tres formas de onda mostradas en la figura 1.7 en el programa del listado 1.2 cambiando el SinOsc en el bloque 2 de código por uno de los siguientes: onda cuadrada (SqrOsc), onda triangular (TriOsc), onda diente de sierra (SawOsc).
+
+Haciendo pruebas y corrigiendo errores
+> Cada vez que haces un cambio en tu programa, harás click en el botón Add Shred para indicarle a ChucK que corra el código nuevo. Si hay un error en tu escritura, ChucK lo imprimirá en la ventana Console Monitor, usualmente acompañado del número de línea donde encontró el error. Este número de línea estará marcado con color rojo en la ventana principal de miniAudicle donde escribiste tu código. Vuelve y corrige tu error, y vuelve a correr el código haciendo click en Add Shred hasta que todo funcione. Si todavía no funciona o hace sentido, reescribe el código desde cero. ¡Así es como los programadores lo hacen!
+
+> Además, en cualquier momento puedes usar el ítem del menú Save As para grabar un nuevo archivo de código ChucK con un nuevo nombre de archivo. Esto será importante más adelante a medida que escribes más y más programas.
+
+
+
 HEREIAM
 
 ## 1.3 Tipos de datos y variables
@@ -207,7 +216,6 @@ HEREIAM
 
 ## 1.8 Resumen
 
-page 22
 page 23
 page 24
 page 25
