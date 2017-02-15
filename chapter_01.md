@@ -662,6 +662,44 @@ Tabla 1.2 Tipos de datos de ChucK
 | time         | tiempo en ChucK         | 22050.0                | tiempo en samples |
 | void         | sin tipo                |                        |          |
 
+Has aprendido mucho de variables y datos y el uso de ellos para controlar parámetros de sonido y avanzar el tiempo. No obstante aún siguesescribiendo muchas líneas de códig para lograr cada nota. Tiene que haber una mejor manera, y sí, existe. Prosigamos.
+
+## 1.5 Lógica y estructuras de control para tus composiciones
+
+Para motivar las ideas de la siguiente sección, estudiemos un ejemplo distinto, no "Twinkle", que juegue con la modificación de altura y duración (avanzando el tiempo) de una forma nueva y flexible. Las pocas líneas de código del siguiente listado pueden hacer sonidos muy interesantes, para siempre, moviéndose repetidamente a través del tiempo con now. Escribe este programa y ejecútalo. La magia está en que estás escuchando a ChucK tocar un flujo constante de notas, cambiando de manera aleatoria la frecuencia y duración de cada una.
+
+Listado 1.12 Música aleatoria de onda triangular
+
+```chuck
+/* Música aleatoria de onda triangular
+por un programador de ChucK
+*/
+
+//Uso de una onda triangular para variar de los ejemplos anteriores
+TriOsc t => dac;
+
+//Bloque 1
+//Bucle infinito que corre para siempre
+while (true)
+{
+  //Bloque 2
+  //Genera un número aleatorio entre 30 y 1000 para definir altura
+  Math.random2(30, 1000) => t.freq;
+
+  //Bloque 3
+  //Avanza el tiempo haciendo ChucKing a now de un número aleatorio entre 30 y 1000 ms
+  Math.random2f(30, 1000) :: ms => now;
+}
+```
+
+### 1.5.1
+
+### 1.5.2
+
+### 1.5.3
+
+### 1.5.4
+
 HEREIAM
 page 35
 page 36
@@ -675,8 +713,6 @@ page 43
 page 44
 page 45
 page 46
-
-## 1.5 Lógica y estructuras de control para tus composiciones
 
 ## 1.6 Uso de múltiples osciladores en tu música
 
