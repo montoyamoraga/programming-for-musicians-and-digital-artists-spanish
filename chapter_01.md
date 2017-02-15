@@ -632,12 +632,26 @@ whole / 2 => dur half;
 quarter /2 => dur eighth;
 ```
 
-La palabra clave especial now está en el corazón del trabajo con tiempo en ChucK, y es del tipo time. La palabra now tiene dos funciones especiales. Primero, cuando es leída, now contiene el tiempo lógico actual de ChucK.
+La palabra clave especial now está en el corazón del trabajo con tiempo en ChucK, y es del tipo time. La palabra now tiene dos funciones especiales. Primero, cuando es leída, now contiene el tiempo lógico actual de ChucK. Esencialmente now es el reloj maestro de ChucK. Segundo, aunque now es una variable, no puedes cambiar su valor directamente, al menos no de la forma normal. Cuando tratas de cambiar el valor de now, por ejemplo, haciendo ChucKing de una duración particular a now, esto tiene el importante efecto secundario de hacer que el tiempo fluya (y hacer que se genere sonido) durante precisamente esa duración de tiempo. En efecto, ¡ChucK está avanzando el tiempo hasta que now se convierte en el valor que quieres que sea!
 
+La figura 1.8 muestra esto para el ejemplo "Twinkle" de dos notas del listado 1.11, ilustrando cómo el tiempo avanza entre bloques de código siendo ejecutados.
+
+Otra manera de ver el tiempo en ChucK es que tu código detiene su ejecución durante cualquier duración que hagas ChucKing a now, pero todo lo relacionado a síntesis que hayas conectado (SinOsc => dac, por ejemplo) se mantiene andando y haciendo sonido. Cuando esa duración de tiempo en particular con la que hiciste ChucKing a now ha transucrrido, se ejecuta la siguiente línea de código.
+
+### 1.4.4 Trabajando con now
+
+Trabajar con now es simple y divertid pero es absolutamente esencial en la programación en ChucK - tienes que usarlo para hacer sonido, punto. Por la manera en que ChucK maneja el tiempo es tan importante y es lo que lo hace tan distinto de cualquier otro lenguaje, así que debemos reforzar algunos puntos sobre time, dur y el manejo de now. Aquí hay algunas cosas importantes a mantener en cuenta cuando trabajes con now.
+
+* Hacer ChucKing de una duración a now hace que el tiempo de ChucK avance precisamente en esa cantidad: mientras el tiempo está avanzando tu código es automática y temporalmente suspendido (la siguiente línea no es ejecutada) y el sonido es generado por el sistema. Cómo lo hace depende de cómo hayas configurado la síntesis de sonido.
+* now nunca avanzará a menos que lo manipules. Entonces hasta que tú explícitamente hagas avanzar el tiempo, estás realmente trabajando dentro de un mismo instante en el tiempo.
+* Otra manera de pensar sobre todo esto es que el código en ejecución de ChucK espera hasta que now se convierte en el tiempo que quieres alcanzar. Por esta razón, nunca deberás hacer ChucKing de una duración negativa a now, por ejemplo, -1 :: second => now. ChucK no puede (aún) viajar hacia atrás en el tiempo, por lo que tratar de lograr esto hará que tu programa se detenga.
+* No existen restricciones en cuánto tiempo puede ser avanzado, mientras no sea una cantidad negativa. Entonces es posible avanzar el tiempo, digamos, un microsegundo, un samp, 2 horas o 51 semanas con el mismo mecanismo - depende ti; el sistema se comportará acordemente y de forma predecible.
+
+Existen otras maneras de avanzar el tiempo; por ejemplo, haciendo ChucKing de un Event a now (como hacer click con el ratón del computador, presionando un botón de una palanca de mando, o tocando una nota musical en un teclado MIDI conectado a tu computador) para cuando no sabes de antemano cuánto tiempo avanzar. Dejaremos esto para una discusión posterior. Por ahora, has aprendido uno de los aspectos más importantes de ChucK: el control del tiempo usando duraciones.
+
+Ahora que conoces los tipos de datos int, float, time y dur, deberíamos mencionar que ChucK incluye otro tipos de datos (llamados primitivos), incluyendo a string (una secuencia de caracteres como "hello world") y void (vacío, un tipo sin tipo, en caso que necesites una variable pero no necesites un tipo). Sabemos que esta noción de un tipo de datos void puede ser confuso, pero lo necesitarás más adelante en el libro. La tabla 1.2 resume todos los tipos de datos incluidos en ChucK.
 
 HEREIAM
-page 33
-page 34
 page 35
 page 36
 page 37
@@ -650,10 +664,6 @@ page 43
 page 44
 page 45
 page 46
-
-
-### 1.4.4 Trabajando con now
-
 
 ## 1.5 Lógica y estructuras de control para tus composiciones
 
