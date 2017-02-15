@@ -515,6 +515,16 @@ myDur :: second => now;
 
 ## 1.4 Tiempo en ChucK: se trata de now
 
+Hasta el momento has estado haciendo sonido conectando una onda sinusoidal u otro oscilador al dac, definiendo su frecuencia y ganancia y haciendo ChucKing de alguna duración, como 0.3 :: second, a una palabra clavemágica llamada now. Ahora profundizaremos en el mecanismo de tiempo de ChucK, introduciendo dos nuevos tipos de datos (como float e int) para lidiar con tiempo y duraciones.
+
+¿Qué es una palabra clave?
+
+> Las palabras clave son palabras reservadas espciales en un lenguaje de programación y sistemas. Ya hemos usado muchas palabras clave, como dac, SinOsc, y second. Puedes comprobar si una palabra es una palabra clave cuando la escribes o la ves en el miniAudicle, porque cambia de color de forma automática. Lo único que debes recordar como programador es que no puedes usar palabras clave para nombrar variables. ChucK no te lo permitirá, porque esas palabras ya han sido definidas (por los autores de ChucK) para usos especiales. Regla de oro: si miniAudicle le cambia el color a una palabra, no puedes usarla como nombre de una variable (excepto por palabras en los comentarios, que automáticamente son convertidas a color verde).
+
+### 1.4.1 Variables de tipo dur
+
+
+
 HEREIAM
 page 30
 page 31
