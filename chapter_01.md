@@ -264,6 +264,114 @@ Ahora sabes cómo hacer sonido con osciladores, cómo cambiar la altura usando .
 
 ## 1.3 Tipos de datos y variables
 
+Los programas que hemo visto hasta el momento emiten sonido, pero sería muy díficil pensar en hacer una canción entera usando este tipo de programación literal para cada ganancia, frecuencia y tiempo. El siguiente concepto a aprender es cómo hacer que tu programa sea fácil de cambiar, dadas las decisiones que quisieras tomar como compositor o incluso decisiones que el programa mismo quiera tomar.
+
+Una clave para hacer esto es usar variables. En ChucK y muchos otros lenguajes de programación, cada variable tiene un tipo de datos particular, lo que significa que puede almacenar solo un tupo específico de valor o colección de valores. Tal como nuestros ejemplos en el listado 1.2, donde una variable s contenía nuestra SinOsc, puedes declarar variables para almacenar un número, un tiempo, o incluso palabras. Pero cada una puede almacenar solo un tipo de datos.
+
+Un tipo de datos muy importante de ChucK está diseñado para almacenar números enteros (int). Un número entero es un tipo especial de número que no tiene una parte decimal; o sea no necesita un punto decimal. En ChucK, una variable entera puede almacenar cualquier número en el rango entre -2,147,483,648 a +2,147,483,647. Puedes declarar e inicializar (asignarle un valor a) una variable entera como se muestra en el listado 1.4. Al declarar una nueva variable se crea espacio en el computador para almacenar esa variable y registra el nuevo nombre declarado y tipo de la variable, para que puedas referirte a ella por su nombre más adelante. Inicializar una variable le da un valor. En el listado 1.4, justo después de que declaras la nueva variable myPitch, almacenas el valor 220 en ella por medio de ChucKing.
+
+Buenas prácticas de programación; nombres de variables
+
+> Como tú eres el programador, puedes escoger cualquier nombre que quieras para tus variables, pero siempre es mejor escoger nombres que tengan sentido. Nombres como myPitch, myVolume y fastTempo tienen mucho mayor significado que x,j y z. La gente que lee tu código puede ver estos nombres y hacerse una idea de su propósito. Más adelante verás que algunas variables son temporales, usadas de forma rápida en el código justo después de ser creadas y nunca vueltas a usar. Para aquellas variables, i, temp, x y otros nombres de ese estilo son adecuados. Pero para la mayoría de las variables, un buen nombre (no demasiado largo pero definitivamente no demasiado corto) es importante.
+
+Listado 1.4 Definiendo y usando una variable entera
+
+```chuck
+//declara un entero
+int myPitch;
+
+//almacena una variable
+220 => myPitch;
+
+//imprime su valor
+<<< myPitch >>>;
+```
+
+Listado 1.5 Inicializando y declarando una variable entera al mismo tiempo
+
+```chuck
+//otra manera de inicializar enteros
+//almacena 220 en la recién declarada variable myPitch
+220 => int myPitch;
+
+//imprime su valor
+<<< myPitch >>>;
+```
+
+En muchas ocasiones vas a querer cambiar el valor de una variable - esa es una de las razones por la que se llaman variables. Y hay veces en las que vas a querer usar el valor de una variable para inicializar una nueva variable. Puedes definir el valor de una variable en relación a otra para usarlas como frecuencias de un acorde musical o escala. ADemás, derivar nuevas variables a partir de otras hace que tu programa sea de más fácil lectura y modificación. Primero aprenderás a usar matemáticas para cambiar los valores de las variables y derivar nuevas variables a partir de otras en los listados 1.6 y 1.7; luego usarás estas herramientas para tocar música en el listado 1.8. Como los enteros son números, puedes realizar todo tipo de aritmética con ellos, como mostramos en el siguiente listado. Esto cobrará mayor importancia más adelante cuando quieras tocar más y más notas.
+
+Listado 1.6 Matemáticas con enteros
+
+```chuck
+//aritmética con enteros
+220 => int myPitch;
+
+//sumar o restar
+myPitch + myPitch - 100 => int anotherPitch;
+
+//multiplicación
+2 * myPitch => int higherPitch;
+
+//división
+myPitch / 2 => int lowerPitch;
+
+//imprimir los valores
+<<< myPitch, anotherPitch, higherPitch, lowerPitch >>>;
+```
+
+El código imprime lo siguiente en la ventana Console Monitor:
+
+```chuck
+220 330 440 110
+```
+
+Ejercicio
+
+> Revisa las operaciones matemáticas sobre las variables del listado 1.6 usando lápiz y papel. Comprueba que tu resultado sea los mismos números. Escribe este código en ChucK para comprobar tus respuestas. ¿Cuál fue más fácil? ¡Ahora puedes usar ChucK como una calculadora!
+
+El siguiente listado muestra unos pocos métodos atajo para realizar aritmética en variables para cambiar sus valores en el mismo lugar. Añadiendo un operador matemático al principio del operador ChucK =>, el cálculo matemático es hecho en la variable y almacenado en la misma variable.
+
+Listado 1.7 Atajos matemáticos: multiplicación, resta, y ChucK en un mismo paso
+
+```chuck
+//versión larga
+int myPitch;
+220 => myPitch;
+
+//multiplicar por dos
+2 * myPitch => myPitch;
+
+//resta
+myPitch - 110 => myPitch;
+
+<<< myPitch >>>;
+```
+
+```chuck
+//versión corta
+220 => int myPitch;
+
+//multiplicar por dos
+2 *=> myPitch;
+
+//resta
+110 -=> myPitch;
+
+<<< myPitch >>>;
+```
+
+Ambos ejemplos imprimen lo siguiente en la ventana Console Monitor:
+
+```chuck
+330 :(int)
+```
+
+Usemos este conocimiento adquirido sobre variables enteras para tocar un par de notas, como se muestra en el siguiente listado. Aquí almacenamos la altura en una variable entera, y luego creas dos enteros llamados onGain y offGain para almacenar los valores 1 y 0 para poder prender y apagar el oscilador.
+
+Listado 1.8 Tocando notas con variables enteras
+
+
+
 HEREIAM
 
 ## 1.4 Tiempo en ChucK: se trata de now
@@ -276,8 +384,6 @@ HEREIAM
 
 ## 1.8 Resumen
 
-page 24
-page 25
 page 26
 page 27
 page 28
