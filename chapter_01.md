@@ -763,11 +763,80 @@ Tabla 1.3 Condicionales lógicos
 | >=      | es mayor o igual a     | if (x >= y)    |
 | <=      | es menor o igual a     | if (x <= y)    |
 
+En el programa de frecuencia aleatoria de una onda triangular del listado 1.12, usas una palabra reservada, true, que siempre tiene l valor 1. En ChucK, el valor 1 es usado para representar true y el valor 0 para representar false. Si escribes y ejecutas esta línea de código ChucK
+
+```chuck
+<<< true, false >>>;
+```
+
+verás que ChucK imprime
+
+```chuck
+1 0
+```
+
+Observa que puedes imprimir dos ítems por medio de poner una coma entre ellos en tu declaración de imprimir <<< >>>. De forma similar, puedes escribir y ejecutar esto:
+
+```chuck
+<<< -3 < 0, true == 1, true == false, 1 > 10 >>>
+```
+
+lo que resultará en
+
+```chuck
+<<< 1, 1, 0, 0 >>>
+```
+
+lo que significa que -3 es menor que 0, que true es igual a 1, pero que true no es igual a false y que 1 no es mayor a 10. ¿Genial, no?
+
+Continuando con el ejemplo del listado 1.13, como chance == 1, la prueba es true, por lo que el programa continua dentro del bloque y luego ejecuta la línea 3, avanza el tiempo 1 segundo, y luego toca por 1 segundo.
+
+Ahora, ve y cambia la línea 1, configurando chance como 0, y volviendo a ejectuar el código recién editado. Esto en esencia cambia la línea 2 a un valor false, con lo que líena 3 nunca será ejecutada, por lo que no pasaré tiempo y no se emitirá ningún sonido durante el códig condicional. El programa continúa hasta tocar la siguiente nota en la línea 4, por lo que solo escuchas la nota alta. Entonces cuando chance == 1 escuchas dos notas y cuando chance == 0 escuchas solo una nota.
+
+La declaración else va de la mano con la declaración if. Como puedes ver en la figura 1.11, la estructura if/else forma una bifurcación en el camino: si la condición es verdadera, anda a la derecha; si la condición es falsa, anda a la izquierda. Como puedes observar en el listado 1.14, la declaración else en el bloque 4 tiene su propio bloque, a continuación del bloque 3 de la declaración if. En este caso la prueba del bloque 2 será igual a false, cambiando la frecuencia a 330 Hz, avanzando el tiempo, y tocando el sonido por 3 segundos.
+
+Si cambias la inicialización de chance a 1 en vez de 3 en el bloque 1, entonces la condición if del bloque 2 será verdadera y el primer bloque de código número 3 será ejecutad, tocando una onda sinusoidal de frecuencia 220 Hz por un segundp.
+
+Listado 1.14 Ejemplo de código if/else
+
+```chuck
+//cadena de sonido
+SinOsc s => dac;
+
+//define la frecuencia
+220.0 => s.freq;
+//define la ganancia
+0.5 => s.gain;
+
+//hloque 1
+//variable lógica chance
+3 => int chance;
+
+//bloque 2
+//si chance es igual a 1
+if (chance == 1) {
+  //bloque 3
+  //ejecuta este bloque
+  1 :: second => now;
+}
+//bloque 4
+//en caso contrario, cambia la frecuencia de oscilación y toca por más tiempo
+else {
+  330.0 => s.freq;
+  3 :: second => now;
+}
+
+//define y toca una nota, una octava arribe de twinkle
+440.0 => s.freq;
+1 :: second => now;
+```
+Corre el código del listado 1.14, cambiando el valor de chance. Escucharás la nota grave twinkle seguida de la nota mucho más alta solo cuando chance == 1, y para cualquier otro valor escucarás la nota twinkle2 seguida de la nota alta.
+
+### 1.5.2 Operadores lógicos y condiciones
+
 
 
 HEREIAM
-page 38
-page 39
 page 40
 page 41
 page 42
@@ -776,11 +845,9 @@ page 44
 page 45
 page 46
 
-### 1.5.2
+### 1.5.3 La estructura de control de bucle for
 
-### 1.5.3
-
-### 1.5.4
+### 1.5.4 La estructura de control de bucle while
 
 
 
