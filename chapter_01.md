@@ -1086,7 +1086,7 @@ Listado 1.20f Armando "Twinkle"
 ```chuck
 //(25) usa un bucle for para barrer de forma descendente desde los 330 Hz
 for (330 => int i; i > 0; i--) {
-  
+
   i => t.freq;
   i*1.333 => s.freq;
 
@@ -1095,5 +1095,10 @@ for (330 => int i; i > 0; i--) {
 }
 ```
 
+Nota que en este ejemplo usaste casi todo lo que hemos aprendido en este capítulo. Usaste ondas sinusoidales y triangulares, variables int y flaot, bucles for y while, tests condicionales, matemática, y la palabra clave now con duraciones para controlar el tiempo. Introducimos un nuevo aspecto del bucle for aquí: puedes contar hacia abajo (desde un número mayor a un número menor) en un bucle for. En este caso, barres tu oscilador en forma descendente por medio de la inicialización de la variable entera i y luego con una cuenta hasta cero usando el operador de decremento (i--, que es lo mismo que 1 -=> i, que es lo mismo que i - 1 => i).
+
+Ejercicio
+
+>  Trata de cambiar el número de veces que las notas son tocadas por medio de cambiar las condiciones de los bucles (prueba con i < 3 o 4 o más). Prueba cambiando el incremento (9) (listado 1.20b) y el decremento (25) (listado 1.20f) para tus bucles de barrido de altura. ¡Experimenta!
 
 ## 1.8 Resumen
