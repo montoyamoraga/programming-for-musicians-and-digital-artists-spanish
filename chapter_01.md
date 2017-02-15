@@ -962,8 +962,33 @@ Un aspecto agradable de ChucK es que cuando conectas más de una fuente de sonid
 
 ## 1.7 Un ejemplo final: "Twinkle" con osciladores, variables, lógica y estructuras de control
 
+Ahora es tiempo de reunir todo para hacer una composición usando todas las herramientas que has aprendido en este capítulo. El programa de ejemplo del listado 1.20 muestra cómo hacer justamente eso, aumentando tu ejemplo "Twinkle" para hacer algunas armonías y otras cosas interesantes con bucles. Primero, declararás dos osciladores, uno sinusoidal (1) y otro triangular (2). Luego declararás variables para almacenar altura (3) (melodía) y tu nota con volumen (4). Finalmente en tu configuración inicial, definirás una variable de duración para almacenar la duración de las notas (5).
+
+Listado 1.20a Armando "Twinkle", ¡con dos ondas!
+
+```chuck
+//Twinkle, con dos osciladores
+
+//(1) oscilador de onda sinusoidal
+SinOsc s => dac;
+
+//(2) oscilador de onda triangular
+TriOsc t => dac;
+
+//(3) define la altura inicial
+110.0 => float melody;
+
+//(4)ganancia para nota encendida
+//ganancia para nuestra melodia con la onda triangular
+0.3 => float onGain;
+
+//(5)duraciones de notas
+//uusaremos esto para los tiempos de encendido y apagado
+0.3 :: second => dur myDur;
+```
+
+
 HEREIAM
-page 43
 page 44
 page 45
 page 46
