@@ -988,6 +988,35 @@ TriOsc t => dac;
 ```
 
 
+Listado 1.20b
+
+```chuck
+```
+
+
+Listado 1.20c
+
+```chuck
+```
+
+
+Listado 1.20d
+
+```chuck
+```
+
+
+Listado 1.20e
+
+```chuck
+```
+
+
+Listado 1.20f
+
+```chuck
+```
+
 HEREIAM
 page 44
 page 45
