@@ -414,21 +414,108 @@ offGain => s.gain;
 0.3 :: second => now;
 ```
 
-HEREIAM
+Creando variables enteras en los bloques 1 y 2, puedes usarlas en vez de números para definir los parámetros de la onda sinusoidal en los bloques 3, 4 y 6. Como son variables, puedes cambiar su valor en cualquier momento, como se ve en la elegancia del bloque 5, donde multiplicas por 2 la altura. Definir la frecuencia de la onda sinusoidal con este nuevo valor hace que la altura aumente.
+
+El tamaño del cambio en la frecuencia (el doble) es conocido como un intervalo musical de una octava hacia arriba, por razones algo oscuras. Una octava es el doble (hacia arriba) o la mitad (hacia abajo) de la frecuencia. Para aquellos familiares con instrumentos con teclado, una octava es el espacio entre dos notas C (C central a la octava superior, por ejemplo), dos notas A, dos notas G, y así. Si tocas una cuerda abierta en una guitarra o cualquier otro instrumento de cuerda y luego pones el dedo en el traste 12 y tocas la misma cuerda, escucharás una diferencia de una octava (duplicando la frecuencia, lo que no por coincidencia corresponde a la mitad de la cuerda).
+
+Puedes tocar algunas notas usando variables enteras, ¿pero qué pasa si quieres tocar un intervalo distinto, como en caso de la canción "Twinkle", donde quieres tocar dos notas de 220 Hz y luego dos notas de 330 Hz? Puedes darte cuenta que podrías multiplicar 220 por 1.5 y eso resultaría en 330.0, pero ChucK no te permitiría hacerlo porque no puedes usar fracciones o números con decimales cuando estás manejando enteros. ¿Y qué ocurre con las siguientes dos notas ("little") de la canción? Estas notas necesitan tener una frecuencia de 369.994 (lo que podrías quizás aproximar a 370), pero qué pasa si te quieres poner creativo y cambiar la melodía un poco más? Podrías querer tocar la palabra "little" en F# y G#, cuyas frecuencias corresponden a 369.994 y 415.305 Hz. Discutiremos más sobre altura y frecuencia en el siguiente capítulo, pero necesitas saber que las variables enteras solo pueden almacenar números sin parte fraccional (no se permiten números decimales).
+
+Afortunadamente, existe otro tipo de datos en ChucK llamado float. Los números de punto flotante son números que tienen un punto decimal (parte fraccional) y por lo tanto pueden ser más precisos,. Como te puedes imaginar, estos números son almacenados y operados de forma distinta dentro del computador; por lo que existe un tipo de datos separado para ellos. Puedes declarar e inicializar variables float tal como lo has hecho con los enteros. Toda la aritmética y operadores que hemos visto también aplican para los float. El listado 1.9 muestra cómo puedes declarar e inicializar un float para almacenar tu primera frecuencia "twinkle". Puedes operar matemáticamente sobre ella, multiplicando por 1.5 para almacenarla en una nueva variable declarada de nombre twinkle2. De forma similar, puedes derivar tus alturas para "little" multiplicando twinkle o twinkle2 por los números de punto flotante adecuados.
+
+Listado 1.9 Uso y manipulación de variables float
+
+```chuck
+//bloque 1
+//declara e inicializa un float para almacenar la altura de twinkle
+220 => float twinkle;
+
+//cálculo para derivar la altura de twinkle2 a partir de twinkle
+1.5 * twinkle => float twinkle2;
+
+//más cálculos para derivar la altura de lit a partir del twinkle base
+1.6818 * twinkle => flloat lit;
+
+//más cálculos para derivar la altura de tle a partir del twinkle2
+1.2585 * twinkle2 => float tle;
+
+//nueva altura una octava más arriba que twinkle
+2 * twinkle = float octave;
+
+<<< twinkle, twinkle2, lit, tle, octave>>>;
+```
+
+Este codigo produce la siguiente salida en la consola:
+
+```chuck
+220.000000 330.000000 369.996000 415.305000 440.000000
+```
+
+La belleza de este código radica en que basta con cambiar la inicialización de tu primer twinkle, para que todas las otras alturas cambien. Como las variables son usadas para definir alturas, si cambias el bloque 1 a
+
+```chuck
+110 => float twinkle;
+```
+
+entonces todas las alturas bajarán una octava. Si defines el primer twinkle como 261.616 Hz tocaría "Twinkle" en la escala de C mayor. Cambiar una melodía o canción a una escala diferente es llamado transposición. Puedes inicializar la variable inicial twinkle a cualquier número razonable y todos los otros cambiarán proporcionalmente. Así, la canción "Twinkle" estaría intacta pero en una escala musicak distinta. ¡El poder de la programación!
+
+Ten en cuenta que ha usaste floats cuando definiste la ganancia de tu UGen SinOsc en el listado 1.2 (primero 1.0 y luego 0.3 para hacerlo menos fuerte). Revisaremos nuevamente este ejemplo en el siguiente listado para reenforzar el uso de variables float. La habilidad de convertir el volumen y la frecuencia en variables será un elemento importante al momento de hacer composiciones expresivas, como pronto verás.
+
+Listado 1.10 Twinkle con variables float
+
+```chuck
+/* Música Twinkle Sinuosidal con variables float
+por un programador de ChucK
+enero 2025
+*/
+
+SinOsc s => dac;
+
+//Puedes usar una variable float para twinkle y usarla para calcular little
+220.0 => float twinkle;
+1.6818 * twinkle => float little;
+
+1 => int onGain;
+0 => int offGain;
+
+//Toca una nota
+//Prende la nota twinkle (hace que la ganancia sea onGain y avanza el tiempo)
+twinkle => s.freq;
+onGain => s.gain;
+0.3 :: second => now;
+//Apaga la nota (hace que la ganancia sea offGain y avanza el tiempo)
+offGain => s.gain;
+0.3 :: second => now;
+
+//Modifica la altura de twinkle usando matemática para tocar el twinkle más alto
+1.5 *=> twinkle;
+
+//Toca la otra nota del segundo "twinkle"
+twinkle => s.freq;
+onGain => s.gain;
+0.3 :: second => now;
+offGain => s.gain;
+0.3 :: second => now;
+
+//Toca una nota de "little"
+little => s.freq;
+onGain => s.gain;
+0.3 :: second => now;
+offGain => s.gain;
+0.3 :: second => now;
+```
+
+Ahora qhas usado variables (tanto int como float) para hacer tu código más felxible y legible. ¿Pero puedes hacer algo con esas líneas con números que controlan el tiempo? Puedes hacer una variable float e inicializarla a 0.3 y luego usarla de esta manera:
+
+```chuck
+0.3 => float mydur;
+myDur :: second => now;
+```
+
+¡Existe una forma mejor! Ahora aprenderás sobre dos otros tipos de datos que están incluidos en ChucK, específicamente para controlar tiempos y duraciones.
 
 ## 1.4 Tiempo en ChucK: se trata de now
 
-## 1.5 Lógica y estructuras de control para tus composiciones
-
-## 1.6 Uso de múltiples osciladores en tu música
-
-## 1.7 Un ejemplo final: "Twinkle" con osciladores, variables, lógica y estructuras de control
-
-## 1.8 Resumen
-
-page 27
-page 28
-page 29
+HEREIAM
 page 30
 page 31
 page 32
@@ -446,3 +533,11 @@ page 43
 page 44
 page 45
 page 46
+
+## 1.5 Lógica y estructuras de control para tus composiciones
+
+## 1.6 Uso de múltiples osciladores en tu música
+
+## 1.7 Un ejemplo final: "Twinkle" con osciladores, variables, lógica y estructuras de control
+
+## 1.8 Resumen
