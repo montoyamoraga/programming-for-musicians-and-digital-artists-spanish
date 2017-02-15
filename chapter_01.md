@@ -173,12 +173,27 @@ Chuck es un lenguaje de programación de verdad
 
 > Por ahora, para darte un vistazo del poder de ChucK, puedes escribir (o copiar y pegar) y correr este programa corto. No te preocues si hay cosas que no entiendes; solo ten cuidado de escribirlo tal como lo ves aquí:
 
+```chuck
+Impulse imp => ResonZ filt => NRev rev => dac;
+0.04 => rev.mix;
+100.0 => filt.Q => filt.gain;
 
+while (1) {
+  Std.mtof(Math.random2(60,84)) => filt.freq;
+  1.0 => imp.next;
+  100 :: ms => now;
+}
+```
 
+> Una vez que hayas escrito el código, grábalo como WowExample.ck (o cualquier otro nombre que prefieras), y haz click en el botón Add Shred (figura 1.6, esquina superior izquierda). Escucharás un flujo constante de pops afinados a frecuencias aleatorias. Mucho sonido puede ser logrado a partir de poco código, una vez que conoces las poderosas características de este lenguaje. Puedes hacer click de nuevo en Add Shred y escuchar aún más notas. De hecho, puedes hacer click muchas veces en Add Shred y escuchar aún más sonidos.
 
-HEREIAM
+> Cuando estés listo y quieras detener el sonido, haz click en el botón Clear Virtual Machine (Vaciar la máquina virtual) en la esquina superior derecha de la ventana de miniAudicle (figura 1.6).
+
+> A lo largo de los siguientes ejemplos y los próximos capítulos, estarás construyendo tu conocimiento básico sobre ChucK, permitiéndote hacer programas cada vez más poderosos. Si a veces sientes que no estás obteniendo demasiado de tus líneas de código escritas, ten paciencia, porque al final de este capítulo habrás aprendido nuevos aspectos de ChucK que te permitirán hacer mucho más, incluso horas de música, con muy poco código adicional.
 
 ### 1.2.4 Probando nuevas formas de onda
+
+HEREIAM
 
 ## 1.3 Tipos de datos y variables
 
@@ -192,7 +207,6 @@ HEREIAM
 
 ## 1.8 Resumen
 
-page 21
 page 22
 page 23
 page 24
