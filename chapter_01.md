@@ -692,16 +692,10 @@ while (true)
 }
 ```
 
-### 1.5.1
+Ahora juega con los números (30, 1000) del bloque 2. Cada vez que hagas un cambio, presiona el botón Replace Shred en el miniAudicle, para que el código que estabas ejecutando sea reemplazado con el nuevo código. Si has hecho cambios significativos, ¡inmediatamente escucharás la diferencia! Esto es otro aspecto extremadamente potente de ChucK - la habilidad de modificar tu código sobre la marcha mientras el sonido todavía está siendo sintetizado.
 
-### 1.5.2
-
-### 1.5.3
-
-### 1.5.4
 
 HEREIAM
-page 35
 page 36
 page 37
 page 38
@@ -713,6 +707,16 @@ page 43
 page 44
 page 45
 page 46
+
+### 1.5.1
+
+### 1.5.2
+
+### 1.5.3
+
+### 1.5.4
+
+
 
 ## 1.6 Uso de múltiples osciladores en tu música
 
