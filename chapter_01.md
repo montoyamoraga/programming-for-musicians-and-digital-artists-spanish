@@ -67,6 +67,22 @@ Tal como fue discutido anteriormente, es útil para ti como programador imprimir
 
 ### 1.2.2 Tu primer programa sonoro: "Hello Sine!"
 
+Como ChucK es un lenguaje orientado a sonido, y nuestra meta es enseñarte a programar a través de la escritura de composiciones, necesitaremos llegar mucho más allá de imprimir texto en la ventana Console Monitor. Necesitas aprender cómo generar sonido. Es así que tu segundo programa se llamará "Hello Sine!" (Hola onda sinusoidal). Como una onda sinusoidal es periódica, produce un sonido que puedes identificar con una altura. Así que piensa en este primer sonido de onda sinusoidal como la nota inicial de tu primera canción, "Twinkle, Twinkle, Little Star".
+
+Cuando ingresas el código de la sección 1.1, asegúrate de grabarlo como un nuevo archivo lllamado HelloSine.ck. Te acostumbrarás a grabar tus programas con nombres que tnengan sentido. Cuando modifiques de gran forma tus programas, es a menudo grabarlos como un nuevo archivo, dándoles un nombre relacionado, como HelloSine2.ck.
+
+También nota que mientras escribes el programa del listado 1.1 en el editor de miniAudicle, algunas de las palabras mágicamente cambian de color. Esto ocurre porque el miniAudicle reconoce estas palabras reservadas y las colorea según su tipo. Aprenderemos más de esto más adelante.
+
+Listado 1.1 Hello Sine!
+```
+SinOsc s => dac;
+0.6 => s.gain;
+220 => s.freq;
+second => now;
+```
+
+
+
 HEREIAM
 
 ### 1.2.3 Ahora hagamos música
@@ -85,7 +101,6 @@ HEREIAM
 
 ## 1.8 Resumen
 
-page 17
 page 18
 page 19
 page 20
