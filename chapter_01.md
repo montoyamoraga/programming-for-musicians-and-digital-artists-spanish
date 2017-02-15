@@ -830,26 +830,89 @@ else {
 440.0 => s.freq;
 1 :: second => now;
 ```
+
 Corre el código del listado 1.14, cambiando el valor de chance. Escucharás la nota grave twinkle seguida de la nota mucho más alta solo cuando chance == 1, y para cualquier otro valor escucarás la nota twinkle2 seguida de la nota alta.
 
 ### 1.5.2 Operadores lógicos y condiciones
 
+Tal como tienes expresiones lógicas que combinan o requieren múltiples condiciones ("Mi medidor de gasolina indica menos de la mitad del estanque, y estoy seguro que la gasolina está barata en este momento, así que compraré gasolina"), es también posible tener múltiples condiciones en una declaración if. El operador && (conocido como and) significa que todas las condiciones deben ser true para que la condición general sea true. El operador || (conocido como o) significa que basta con que una de las condiciones sea true para que se ejecute el bloque de código asociado. Un ejemplo de or podría ser "Si mi estanque está realmente vacío o la gasolina está muy barata, entonces llena el estanque". Los ejemplos de código ChucK de esto se encuentran en el listado 1.15.
 
+Las declaraciones if/else/and/or se convertirán en extremedamente útiles a medida que vas aprendiendo más sobre programación musical.
+
+Listado 1.15 Condiciones lógicas más complejas
+
+```chuck
+//Declaraciones condicionales
+
+//Condición or, si chance es igual a 1 o 5, entonces la condición es true.
+if ( (chance == 1) || (chance == 5) ) {
+  //aquí va el código
+}
+
+//Si chance es menor que 2 y chance2 es mayor o igual que 6, entonces la condición es true
+if ( (chance < 2) && (chance2 >= 6) ) {
+  //aquí va el código
+}
+```
+
+### 1.5.3 La estructura de control de bucle for
+
+Puedes hacer música aún más interesante usando la siguiente estructura de control, llamada bucle for. Como el nombre bucle sugiere, esta estructura de control es usada para crear bucles y comportamientos cíclicos. En el listado 1.16 y también ilustrado en la figura 1.12, un bucle for empieza definiendo una condición inicial con una variable (1). Contiene una condición (2) que confirma si es true o no (como una declaración if). Si es true, entonces ejecuta un bloque (párrafo) de código (4), y al final ejecuta un comando de actualización (3). Aquí la variable inicial es actualizada a un nuevo valor, y luego la condición es comprobada nuevamente. El proceso continúa hasta que la condición es false y se acaba el bucle.
+
+Existen muchos casos musicales donde podrías querer usar un bucle for, como en el caso de tocar ascendentemente todas las notas de una escala (siguiente capítulo) o barrer gradualmente desde una frecuencia hasta otra, incluyendo todas las frecuencias entre medio. Aquí vemos un ejemplo de contar ascendentemente e imprimir enteros.
+
+Listado 1.16 El bucle for
+
+```chuck
+//Bucle for
+
+//Comienzo de la estructura for
+//(1) Configuración inicial, usualmente declara e inicializa una variable contador
+//(2) Test condicional
+//(3) Actualización  a hacerse cada vez que se ejecuta el bucle, usualmente incrementa el contador
+for (0 => int i; i < 4; i++)
+//Bloque de código a ejecutarse cada vez, mientras el condicional sea true
+{
+  //Imprimir el valor de i
+  <<< i >>>;
+  //Avanzar el tiempo
+  second => now;
+}
+```
+
+En el ejemplo del listado anterior, la variable entera i es inicializa a 0 (1). El test condicional (2) es por supuesto true (0 es menor que 4), así que el bloque de código (4) es ejecutado (imprimir i, esperar 1 segundo); luego i es incrementado (3) (i++ es equivalente a 1 +=> i, que es lo mismo que i + 1 => i) y el bucle for es ejecutado de nuevo con i igual a 1. El test condicional sigue siendo true (1 es menor que 4), así que el bloque es ejecutado, i es incrementado y el bucle for es ejecutado de nuevo. Esto continúa hasta que i es igual a 4, y el test condicional ahora es false, por lo que el bucle termina.
+
+Añadamos sonido a este concepto para que puedas empezar a escuchar lo que un bucle for puede hacer musicalmente. En programación musical, los bucles for pueden ser usados para tocar escalas, repetir patrones como líneas de bajos o melodías, cambiar ganancias de forma suave, hacer barridos en frecuencia hacia arriba o abajo, y muchas otras cosas super-musicales.
+
+En el listado 1.17, usarás el bucle for (1) para definir frecuencias de tu SinOsc (3) según valores entre 20 Hz a 400 Hz (e imprimirlos (2)) cada 10 milisegundos (4). ¡Imagina tener que escribir todas estas líneas de código una a una como hiciste en la sección 1.2! La repetición en bluce te permite hacer sonidos y composiciones muchos más complejos y te ahorra muchas líneas de código. Desde ya, como compositor, eres capz de escribir música que tú nunca podrías haber escrito sin haber aprendido a programar.
+
+Listado 1.17 Uso musical de un bucle for
+
+```chuck
+//Onda sinusoidal conectada al dac
+SinOsc s => dac;
+
+//bucle for musical
+//(1) bucle for entre 20 y 399
+for (20 => int i; i < 400; i++) {
+  //(2) imprime el valor actual de i
+  <<< i >>>;
+  //(3) define la frecuencia
+  i => s.freq;
+  //(4) espera 10ms y empieza de nuevo el bucle
+  10 :: ms => now;
+}
+ ```
+
+
+### 1.5.4 La estructura de control de bucle while
 
 HEREIAM
-page 40
-page 41
 page 42
 page 43
 page 44
 page 45
 page 46
-
-### 1.5.3 La estructura de control de bucle for
-
-### 1.5.4 La estructura de control de bucle while
-
-
 
 ## 1.6 Uso de múltiples osciladores en tu música
 
