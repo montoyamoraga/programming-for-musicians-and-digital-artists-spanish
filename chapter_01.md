@@ -1038,31 +1038,50 @@ Para el segundo twinkle, define nuevas alturas (18) y toca dos notas adicionales
 Listado 1.20d Armando "Twinkle", segundo Twinkle
 
 ```chuck
-//(18)
+//(18) define la nueva frecuencia para twinkle
 138.6 => s.freq;
 1.5 * melody => t.freq;
 
+//(19) toca dos veces con el bucle for
 //dos notas adicionales, segundo twinkle
 for (0 => int i; i < 2 ; i ++) {
   onGain => t.gain;
   myDur => now;
   0 => t.gain;
-    mydur => now;
+  mydur => now;
 }
 ```
 
+Como mostramos en el siguiente listado, para tocar "little", debes definir más alturas (20) y tocar dos notas más (21), de nuevo de la misma manera. Para "star" necesitar tocar solo una vez, así que define las alturas (22) y toca las notas (23), esta vez por 1 segundo (24).
 
-HEREIAM
-page 45
-page 46
-
-Listado 1.20e
+Listado 1.20e Armando "Twinkle", tocando "little" y "star"
 
 ```chuck
+//(20) define la nueva frecuencia para "little"
+146.8 => s.freq;
+1.6837 * melody => t.freq;
+
+//(21) toca dos veces con el bucle for
+for (0 => int i; i < 2; i++) {
+  onGain => t.gain;
+  myDur => now;
+  0 => t.gain;
+  mydur => now;
+}
+
+//(22) define la nueva frecuencia para "star"
+138.6 => s.freq;
+1.5 * melody => t.freq;
+
+//(23) toca esa nota
+onGain => t.gain;
+//(24) durante un segundo
+second => now;
 ```
 
+Para concluir la canción, mostrado a continuación, usa un bucle for (25) para barrer las frecuencias de ambos osciladores en forma descendente hasta ser cero. Una vez más, actualiza las frecuencias de los osciladores solo un poco (una caída de 1 Hz por cada pasada del bucle) pero muy seguido (cada 1/10 de segundo (28)).
 
-Listado 1.20f
+Listado 1.20f Armando "Twinkle"
 
 ```chuck
 ```
