@@ -6,7 +6,17 @@ Este capítulo cubre:
 * Variables
 * Estructuras de control y lógica
 
+Hasta el momento hemos mostrado por qué creemos que ChucK es el mejor lenguaje y el más poderoso para hacer todo tipo de arte y sistemas artísticos. Ahora es el momento de empezar a aprender a programar en ChucK para hacer sonido y música. Primero hablaremos de sonido en general, observando una o dos formas de onda de sonido. Discutiremos las propiedades de los sonidos en términos de volumen, altura y ruido. Aprenderás que objetos llamados osciladores son fundamentales para la física, el sonido y la música, y harás música con los osciladores incluidos en ChucK. Aprenderás:
+
+* Cómo los datos son manejados y manipulados por ChucK mediante el uso de variables.
+* Sobre los mecanismos de temporización incluidos en ChucK. La forma en que maneja el tiempo es uno de los aspectos que lo hace diferente de los otros lenguajes de programación, y que lo hace tan bueno para programar música, sonido y arte basado en el tiempo.
+* Sobre el control del flujo de tus programas mediante el uso de variables lógicas y pruebas y bucles.
+
+¡Para el final del capítulo habrás escrito tu primera composición con ChucK!
+
 ## 1.1 Ondas de sonido y formas de onda
+
+
 
 ## 1.2 Tus primeros programas de ChucK
 
@@ -22,7 +32,6 @@ Este capítulo cubre:
 
 ## 1.8 Resumen
 
-page 13
 page 14
 page 15
 page 16
