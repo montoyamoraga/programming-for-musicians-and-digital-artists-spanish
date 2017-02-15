@@ -370,7 +370,49 @@ Usemos este conocimiento adquirido sobre variables enteras para tocar un par de 
 
 Listado 1.8 Tocando notas con variables enteras
 
+```chuck
+/* Música sinusoidal con variables entersa
+por un programador de ChucK
+enero 2025
+*/
 
+SinOsc s => dac;
+
+//Bloque 1
+//declara e inicliazia una variable entera llamada myPitch
+220 => int myPitch;
+
+//Bloque 2
+//declara e inicializa dos variables enteras para controlar ganancia
+1 => int onGain;
+0 => int offGain;
+
+//Bloque 3
+//toca una nota usando tus nuevas variables enteras
+myPitch => s.freq;
+onGain => s.gain;
+0.3 :: second =>  now;
+
+//Bloque 4
+//apaga el sonido del oscilador para separar las dos notas
+offGain => s.gain;
+0.3 :: second => now;
+
+//Bloque 5
+//multiplica por dos la altura
+2 *=> myPitch;
+
+//Bloque 6
+//define la frecuencia del oscilador y lo enciende, para empezar la segunda nota
+myPitch => s.freq;
+onGain => s.gain;
+0.3 :: second =>  now;
+
+//Bloque 4
+//apaga el sonido del oscilador para terminar la segunda nota
+offGain => s.gain;
+0.3 :: second => now;
+```
 
 HEREIAM
 
@@ -384,7 +426,6 @@ HEREIAM
 
 ## 1.8 Resumen
 
-page 26
 page 27
 page 28
 page 29
