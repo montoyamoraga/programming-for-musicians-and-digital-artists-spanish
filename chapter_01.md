@@ -85,7 +85,27 @@ SinOsc s => dac;
 second => now;
 ```
 
+Diseccionemos este programa línea a línea. En la primera línea, construyes tu primera cadena de señal de sonido, también llamada patch, sobre la que hablaremos pronto. SinOsc es llamado un generador unitario (UGen), un objeto que genera el sonido de una onda sinusoidal. El nombre que le das al oscilador es s, lo que también es llamado en programación como el nombre de una variable porque su valor puede cambiar. Es también una variable en el sentido de que podrías haber escogido cualquier otro nombre como t o mionda. Tu como programador eliges cómo nombras los objetos que creas. Por simplicidad, hemos escogido s.
 
+La siguiente parte importante es el símbolo =>. Observa que se parece a una flecha. Este es el operador ChucK, y ChucK es el nombre del lenguaje completo. Está diseñado para mostrar cómo una señal fluye de un lado de la flecha al otro. Cuando lo usas, dices que estás ChucKing lo que sea que está al lado izquierdo de la flecha a lo que sea que está al lado derecho. Así que ahora, tienes un SinOsc que has llamado s y quieres enviar el sonido a tus parlantes o audífonos. Para esto usas un objeto especial llamado un conversor análogo-digital (DAC, por digital-to-analog converter), el que está conectado dentro de tu computador a la salida de tu tarjeta de sonido (parlantes, audífonos, o similar).
+
+Entonces, por medio de ChucKing un SinOsc llamado s al dac, has construido una onda sinusoidal que serás capaz de escuchar a través de tus parlantes. Otro término para conectar tu generador unitario oscilador sinusoidal al dac es hacer un patch, que proviene de los viejos tiempos de los sintetizadores análogos donde los componentes generadores y procesadores de sonido eran conectado usando cables patch, o cables físicos con enchufes para hacer las conexiones.
+
+Ahora que has creado una cadena sonora capaz de producir sonido, es necesario saber que existen tres aspectos principales de este programa para crear sonido: cuánto volumen, cuál frecuencia (o altura), y cuán largo. En la línea 2, defines cuánto volumen. Todos los objetos generadores y procesadores de sonido en ChucK tienen un método .gain que puede ser ajustado a cualquier número, pero está usualmente en el rango entre 0.0 y 1.0. Observa que en este código has definido el volumen a .6 por medio de su Chucking  a s.gain.
+
+En la línea 3, trabajas con la frecuencia. Así es como eres capaz de componer y determinar cuál altura (frecuencia específica) quieres que tenga tu SinOsc. El método .freq de tu SinOsc acepta un número en Hertz entre 0 y 20,000, que cubre, y sobreestima por debajo, el rango de frecuencias de escucha humana. Notar en que en este ejemplo defines la frecuencia por medio de Chucking 220 a s.freq. Esto es la altura de la primera nota de tu canción "Twinkle". Conversaremos más en el siguiente capítulo sobre cómo determinar frecuencias para alturas musicales particulares.
+
+En la línea 4, determinas cuán larga será la ejecución de tu síntesis, o la duración de tu primera nota. Por ahora quieres que tu sonido se ejecute por un segundo, lo que logras por medio de ChucKing una duración de 1 segundo a un objeto llamado now. Hacer ChucKing de second a now le indica a ChucK que quieres esperar 1 segundo mientras el sonido es sintetizado. Si no tuvieras esta línea que manipula el tiempo, no escucharías ningún sonido, porque el programa terminaría justo ahí.
+
+Unidades de tiempo y duración en ChucK
+
+> Podrías haber reproducido tu onda sinusoidal durante cualquier cantidad de tiempo por medio de ChucKing una diferente duración a now. Por ejemplo, si cambias la línea 4 en el listado 1.1 a:
+
+```chuck
+2.0 :: second => now;
+```
+
+> el sonido se reproduciría por 2 segundos. Los dos puntos le indican a ChucK que quieres hablar sobre unidades de tiempo (duration en segundos), entonces 2 :: second es 2 segundos, 0.1 :: second es 1/10 de un segundo, y así. También observa que pueden haber espacios (o no) alrededor del par de dos puntos. Discutiremos pronto más sobre otras unidades de tiempo/duración en ChucK.
 
 HEREIAM
 
@@ -105,8 +125,6 @@ HEREIAM
 
 ## 1.8 Resumen
 
-page 18
-page 19
 page 20
 page 21
 page 22
