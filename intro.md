@@ -11,7 +11,7 @@ Como muchos otros, a mí me importan las artes visuales y la música por sobre t
 Me esforcé en aprender código de la manera tradicional. Durante la última década, he enseñado a programar a través de una nueva plataforma de programación que coinventé con Ben Fry. En MIT en el año 2001, empezamos a desarrollar un entorno y lenguaje de programación llamado Processing. Processing fue creado para que aprender a programar por primera vez y alienta a "bosquejar" con código. Lo más importante de Processing es que puedes aprender todos los fundamentos de programar, pero a través del trabajo con medios visuales dinámicos - por ejemplo, con dibujo, color y animación. En el momento en que empezamos a trabajar en Processing, no sabíamos que Ge Wang, en ese entonces un estudiante de posgrado en Princeton, estaba haciendo lo mismo en el dominio de la música. A través de su lenguaje de programación sobre la marcha, ChucK, se aprende a programar a través de la creación de onsido.
 
 Uno de los primeros programas que verás en este libro va al grano:
-```
+```chuck
 SinOsc s => dac;
 440 => s.freq;
 1 :: second => now;
