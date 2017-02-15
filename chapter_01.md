@@ -904,17 +904,41 @@ for (20 => int i; i < 400; i++) {
 }
  ```
 
-
 ### 1.5.4 La estructura de control de bucle while
 
+La última estructura de control que aprenderás en este capítulo es el bucle while (figura 1.13), que ya has usados para hacer un bucle infiinito. while es similar al bucle for pero se escribe de una manera distinta. Puedes reescribir el mismo programa de bucle for, usando un bucle while, como se muestra en el listado 1.18.
+
+Listado 1.18 Uso musical de un bucle while
+
+```chuck
+//Onda sinusoidal conectada al dac
+SinOsc s => dac;
+
+//(1) inicializa el contador con el número 20
+20 => int i;
+
+//(2)bucle while musical, tiene solo un test condicional
+while (i < 400)
+//(3) bloque de código a ejecutarse
+{
+  <<< i >>>;
+  i => s.freq;
+  10 :: ms => now;
+  //(4) incrementa el contador (¡muy importante!)
+  i++;
+}
+
+Después de configurar tu usual onda sinusoidal, inicializas el entero i en 20 (1). Luego defines la condición while (2) (while i sea menor que 400). El nombre sugiere que es una condición (while significa mientras), lo que puede hacerse un poco más obvio y fácil de recordad que el bucle for. El bucle whiel entonces continúa dentro de su bloque (3). Observa que tienes que agregar un comando de refresco (4) similar al de refresco del bucle for. Ejecutando este código, verás que hace el mismo sonido que el bucle for del listado 1.15. Es importante que aprendas que tanto los bucles for como los while porque los usarás de formas distintas a través de tu camino de aprendizaje de ChucK.
+
+Observa que si te olvidas de incluir la línea de incremento (4) en el bloque de código del listado 1.18 el programa correría para siempre, con el valor de i y de la frecuencia de la onda sinusoidal siempre igual a 20. En la mayoría de los lenguajes de programación la noción de un bucle infinito (un bucle condicional que nunca cunmple con su condicion de término) debe ser evitado a toda costa. Pero esto no es tan así en ChucK, de hecho ya has usado un bucle infinito de forma intencional, while (true) en el listado 1.12, para hacer música bastante interesante. Los botones en la parte superior de miniAudicle para añadir, reemplazar y remover shreds y vaciar la máquina virtual te permiten crear y usar bucles infinitos sin temer. Una característica atractiva de ChucK es que puede seguir corriendo mientras tú añades, modificas, reemplazas y agregas capas para hacer sonidos y música realmente interesantes.
+
+## 1.6 Uso de múltiples osciladores en tu música
+
 HEREIAM
-page 42
 page 43
 page 44
 page 45
 page 46
-
-## 1.6 Uso de múltiples osciladores en tu música
 
 ## 1.7 Un ejemplo final: "Twinkle" con osciladores, variables, lógica y estructuras de control
 
