@@ -983,21 +983,44 @@ TriOsc t => dac;
 0.3 => float onGain;
 
 //(5)duraciones de notas
-//uusaremos esto para los tiempos de encendido y apagado
+//usaremos esto para los tiempos de encendido y apagado
 0.3 :: second => dur myDur;
 ```
 
+Continuando con el ejemplo de "Twinkle" con dos osciladores (listado 1.20b), primero tocarás solamente con el oscilador de onda triangular (4), definiendo la ganancia del oscilador a 0.0 (7). Partirás la canción haciendo un barrido de altura hacia arriba con la onda triangular, yendo de 110.0 a 120.0 usando un bucle while (8). Luego aumentarás la frecuencia en 1 Hz cada vez que se ejecute el bucle (9) y lo harás rápidamente, actualizando cada 1/100 de segundo (10).
 
-Listado 1.20b
-
-```chuck
-```
-
-
-Listado 1.20c
+Listado 1.20b Armando "Twinkle", todas las partes (parte B. barrido ascendente)
 
 ```chuck
+//solo toca t al principio, barrido ascendente de altura
+
+//(6) enciende el oscilador de onda triangular
+onGain => t.gain;
+
+//(7) enciende el oscilador de onda sinusoidal
+0 => s.gain;
+
+//(8) itera hasta que la altura llegue a 220
+while (melody < 220.0) {
+  melody => t.freq;
+  //(9) aumenta la altura en 1 Hz
+  1.0 +=> melody;
+  //(10) cada 1/100 de segundo
+  0.01 :: second => now;
+}
 ```
+Una vez que hayas barrido ascendemente la altura, empezarás a tocar la melodía y la armonía (listado 1.20c) prendiendo el oscilador sinusoidal (10), definiendo su frecuencia a 110.0 (12), y tocando dos notas en el oscilador de onda triangular (definir gain como una valor distinto de ero) (14), esperar un momento (15), y luego apagarlo (16) y esperar de nuevo (17). Esto toca la primera parte de la canción "Twinkle".
+
+Listado 1.20c Armando "Twinkle", primer Twinkle
+
+```chuck
+
+```
+
+HEREIAM
+page 44
+page 45
+page 46
 
 
 Listado 1.20d
@@ -1017,9 +1040,5 @@ Listado 1.20f
 ```chuck
 ```
 
-HEREIAM
-page 44
-page 45
-page 46
 
 ## 1.8 Resumen
