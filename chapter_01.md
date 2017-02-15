@@ -1014,20 +1014,47 @@ Una vez que hayas barrido ascendemente la altura, empezarás a tocar la melodía
 Listado 1.20c Armando "Twinkle", primer Twinkle
 
 ```chuck
+//enciende ambos osciladores, define las alturas
+//(11) ahora enciendo también el oscilador sinusoidal
+0.7 => s.gain;
+//(12) inicializa su altura
+110 => s.freq;
 
+//(13) usa un bucle for para tocar dos notas
+for (0 => int i; i < 2; i++) {
+  //(14) enciende la onda triangular
+  onGain => t.gain;
+  //(15) deja que la nota suene
+  myDur => now;
+  //(16) apaga la onda triangular
+  0 => t.gain;
+  //(17) silencio para separar las notas
+  mydur => now;
+}
 ```
 
-HEREIAM
-page 44
-page 45
-page 46
+Para el segundo twinkle, define nuevas alturas (18) y toca dos notas adicionales (19) de la misma forma, como se muestra a continuación.
 
-
-Listado 1.20d
+Listado 1.20d Armando "Twinkle", segundo Twinkle
 
 ```chuck
+//(18)
+138.6 => s.freq;
+1.5 * melody => t.freq;
+
+//dos notas adicionales, segundo twinkle
+for (0 => int i; i < 2 ; i ++) {
+  onGain => t.gain;
+  myDur => now;
+  0 => t.gain;
+    mydur => now;
+}
 ```
 
+
+HEREIAM
+page 45
+page 46
 
 Listado 1.20e
 
