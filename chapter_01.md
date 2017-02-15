@@ -75,10 +75,13 @@ También nota que mientras escribes el programa del listado 1.1 en el editor de 
 
 Listado 1.1 Hello Sine!
 ```
-%Conecta una onda sinusoidal
+//Conecta una onda sinusoidal
 SinOsc s => dac;
+//Define la ganancia del oscilador como 0.6
 0.6 => s.gain;
+//Define la frecuencia del oscilador como 220
 220 => s.freq;
+//Permite que toque por un segundo
 second => now;
 ```
 
