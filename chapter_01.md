@@ -1102,3 +1102,15 @@ Ejercicio
 >  Trata de cambiar el número de veces que las notas son tocadas por medio de cambiar las condiciones de los bucles (prueba con i < 3 o 4 o más). Prueba cambiando el incremento (9) (listado 1.20b) y el decremento (25) (listado 1.20f) para tus bucles de barrido de altura. ¡Experimenta!
 
 ## 1.8 Resumen
+
+¡Uf! Hemos cubierto mucho hasta este punto:
+* Has aprendido un poco sobre ondas de sonido en general, que son fluctuaciones viajando a través del aire.
+* Hemos discutido ondas sinusoidales y osciladores y los tipos de osciladores incluidos en ChucK (SinOsc, SqrOsc, SawOsc y TriOsc).
+* Has aprendido de variables y tipos de datos: int, float, dur y time.
+* Hemos mostrado cómo manipular tiempo en ChucK. No se emite sonido a menos que tú, el programador, haga que el tiempo avance (por medio de hacer ChucKing de duraciones a now).
+* Has estudiado condiciones lógicas y palabras reservadas como if, else, &&, true y false.
+* Has experimentado con estructuras de bucle, for y while, que te permiten controlar tus programas y sonido/música sin tener que escribir cada evento de forma literal.
+
+¡Felicítate a ti mismo, porque ahora eres un programador y un artista digital! No obstante, ChucK ofrece mucho más poder que esto y te invita a aprender más sobre programación y sonido, acústica, interacción humano-computador, entre otros. Por ejemplo, ¿cómo es que llegamos a esos números para las alturas que usamos en este capítulo? ¡ChucK te puede ayudar con eso! Y aprenderás inmediatamente en el siguiente capítulo.
+
+Así que continua aprendiendo más sobre las bibliotecas includias en ChucK (funciones útiles que puedes usar) y arreglos (formas de organizar y manipular tus datos artísticos/musicales).
