@@ -200,11 +200,71 @@ Haciendo pruebas y corrigiendo errores
 
 > Además, en cualquier momento puedes usar el ítem del menú Save As para grabar un nuevo archivo de código ChucK con un nuevo nombre de archivo. Esto será importante más adelante a medida que escribes más y más programas.
 
+Algunos de los elementos más importantes en programación son los comentarios que el autor hace mientras crea el código. Como mostramos en las primeras líneas del listado 1.2 y mostraremos de nuevo aquí, los comentarios se pueden hacer de dos maneras: la primera es con un conjunto de barra oblicuas y astericos, /* y */, y la segunda es con dos barras oblicuas //. En el método 2, cualquier caracter en la misma línea a continuación de las dos barras será ignorado por ChucK. El método 1 es para múltiples líneas, donde todas las líneas entre el par de caracteres será ignorado por el compilador.
 
+```chuck
+//Bloque 1
+/* Música con onda sinusoidal
+por un programador de ChucK
+Enero 2025
+*/
 
-HEREIAM
+//Bloque 2
+//Conecta una onda sinusoidal al dac
+SinOsc s => dac;
+
+//Bloque 3
+//Toca una nota
+//Define la ganancia como 1.0 y la frecuencia como 220 Hz.
+//Deja que se ejecute por 0.3 segundos haciendo ChucKing a now.
+220 => s.freq;
+```
+
+Buenas prácticas de programación
+> Al principio, deberías hacerte el hábito de comentar cada línea (o la moyoría de las líneas, o al menos cada bloque) de código con anotaciones para ti mismo y para futuros colaboradores. Además, deberías siempre escribir tu nombre y fecha al principio de cada programa que escribes. A medida que te vayas convirtiendo en un programador más avanzado y también consultes los programas de otros, aprenderás cómo comentar de manera más efectiva, dónde los comentarios son necesarios, y qué decir en ellos.
+
+El ejemplo del listado 1.3 reune todos los conceptos discutidos en la sección 1.2. El código está bien documentado (comentado) y también imprime algo en la salida 1 de la consola al principio y luego toca dos notas de música.
+
+En el último bloque 2, te mostramos cómo puedes usar el comentario multilínea /*...*/ para hacer que una sección de código no sea ejecutada, porque ChucK asume que este texto es un comentario y no código. Esto puede ser extremadamente útil para reparar errores en tu código o para omitir una parte de tu composición para que así puedas trabajar con secciones posteriores.
+
+```chuck
+//Autor: equipo ChucK
+//Fecha: la fecha de hoy
+
+//Haz una cadena de sonido (patch)
+SinOsc s => dac;
+
+//Imprime el nombre del programa
+<<< "Hello Sine!" >>>;
+
+//Define los parámetros para tocar una nota
+//Define el volumen como 0.6
+.6 => s.gain;
+//Define la frecuencia como 220
+220.0 => s.freq;
+//Toca por un segundo
+second => now;
+
+//Define el volumen como 0.5
+0.5 => s.gain;
+//Define la frecuencia como 440
+440 => s.freq;
+//Ahora toca por dos segundos
+2 :: second => now;
+
+//Comenta esta tercera nota por ahora
+/*
+0.3 => s.gain;
+330 => s.freq;
+3 :: second => now;
+*/
+```
+
+Ahora sabes cómo hacer sonido con osciladores, cómo cambiar la altura usando .freq y el volumen usando .gain y cómo controalr las duraciones de tus notas usando now. Pero hay otras cosas que necesitas saber para hacer mejor música.
 
 ## 1.3 Tipos de datos y variables
+
+HEREIAM
 
 ## 1.4 Tiempo en ChucK: se trata de now
 
@@ -216,7 +276,6 @@ HEREIAM
 
 ## 1.8 Resumen
 
-page 23
 page 24
 page 25
 page 26
