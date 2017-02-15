@@ -927,6 +927,7 @@ while (i < 400)
   //(4) incrementa el contador (¡muy importante!)
   i++;
 }
+```
 
 Después de configurar tu usual onda sinusoidal, inicializas el entero i en 20 (1). Luego defines la condición while (2) (while i sea menor que 400). El nombre sugiere que es una condición (while significa mientras), lo que puede hacerse un poco más obvio y fácil de recordad que el bucle for. El bucle whiel entonces continúa dentro de su bloque (3). Observa que tienes que agregar un comando de refresco (4) similar al de refresco del bucle for. Ejecutando este código, verás que hace el mismo sonido que el bucle for del listado 1.15. Es importante que aprendas que tanto los bucles for como los while porque los usarás de formas distintas a través de tu camino de aprendizaje de ChucK.
 
