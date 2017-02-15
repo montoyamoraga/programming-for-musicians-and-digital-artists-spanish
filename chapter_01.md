@@ -605,11 +605,37 @@ En ChucK, el tiempo (time) y la duración (dur) son tipos de datos básicos con 
 
 ### 1.4.3 Variables de tipo time
 
+El tipo time contiene un punto en el tiempo (referenciado desde cero cuando la máquina virtual de ChucK es iniciada). El tipo dur almacena una duración, lo que es una cantidad de tiempo, el espacio entre dos momentos. Tal como podrías coordinar una juntarte con alguien en un momento en particular - "Te veré a las 1:00 p.m." - o especificar algo con una duración - "Estaré de vuelta en una hora" - es la naturaleza de time y dur en ChucK. Una variable time especifica un punto en el tiempo (la duración desde que ChucK empezó) y dur especifica una cantidad de tiempo. Por ejemplo, 2 :: second en ChucK es un valor de tipo dur. Puedes sumar duraciones para obtener nuevas duraciones (por ejemplo,  2 :: second + 1 :: minute) y almacenar duracioens en variables recién declardos, por ejemplo:
 
-### 1.4.4 Trabajando con now
+```chuck
+//duración de nota negra
+0.8 :: second => dur quarter;
+```
+
+La duración de una nota negra en música depende del tempo, a menudo expresado en términos de cuántas notas negras ocurren por segundo, también llamado BPM (beats per minute). Aquí hemos definido la duración de una nota negra como 0.8 segundos, lo que significa que nuestro tempo es de 75 BPM (60 segundos por minuto / 0.8 segundos por nota negra).
+
+Las variables pueden ser reusadas para crear nuevas variables, por ejemplo:
+
+```chuck
+4 :: quarter => dur whole;
+```
+
+Una vez que has definido la duración de una nota negra (y por lo tanto el tempo), puedes definir la duración de una nota redonda, que equivale a cuatro negras. De forma similar puedes definir la duración de las corcheas (negra / 2) y blancas (2 * negra o redonda / 2), así:
+
+```chuck
+4 :: quarter => dur whole;
+
+4 * quarter => dur whole;
+
+whole / 2 => dur half;
+
+quarter /2 => dur eighth;
+```
+
+La palabra clave especial now está en el corazón del trabajo con tiempo en ChucK, y es del tipo time. La palabra now tiene dos funciones especiales. Primero, cuando es leída, now contiene el tiempo lógico actual de ChucK.
+
 
 HEREIAM
-page 32
 page 33
 page 34
 page 35
@@ -624,6 +650,10 @@ page 43
 page 44
 page 45
 page 46
+
+
+### 1.4.4 Trabajando con now
+
 
 ## 1.5 Lógica y estructuras de control para tus composiciones
 
