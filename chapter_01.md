@@ -572,15 +572,15 @@ offDur => now;
 
 Tabla 1.1 Palabras clave especiales de ChucK para duración y su correspondiente duración
 
-| Palabra clave | Duración      |
-| ------------- |:-------------:|
+| Palabra clave  | Duración |
+| :------------- |:--------|
 | samp   | 1 muestra digital en tiempo ChucK (usualmente 1/44100 de segundo) |
-| ms     | 1 milisegundo                                                     |
-| second | 1 segundo                                                         |
-| minute | 1 minuto                                                          |
-| hour   | 1 hora                                                            |
-| day    | 1 día                                                             |
-| week   | 1 semana                                                          |
+| ms     | 1 milisegundo |
+| second | 1 segundo     |
+| minute | 1 minuto      |
+| hour   | 1 hora        |
+| day    | 1 día         |
+| week   | 1 semana      |
 
 
 HEREIAM
