@@ -51,7 +51,7 @@ HECHO: Spencer y yo somos ávidos fans de StarCraft, y de forma semi-regular som
 
 Ahora probablemente ya estás haciéndote una idea del tipo de personas locas (y relajadas) que han trabajado para hacer ChucK posible. La lista no termina ahí. Philip Davidson y Ari Lazier contribuyeron con grandes secciones de ChucK; Phil y yo incluso construimos un prototipo de un ambiente de desarrollo animado en tiempo real llamado el Audicle (un predecesor en bruto al MiniAudicle). Ananya Misra y Matt Hoffman contribuyeron generosamente con grandes porciones de nuevas funcionalidades, mientras que Adam Tindale escribió un manual de ChucK. Al mismo tiempo, sabios individuos como Paul Lansky, Roger Dannenberg, Andrew Appel y Brian Kernighan (todos ellos creadores de lenguajes de programación) dispensaron generosamente su sabiduría en torno a la dirección de ChucK.
 
-La comunidad en línea de ChucK se formó entre los años 2003 y 2004, y empezamos rápidamente a lanzar correcciones de errores y nuevas características (y nuevos errores). Era mágico ver cómo gente que no conocíamos generosamente contribuían a un projecto de código abierto y una comunidad como esta. Un individuo particularmente notable es Kassen Oud, quien ha guíado a un sinnúmero de nuevos usuarios, respondido a innumerables preguntas y en general ha distribuido paz y buena voluntad a todos los usuarios de ChucK por más de 10 años. (Kassen tiene el crédito de SporksPerson, moderador del foro y ChucKian Sherpa, en nuestro sitio web). Nunca he conocido a Kassen, pero intuyo en él a alguien de un espíritu gentil.
+La comunidad en línea de ChucK se formó entre los años 2003 y 2004, y empezamos rápidamente a lanzar correcciones de errores y nuevas características (y nuevos errores). Era mágico ver cómo gente que no conocíamos generosamente contribuían a un projecto de código abierto y una comunidad como esta. Un individuo particularmente notable es Kassen Oud, quien ha guiado a un sinnúmero de nuevos usuarios, respondido a innumerables preguntas y en general ha distribuido paz y buena voluntad a todos los usuarios de ChucK por más de 10 años. (Kassen tiene el crédito de SporksPerson, moderador del foro y ChucKian Sherpa, en nuestro sitio web). Nunca he conocido a Kassen, pero intuyo en él a alguien de un espíritu gentil.
 
 Existe una regla del desarrollo de software de "The Mythical Man-Month" (un gran tratado en cómo los humanos crean software) que dice: planea desechar uno. La idea detrás de esto es que cuando construyas algo nuevo, la primera implementación a menudo no es la adecuada en términos de arquitectura. Uno no debiera temer a empezar todo de nuevo, armado del conocimiento ganado del primer intento (esto es realmente una muy buena regla para muchas cosas en la vida). En el año 2005, remodelé completamente el núcleo de ChucK para añadir soporte de arreglos y objetos, y también para hacer más fácil una multitud de otras características. Esto resultó ser una buena movida, para la (totalmente loca) Princeton Laptop Orchestra (PLOrk) que empezó ese otoño, conducida por el magnífico Dan Trueman y Perry, con Scott Smallwood y yo como profesores asistentes. ChucK fue usado como la herramienta principal de programación y enseñanza.
 
@@ -75,7 +75,7 @@ Como artista robótico, Ajay trabaja con MIDI de controladores personalizados y 
 
 Le preguntamos a más gente por qué usan ChucK, y aquí está lo que dijeron:
 
-ChucK sugiere una mentalidad de aproximación a la música, y al diseño de música, la experimentación con música, y el aprendizaje de programación ... Me gusta la manera en que ChucK me hace pensar, y yo estaba realmente deprimida con la programación de música antes de conocer ChucK.
+ChucK sugiere una mentalidad de aproximación a la música, y al diseño de música, la experimentación con música, y el aprendizaje de programación... Me gusta la manera en que ChucK me hace pensar, y yo estaba realmente deprimida con la programación de música antes de conocer ChucK.
 
 Rebecca Fiebrink
 
@@ -85,7 +85,7 @@ Departamento de Computación
 
 Goldsmiths, University of London
 
-Con ChucK, puedo fácilmente pensar en el flujo del tiempo y en ómo combinar múltiples capas musicales simultáneamente. Es el único lenguaje que conozco que es inherentemente contrapuntual, y es por naturaleza extraordinariamente musical (y entretenido) para programar.
+Con ChucK, puedo fácilmente pensar en el flujo del tiempo y en cómo combinar múltiples capas musicales simultáneamente. Es el único lenguaje que conozco que es inherentemente contrapuntual, y es por naturaleza extraordinariamente musical (y entretenido) para programar.
 
 Dan Trueman
 
@@ -109,7 +109,7 @@ Y ahora estamos aquí - y tú estás aquí - con un libro sobre ChucK. Pero real
 
 Para finalizar, siento una combinación de alegría (porque la gente está usando ChucK para ser creativa, expresiva y hacer música) y de perpetuvo pavor / consternación (yo sé dónde están los errores en la implementación). Esto se suma a una gran gratitud a todos quienes han valientemente programado una línea de ChucK, a quienes han creado un nuevo sonido, interacción, o una nueva pieza musical, y a todos los que quieren aprender.
 
-Así que como decimos en la tierra ChucK (donde ahora te encuentras): el tiempo es ahora. No hay mejor tiempo que el presente. 'Diviértete y haz música fantástica y alegre!
+Así que como decimos en la tierra ChucK (donde ahora te encuentras): el tiempo es ahora. No hay mejor tiempo que el presente. 'Diviértete y haz música fantástica y alegre!'
 
 En representación de mis coautores,
 
