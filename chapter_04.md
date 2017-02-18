@@ -277,13 +277,57 @@ me.dir() + "/audio/stereo_fx_01.wav" => myStereoSound.read;
 
 //y lo hace sonar por el tiempo apropiado
 //(1) ¡Nueva función / método! .length retorna la duración exacta del archivo de sonido
-myStereoSiund,length() => now;
+myStereoSound,length() => now;
 ```
 
-Observa que ya no estás usando
+Observa que ya no estás usando un objeto Pan2 para controlar la espacialización porque SndBuf2 produce una salida de dos canales. Al conectarlo directamente al dac, automáticamente ocurren las cosas correcas (izquierda a izquierda, derecha a derecha, tal como las dos salidas de Pan2).
+
+Observa tamvién que si hubieras conectado tu SndBuf2 a una unidad Gain antes del dac, el resultado hubiera sido diferente, Cuando una salida de dos canales es conectada a una entrada de un canal, los dos canales son mezclados para ajustarse a la entrada. Esto elimina cualquier efecto de espacialización en la señal stereo original, por lo que mezclar la salida de SndBuf2 generalmente anula el sentido de usar SndBuf2. Si quieres lograr esto, carga un archivo stereo en un SndBuf regular, y los dos canales serán mezclados internamente dentro del objeto SndBuf y almacenados en un arreglo mono interno.
+
+No obstante, aún puedes usar UGens Gain para controlar el campo sonoro stereo en otras maneras, como se muestra en el listado 4.7. Aquí combinamos tu conocimiento de arreglos y unidades generadoras para crear un arreglo de UGens, uno por cada canal. Usando un arreglo de twos UGens Gain, creas un control de balance stereo, que es una manera de ajustar el paneo de una señal stereo. ¿Pero cómo funciona esto?
+
+Después de hacer un SndBuf2 stereo y cargar un archivo stereo (1), haces un arreglo de dos UGens Gain, para ser usados para volumen izquierdo/derecho (2). Luego conectas el canal izquierdo de tu SndBuf2 al Gain cero (bal[0]) y luego al canal dac.left (3). Haces lo mismo con dac.right y bal[1].
+
+Listado 4.7 Paneo stereo con archivos de sonido stereo usando SndBuf2
+
+```chuck
+//Carga y paneo de archivos de sonido stereo
+//por programador ChucK, octubre 2023
+
+//
+SndBuf2 myStereoSound;
+//
+me.dir() + "/audio/stereo_fx_03.wav" => myStereoSound.read;
+
+//
+Gain bal[2];
+
+//
+mySteroSound.chan[0] => bal[0] => dac.left;
+mySteroSound.chan[1] => bal[1] => dac.right;
+
+//
+1 => myStereoSound.loop;
+
+while(true)
+{
+  //
+  Math.random2f(0.2, 1.8) => myStereoSound.rate;
+  Math.random2f(-1.0, 1.0) => float balance;
+
+  //
+  (balance + 1) / 2.0 => float rightGain;
+  1.0 - rightGain => float leftGain;
+
+  leftGain => bal[0].gain;
+  rightGain => bal[1].gain;
+
+  0.3 :: second => now;
+}
+
+```
 
 HEREIAM
-page 81
 page 82
 page 83
 page 84
@@ -296,13 +340,7 @@ page 90
 page 91
 
 
-
-
-
-
-
-
-## 4.4
+## 4.4 e
 
 ## 4.5
 
