@@ -349,10 +349,20 @@ Ahora que has adquirido muchas nuevas herramientas, las funcioens de las bibliot
 
 ## 2.4 Ejemplo: música aleatoria con dos voces y paneo
 
+Para cerrar este capítulo, harás un generador de música aleatoria usando muchas de los atractivos métodos de las bibliotecas que hemos visto. En este ejemplo, tendrás una voz solista, un oscilador tocando arriba y abajo del teclado aleatoriamente, y tendrás una voz de acompañamiento que se queda en las notas que la voz solista toca, pero una octava más grave. Además, harás paneo aleatorio de de la melodía, usando la biblioteca Math. ¡Manos a la obra!
+
+Como se muestra en el listado 2.8, primero declara y añade paneo a tu oscilador de melodía usando un objeto Pan2 (1). A continuación, haz otro oscilador para armonía y conéctalo al dac (2). Por supuesto, el dac se encarga de mezclar estas fuentes automáticamente.
+
+Después crea variables para prender y apagar tus notas (3). Como último paso de configuración, declara un número de nota MIDI para que tu melodía empiece en (4).
+
+Listado 2.8 Caminata aleatoria a dos voces con paneo
+
+
+```chuck
+```
 
 
 HEREIAM
-page 58
 page 59
 page 60
 
