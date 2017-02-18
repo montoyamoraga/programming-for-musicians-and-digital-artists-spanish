@@ -103,41 +103,73 @@ Todo calza musicalmente cuando tu nota MIDI del arreglo a[i] es convertida en fr
 Listado 3.4 Tocar una melodía almacenada en un arreglo
 
 ```chuck
-//
+//usemos un oscilador de onda cuadrada
+//(1) oscilador de onda cuadrada para la melodía
 SqrOsc s => dac;
 
-//
+//ganancias para separar nuestras notas
+//(2) ganancias de notas encendidas y apgadas
 0.7 => float onGain;
 0.0 => float offGain;
 
-//
+//declarar e inicailzar un arreglo de notas MIDI
+//(3) arreglo de notas MIDI para la melodía
 [57, 57, 64, 64, 66, 66, 64, 62, 62, 61, 61, 59, 59, 57] @=> int a[];
 
-//
+//bucle que recorre cada element del arreglo
 for (0 => int i; i < a.cap(); i++) {
+  //(4) imprime el índice y la nota del arreglo
   <<< i, a[i] >>>;
 
-  //
+  //define la frecuencia y la ganancia para prender tu nota
+  //(5) define la altura de las notas de melodía
   Std.mtof(a[i]) => s.freq;
+  //(6) encendido de la nota
   onGain => s.gain;
+  //duración de la nota encendida
   0.3 :: second => now;;
 
-  //
+  //apaga tu nota para separarla de la siguiente
+  //(8) nota apagada
   offGain => s.gain;
   0.2 :: second => now;
 }
 ```
 
+## 3.4 Grabar otros tipos de datos en un arreglo
+
+Puede que hayas notado que la versión de "Twinkle" producida por el listado 3.4 está casi completa, a excepción de algunos problemas con el tiempo. Por ejemplo, las notas correspondientes a "star" y "are" deberían ser más largas que las otras. A continuación, aprenderemos que podemos almacenar prácticamente cualquier tipo de datos en arreglos, incluyendo tipo int, float, string e incluso duration.
+
+### 3.4.1 Uso de un arreglo para almacenar datos tipo duration
+
+La melodía "Twinkle" requiere que algunas notas sean más largas que otras. Los que escriben y leen música le llaman notas negras a las duraciones de las secciones "little" y a las duraciones más largas "star", notas blancas. Estas son mostradas en notación musical en la figura 3.2.
+
+Las notas negras corresponden a un cuarto de la duración de una nota redonda, mientras que las notas blancas corresponden a dos negras, y por lo tanto, a la mitad de una redonda.
+
+Para tomar en cuenta esto en el código, puedes cambiar tu programa para que use lógica, con tal de sostener estas dos notas durante más tiempo. Si reemplazas la línea (7) del listado 3.4 con la declaración if/else del listado 3.5, entonces las dos notas serán sostenidas por el doble de tiempo. El tiempo de noteOff de 0.2 segundos es el mismo en todos los casos. Esta vez, aparte de un tiempo de noteOn de 0.8 segundos (1), hay notas blancas de un segundo. Y el tiempo de noteOn de 0.3 segundos, sumado a los 0.2 segundos de noteOff resulta en en los deseados 0.5 segundos de las notas negras (2). ¡Pruébalo y escucharás la diferencia!
+
+Listado 3.5 Nueva lógica para controlar duraciones de notas
+
+```chuck
+if (i == 6 || i == 13)
+{
+  //(1) algunas notas son más largas
+  0.8 :: second => now;
+}
+else
+{
+  //(2) el resto son más cortas
+  0.3 :: second => now;
+}
+```
+
+
 HEREIAM
-page 65
 page 66
 page 67
 page 68
 page 69
 
-## 3.4 Grabar otros tipos de datos en un arreglo
-
-### 3.4.1 Uso de un arreglo para almacenar duraciones
 
 ### 3.4.2
 
