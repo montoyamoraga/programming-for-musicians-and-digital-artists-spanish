@@ -340,10 +340,21 @@ page 90
 page 91
 
 
-## 4.4 e
+## 4.4 Ejemplo: construcción de una máquina de ritmos
 
-## 4.5
+### 4.4.1 Añadir lógica para tener distintos tambores en distintos momentos
 
-## 4.6
+### 4.4.2 Control la reproducción de los tambores usando arreglos lógicos
 
-## 4.7
+## 4.5 Una nueva herramienta matemática/musical:: el operador modulo
+
+## 4.6 Uniendo todas las partes: tu máquina de ritmos más genial hasta el momento
+
+## 4.7 Resumen
+
+Otras lecturas recomendadas
+
+* Ken Pohlmann, Principles of Digital Audio, 6th Edition (McGraw Hill, 2010).
+* Perry Cook, Real Sound Synthesis for Interactive Applications (A K Peters LTD, 2002).
+* Ken Steiglitz, A Digital Signal Processing Primer (Addison Wesley, 1996).
+* Robert Bristow-Johnson, "Wavetable Synthesis 101, A Fundamental Perspective", AES 101 Conference, 1006. Disponible en http://musicdsp.org/files/Wavetable-101.pdf.
