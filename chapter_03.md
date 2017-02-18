@@ -230,8 +230,92 @@ Listado 3.7 Un arreglo de strings (la letra de "Twinkle")
 
 ## 3.5 Ejemplo: una canción con melodía, armonía y letras
 
-HEREIAM
-page 68
-page 69
+Para finalizar este capítulo, queremos darte un ejemplo más completo de cómo hacer una composición completa usando todo lo que hemos visto hasta el momento.  Harás una versión mucho más larga de "Twinkle", usando dos arreglos de notas MIDI para melodía y armonía. Usarás un arreglo float para almacenar las duraciones de las notas. ¡También usarás un arreglo string para imprimir las letras de la canción a medida que se reproduce! Y harás paneo aleatorio de la melodía, usando la biblioteca Math. ¡Manos a la obra!
+
+En el listado 3.8, primero declaras y añades paneo a tu oscilador de melodía usando el objeto Pan2 (1). A continuación, haces otro oscilador para armonía y lo conectas al dac (2). como has aprendido, el dac se hace cargo de mezclar estas fuentes sonoras automáticamente. Luego crea unas variables gain para encender y apagar tus notas (3).
+
+A continuación, tienes el mismo arreglo de melodía con el que has trabajado (4), y haces otro arreglo para controlar el oscilador de armonía (5). Haz un arreglo dur que usarás para las duraciones (6) y otro arreglo string que contiene las palabras (7).
+
+Ten cuidado de hacer todos estos arreglos del mismo largo, ya que si no podrías encontrar errores cuando pidas el elemento [i-ésimo] si no existe porque uno de los arreglos es más corto que los otros.
+
+Continua con el mismo bucle for del último ejemplo usando la función .cap() para determinar el tamaño de los arreglos que estás usando (8). En el bloque del bucle, imprime el valor de tu variable contador i, en conjunto con los números de nota MIDI de melodía y armonía y, lo más importante, tu palabra o fragmento d epalabra correspondiente a esa nota en particular de la canción (9).
+
+Luego define las frecuencias de ambos osciladores (10), pero añade variedad para la línea melódica, usando un valor aleatorio de paneo para cada nota (11). Enciendo tus dos osciladores por medio de definir sus ganancias como la variable ya definida onGain (12); luego avanza el tiempo por medio de la lectura y uso de los valores en el arreglo durs[] (13), (14)..
+
+NOTA En el listado 3.8 usas un método de atajo (12) para configurar los valores de múltiples cosas a un valor común único. onGain => t.gain => s.gain; funciona bien, porque primero se hace ChucKing de onGain a t.gain, el que luego tiene esta valor, que se la hace después ChucKing a s.gain.
+
+Listado 3.8 ¡"Twinkle" con melodía, armonía y letras!
+
+```chuck
+//por el equipo ChucK, julio 2050
+
+//dos osciladores, melodía y armoní
+//(1) SinOsc a través de Pan2 para la melodía
+SinOsc s => Pan2 mpan => dac;
+//(2) TriOsc en el centro para la armonía
+TriOsc t => dac;
+
+//usaremos estos para separar entre notas
+//(3) ganancias para encendido y apagado
+0.5 => float onGain;
+0.0 => float offGain;
+
+//declara e inicializa los arreglos de números de notas MIDI
+//(4) arreglo de enteros para notas MIDI de melodía
+[57, 57, 64, 64, 66, 66, 64.
+62, 62, 61, 61, 59, 59, 57] @=> int melNotes[];
+//(5) arreglo enteros para notas MIDI de armonía
+[61, 61, 57, 61, 62, 62, 61,
+59, 56, 57, 52, 52, 68, 69] @=> int harmNotes[];
+
+//duraciones de notas negras y blancas
+0.5 :: second => dur q;
+1.0 :: second => dur h;
+//(6) arreglo tipo duration
+[q, q, q, q, q, q, h, q, q, q, q, q, q, h] @=> dur myDurs[];
+
+//haz otro arreglo para las palabras
+//(7) arreglo tipo string para las letras
+["Twin", "kle", "twin", "kle", "lit", "tle", "star",
+"how", ""I, "won", "der", "what", "you", "are." ] @=> string words[];
+
+//itera sobre todos los arreglos
+// (¡¡ asegúrate que tengan el mismo tamaño !!)
+//(8) toca todas las notas en el arreglo
+for (0 => int i; i < melNotes.cap(); i++)
+{
+  //imprime el índice, notas MIDI y letras de los arreglos
+  //(9) imprime datos de notas, incluyendo letras
+  <<< i, melNotes[i], harmNotes[i], words[i] >>> ;
+
+  //define melodía y armonía a partir de los arreglos
+  //(10) define la frecuencias a partir de los arreglos de notas MIDI
+  Std.mtof(melNotes[i]) => s.freq;
+  Std.mtof(harmNotes[i]) => t.freq;
+
+  //la melodía tiene un paneo aleatorio para cada nota
+  //(11) paneo aleatorio para el oscilador de melodía
+  Math.random2f(-1.0, 1.0) => mpan.pan;
+
+  //las notas están encendidas durante el 70% de la duración del arreglo
+  //(12) enciende ambos osciladores
+  onGain => s.gain => t.gain;
+  //(13) el 70% de de la duración del arreglo es tiempo encendido
+  0.7 * myDurs[i] => now;
+
+  //el espacio entre notas es el 30% del arreglo duration
+  //(13) el 30% de la duración del arreglo es tiempo apagado
+  offGain => s.gain => t.gain;
+  0.3 * myDurs[i] => now;
+}
+```
 
 ## 3.6 Resumen
+
+Los arreglos pueden hacer la vida mucho m'as simple y más organizada para ti:
+
+* Los arreglos pueden ser usados no solo para almacenar enteros; como melodías y números de notas, sino que también cualquier secuencia de números de punto flotante, como ganancias y frecuencias.
+* Los arreglos pueden ser usados para almacenar datos tipo duration y string, incluyendo palabras, instrucciones e incluso nombres de archivo, o cualquier tipo de datos - generadores unitarios, ¡prácticamente lo que sea!.
+* Puedes encontrar el tamaño de un arreglo usando el método .cap(), así que no tienes que hacer un recuento de los elementos cada vez que quieras cambiar algo.
+
+Ahora que has aprendido un poco sobre el lenguaje ChucK, podemos enfocar enuestra atención a hacer sonidos y música más ricos y realísticos. Nuestro siguiente capítulo trata de trabajo con archivos de audio (esencialmente arreglos que contienen sonido) y cómo los puedes usar y manipular para hacer aún más asombrosa tu música.
