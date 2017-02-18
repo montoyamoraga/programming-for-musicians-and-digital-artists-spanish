@@ -9,7 +9,7 @@ Este capítulo cubre:
 
 Hasta el momento solo has usado osciladores y ruido para hacer tus sonidos y composiciones. Pero hay mucho más en la composición y producción de música que estos sonidos. Existen un sinnúmero de tupos de sonidos en el mundo y en la música. En este capítulo, te mostraremos cómo usar archivos de sonido en ChucK. Los archivos de sonido, como .wav y .aif, u otros archivos que tengas en tu computador o has visto en internet, son a menudo llamados samples, por razones que verás pronto. Los samples son una manera fácil y efectiva de construir elementos sónicos y musicales con mucha variedad y realismo. Usando samples, puedes acceder una gran colección de sonidos existentes que otra gente ha grabado y sintetizado a lo largo de los años.
 
-En los sigiuentes capítulos aprenderas a sintetizar tus propios sonidos desde cero. Pero en este capítulo, usarás samples para llegar al punto que puedes crear tu propia máquina de ritmos con muchas nuevas habilidades de programación. Primero, le daremos un vistazo rápido a cómo el sonido es transformado de formas de onda en el aire a números digitales para almacenamiento y transmisión por computador, llamado sampling. Luego profundizaremos en cómo usar samples en ChucK. También revisaremos nuevas maneras de usar arreglos e introduciremos un nuevo operador matemático llamado modulo.
+En los siguientes capítulos aprenderas a sintetizar tus propios sonidos desde cero. Pero en este capítulo, usarás samples para llegar al punto que puedes crear tu propia máquina de ritmos con muchas nuevas habilidades de programación. Primero, le daremos un vistazo rápido a cómo el sonido es transformado de formas de onda en el aire a números digitales para almacenamiento y transmisión por computador, llamado sampling. Luego profundizaremos en cómo usar samples en ChucK. También revisaremos nuevas maneras de usar arreglos e introduciremos un nuevo operador matemático llamado modulo.
 
 ## 4.1 Sampling: convertir sonido en números
 
@@ -45,11 +45,63 @@ Como se muestra en la figura 4.2, recomendamos primero crear un directorio (carp
 
 Ahora que tienes configurada una estructura de archivos en tu computador que hace fácil usar archivos de sonido, puedes usar ChucK para probarla, usando samples pregrabados del toque de un tambor ubicado en el directorio audio. El listado 4.1 muestra cómo lograr justo eso, usando SndBuf, que es una nuevo UGen generador de onisod que te permite cargar y reproducir samples. Aunque lo conectes al dac tal como lo habías hecho con otros UGen hasta el moento, cuando se comparar con nuestro oscilador (SinOsc, TriOsc, entre otros) y generadores de ruido, existen un númbero de cosas sobre SndBuf que necesitas conocer para usarlo.
 
-Primero, cuando le dices a SndBuf que cargue un archivo,
+Primero, necesitas decirlea a SndBuf que cargue un archivo y de dónde, en caso contrario no emitirá ningún sonidl. Lo logras por medio de la construcción de una dirección de archivo completa y un nombre de archivo. Puedes imaginártelo como una dirección en el sistema de archivos de tu computador, tal como cuando tienes que usar el menú de navegación para cargar a tus programas documentos, hojas de cálculo, o cualquier otro tipo de archivos de tu computador. Con ChucK, mientaras tengas todo configurado de forma correcta (como se muestra en la figura 4.2), puedes cargar archivos desde el interior de programas ChucK usando solo código ChucK y sin la necesidad de menús.
+
+EScribe el código ChucK del listado 4.1 y grábalo como UsingSndBuf.ck (o cualquier otro nombre que desees; solo recuerda el nombre que usaste) en el directorio chuck que creaste previamente. El códgigo en la línea (1) le pide a ChucK que arroje la dirección completa de archivo donde se encuentra este archivo de ChucK. .me es una palabra clave. y me.dir() retorna el directorio actual donde este archivo ChucK reside. Esta es la razón por la que es importante grabar tu archivo en algún lugar del directorio chuck. Graba la dirección del archivo en un string llamado path para ser usado después. En la siguiente línea crea una nueva variable tipo string e inicialízala con el nombre del sonido que vas a reproducir; incluyendo el nombre del directorio audio donde se ubica el archivo.
+
+Luego crea otra variable tipo string llamada filename (2) para almacenar el nombre del archivo de sonido que vas a reproducir. Este nombre debe incluir el directior de audio que contiene tus archivos de sonido.  Observa que aquí usamos el símbolo + de una manera nueva, para unir las dos variables tipo string llamadas path y filename para crear un nuevo string, que luego almacenamos en la variable filename. Esta es otra característica interesante de ChucK, donde el signo más puede sumar números o unir variables string automáticamente, basado en el tipo de datos en cuestión.
+
+Listado 4.1 Carga y reproducción de archivos de sonido usando SndBuf
+
+```chuck
+//Uso de SndBuf para reproducir un archivo de sonido
+//por programador de ChucK, diciembre 2050
+SndBuf mySound => dac;
+
+//obtener la dirección del directorio
+//(1) obtiene el directorio actual de trabajo
+me.dir() => string path;
+//archivo de sonido que queremos reproducir
+"/audio/snare_01.wav" => string filename;
+
+// signo + concatena strings
+//(2) construye una dirección completa del archivo de sonido
+path + filename => filename;
+
+//indicarle a SndBuf que lea este archivo
+//(3) hacer ChucKing de un string al método .read de SndBuf causa que cargue ese archivo
+filename => mySound.read;
+
+//definir la ganancia
+0.5 => mySound.gain;
+
+//reproducir el sonido desde el princpio
+//hacer ChucKing de un número al método .pos (de posición) de un SndBuf causa que empiece a reproducirse desde esta posición en el arreglo (en este caso, desde el principio)
+0 => mySound.pos;
+
+//hacer que el tiempo transcurra para poder escuchar el sonido
+second => now;
+```
+
+NOTA No puedes usar el signo + para sumar un string y un float, incluso si el string puede parecerse a un número. Es así que "123.7" + 6.3 no es legal, pero dependiendo de si quieres que el resultado final sea string o float, puedes usar Std.atof("123.7") + 6.3 para obtener un float. Recuerda que Std.atof() convierte un string ASCII en un número de punto flotante. Puedes también usar "123.7" + Std.ftoa(6.3) (float a ASCII) para obtener un string, aunque no tenga mucho sentido, porque tendría dos puntos decimales.
+
+Una vez que has ensamblado la dirección completa del archivo, puedes hacer ChucKing a tu SndBuf usando el método .read (3), y automáticamente cargará el archivo desde el disco y lo almacenará en el arreglo interno de tu SndBuf. Si esto no funciona, por ejemplo si no se pudo encontrar el archivo porque la dirección era incorrecta o hiciste un error al escribir algo en el nombre del archivo, entonces ChucK imprimirá un eror en la ventana Console.
+
+> Formatos de archivos de sonido y extensiones de archivo
+
+> Entre los muchos tipos de formatos de archivo de audio, los más comunes son .wav (por wave o waveform, onda o forma de onda) y .aif (de audio interchange file o format, archivo o formato de intercambio de audio). SndBuf es capaz de entender estos y otros formatos. Basta con indicarle a SndBuf .read, y ChucK se encargará del resto, o arrojará un error si no es capaz de encontrar el archivo o leer el formato particular. ChucK todavía no lee archivos .mp3 comprimidos, así que si tratas de cargar uno, obtendrás un mensaje de "Format not recognized" (Formato no reconocido) en la ventana Console Monitor.
+
+Puedes definir el volumen de tu SndBuf usando el método .gain. Como recuerdas, cada UGen en Chuck obedece al método .gain, así que siempre puedes usarlo para cambiar el volumen. Finalmente, para hacer que tu SndBuf se reproduzca, usa el nuevo método .pos (de position, posición) para apuntar el puntero interno de SndBuf al primer sample, indexado como cero, tal como cualquier otro arreglo. Después de eso, basta con hacer ChucKing de una duración (en este caso 1 segundo) a now, para permitir que el tiempo pase y el sonido sea generado. SndBuf se encarga del resto, entregándole samples individuales al dac para su reproducción a través de tus parlantes o audífonos.
+
+Asumiendo que has escrito todo de forma correcta y que todos los archivos están en los lugares correctos, si haces click en el botón Add Shred en el miniAudicle, ¡deberías escuchar un gople en el tambor llamado caja (snare drum)! Haz click en el botón unas cuantas veces adicionales. Podrías incluso tocar esto en vivo como baterista en una banda. Hacer click es un poco difícil - igual que tocar un tambor exactamente en el momento indicado - pero es posible.
+
+### 4.2.2 Looping (repetición automática) de tus samples
+
+Como has visto, el objeto SndBuf tiene un número de métodos distntos para controlar sonido. Recuerda que nuestros osciladores tenían métodos .gain y .freq, y como has visto, SndVuf tiene un objeto .gain, pero no posee un método .freq. La razón de esto es que como SndBuf contiene una grabación, no tienes idea de qué frecuencia, o si incluso tiene una, contiene esta grabación. Pronto verás cómo hacer que la altura del sonido de un SndBuf aumente o disminuya.
+
+También has visto que SndBuf tiene un método .pos, que es usado para definir la ubicación donde empiezas la reproducción de un archivo, llamado la cabeza de reproducción.
 
 HEREIAM
-page 74
-page 75
 page 76
 page 77
 page 78
@@ -66,10 +118,6 @@ page 88
 page 89
 page 90
 page 91
-
-Listado 4.1
-
-### 4.2.2 Looping (repetición automática) de tus samples
 
 ### 4.2.3 Reproducción de tus samples en reversa
 
