@@ -385,8 +385,41 @@ while(true)
 Listado 4.9 Mejorando el bucle while de tu máquina de ritmos
 
 ```chuck
+//
+//
 
+//
+//
+SndBuf kick => Gain master => dac;
+SndBuf snare => master;
+
+//
+me.dir() + "/audio/kick_01.wav" => kick.read;
+me.dir() + "/audio/snare_01.wav" => snare.read;
+
+//
+0.15 :: second => dur tempo;
+
+while(true)
+{
+  for (0 => int beat; beat < 16; beat++)
+  {
+    //
+    if (beat == 0 || beat == 4 || beat == 8 || beat == 12)
+    {
+      0 => kick.pos;
+    }
+    //
+    if (beat == 4 || beat == 10 || beat == 13 || beat == 14)
+    {
+      0 => snare.pos;
+    }
+    tempo => now;
+  }
+}
 ```
+
+NOTA: Puedes cambiar los números de if (beat == N) para revisar cómo cambia el patrón en general
 
 HEREIAM
 page 84
