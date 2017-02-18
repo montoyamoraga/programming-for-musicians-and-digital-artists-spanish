@@ -437,4 +437,4 @@ PRUEBA ESTO Añade una llamada a Math.srandom() para definir la semilla de gener
 
 Harás mucho más con las funciones de las bibliotecas en el futuro, y aprenderás cómo escribir tus propias funciones desde cero (capítulo 5).
 
-El siguiente capítulo tratará sobre arrelgos, que son colecciones de datos que puedes usar para organizar tus notas, alturas, duraciones, parámetros, incluso strings de texto, o lo que sea. Una vez que sepas cómo crearlos y usarlos, serás capaz de programar canciones completas más fácilmente, escribiendo mucho menos, y también harás que tus programas sean de más fácil lectura para ti y otros usuarios.
+El siguiente capítulo tratará sobre arreglos, que son colecciones de datos que puedes usar para organizar tus notas, alturas, duraciones, parámetros, incluso strings de texto, o lo que sea. Una vez que sepas cómo crearlos y usarlos, serás capaz de programar canciones completas más fácilmente, escribiendo mucho menos, y también harás que tus programas sean de más fácil lectura para ti y otros usuarios.
