@@ -84,11 +84,31 @@ Nota sobre programar en ChucK
 
 > Ambos hacen lo mismo y arrojarán el mismo resultado (valor de retorno).
 
-Ahora,
+Ahora, usemos un bucle for para tocar muchas notas usando la función Std.mtof. El código del listado 2.1 muestra un programa que toca la escala cromática completa (cada nota del teclado musical, tanto blanca como negra) usando un oscilador de onda triangular (TriOsc). Lo logras por medio de la creación de un bucle for que va de 0 a 127 (cubriendo cada nota MIDI), almacenando este valor en la variable i. Observa que la variable i se usa como entrada (también conocido como argumento de la función) a Std.mtof() (1). Entonces la primera vez que se recorre el bucle for, la nota MIDI 0 es convertida a 8.175799 Hz, que corresponde a una nota C que es muy grave como para ser escuchada, cinco octavas bajo el C central (también conocido como C-1).
 
+Listado 2.1 Tocando una escala crómatica usando Std.mtof
+
+```chuck
+//cadena de sonido
+TriOsc t => dac;
+0.4 => t.gain;
+
+//bucle
+for (0 => int i; i < 127; i++) {
+  //(1) Usar Std.mtof para convertir de número de nota a frecuencia
+  Std.mtof(i) => float Hz;
+  //imprimir el resultado
+  <<< i, Hz >>>
+  //(2) Definir en Hz la frecuencia del oscilador
+  Hz => t.freq;
+  //Hacer avanzar el tiempo
+  200 :: ms => now;
+}
+```
+
+En la segunda iteración,
 
 HEREIAM
-page 50
 page 51
 page 52
 page 53
