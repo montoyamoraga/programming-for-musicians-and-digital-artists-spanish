@@ -271,7 +271,7 @@ Listado 2.4 Usando dac.left y dac.right para conectar a los parlantes izquierdo 
 //(1) conecta un SinOsc al canal izquierdo...
 SinOsc s => dac.left;
 //(2) ... y otro al canal derecho
-SinOsc t -> dac.right;
+SinOsc t => dac.right;
 
 //definir frecuencias
 //(3) define la frecuencia del oscilador izquierdo...
@@ -280,16 +280,72 @@ SinOsc t -> dac.right;
 361 => t.freq;
 
 //avanzar el tiempo
-second -> now;
+second => now;
 ```
 
 La segunda técnica para panear es similar, pero puede ser usada para hacer audio multicanal (como el sistema 5.1 envolvente de sonido en los cines y usados en muchos sistemas de cine casero y videojuegos). Si tienes una configuración en tu estudio con más de dos parlantes, y tienes una tarjeta multicanal de sonido o una interfaz externa que soporta más de dos canales, entonces puedes usar el método dac.chan() (chan por channel, que significa canal) para definir qué quieres reproducir en cada parlante. El siguiente listado muestra la conexión multicanal de cuatro osciladores.
 
 Listado 2.5 Usando dac.chan() para conectar a múltiples parlantes
 
+```chuck
+SinOsc s0 => dac.chan(0);
+SinOsc s1 => dac.chan(1);
+SinOsc s2 => dac.chan(2);
+SinOsc s3 => dac.chan(3);
+```
+
+El tercer método de paneo es el que más nos gusta, porque nos permite usar nuestras habilidades de programación y el poder de ChucK para lograr cosas que generalmente no podemos en programas de audio comerciales.
+
+Existe un entetenido objeto UGen llamado Pan2, que puedes insertar en la cadena de audio (entre tu fuente SinOsc y el dac), como se muestra en la figura 2.6. Hemos nombrado este objeto p, y lo puedes conectar al dac (salida de audio) (1).  Lo bueno de conectar Pan2 al dac es que ChucK sabe que son stereo, por lo que las salidas correspondientes de Pan2 son automáticamente conectadas a dac.left y dac.right. El paneo del objeto Pan2 es controlado con un número de punto flotante entre -1.0 (izquierda) y 1.0 (derecha), usando el método .pan. Como puedes ver en el siguiente listado, defines la variable panPosition como -1.0 (izquierda) (2). La posición de paneo es definida según la actualización de p.pan con el valor actual de panPosition (4). Aumentas lentamente la variable (hacia la derecha) en incrementos de .01 (5) hasta que llega a 1.0 (3). Puedes escuchar mejor este ejemplo con audífonos.
+
+Listado 2.6 Usando un objeto Pan2 para conectar un SinOsc a la salida dac stereo
+
+```chuck
+//ejemplo de paneo
+//(1) Corre el oscilador a través del objeto Pan2
+SinOsc s => Pan2 p => dac;
+
+//inicializar la posición de paneo
+//(2) define a la izquierda el paneo inicial
+-1.0 => float panPosition;
+
+//hacer un bucle para variar el paneo
+//(3) hasta que el paneo llegue a la derecha
+while (panPosition < 1.0) {
+  //(4) define la nueva posición de paneo...
+  panPosition => p.pan;
+  <<< panPosition >>>;
+  //(5) ... y la incrementa un poco
+  panPosition + 0.01 => panPosition;
+  10 :: ms => now;
+}
+```
+
+Para hacer este paneo aún más interesante, vamos a volver a la biblioteca Math y mirar otro ejemplo usando el objeto Pan2 con un nuevo objeto gnerador de sonido llamado Noise (ruido). El objeto Noise genera rudido blanco (valores aleatorios en cada punto en el tiempo e igual energía para cada frecuencia), que se aproxima mucho al sonido "sss" de "see" de la figura 1.1.
+
+Entonces, conecta la fuente Noise n al objeto de paneo Pan2 y al dac. En un bucle wihle infinito, usa un nuevo método llamado Math.sin() (seno). Este método usa una función seno para crear nuevos parámetros para el objeto de paneo. Observa cómo esto suena. El ruido blanco se mueve entre la izquierda y la derecha, adelante y atrás, en el patrón de una onda sinusoidal, para siempre. Esto puede ser una herramienta poderosa para hacer composiciones expresivas.
+
+Listado 2.7 Paneo automático usando pan2 y la función Math.sin()
+
+```chuck
+//cadena de sonido; ruido blanco a pan2 a dac
+Noise n => Pan2 p => dac;
+
+//el ruido puede sonar demasiado fuerte
+0.2 => n.gain;
+
+//bucle infinito
+while (true) {
+  //oscila el paneo entre -1.0 y 1.0
+  Math.sin(now/second) => p.pan;
+  //hazlo muy a menudo, para hacerlo más suave
+  ms => now;
+}
+```
+
+Existen otras 
 
 HEREIAM
-page 57
 page 58
 page 59
 page 60
