@@ -294,19 +294,22 @@ Listado 4.7 Paneo stereo con archivos de sonido stereo usando SndBuf2
 //Carga y paneo de archivos de sonido stereo
 //por programador ChucK, octubre 2023
 
-//
+//declara y carga un archivo stereo
 SndBuf2 myStereoSound;
-//
+//(1) Crea un archivo SndBuf2 streo y carga un archivo stereo
 me.dir() + "/audio/stereo_fx_03.wav" => myStereoSound.read;
 
-//
+//usaremos estos para paneo en stereo
+//(2) Hace un arreglo de Ugens Gain para control stereo de volumen
 Gain bal[2];
 
-//
+//conecta todo en stereo
+//(3) Conecta el izquierod al izquierdo y el derecho en el derecho
 mySteroSound.chan[0] => bal[0] => dac.left;
 mySteroSound.chan[1] => bal[1] => dac.right;
 
-//
+//configura nuestro archivo para que se repita para siempre
+//(4) Repite automáticamente
 1 => myStereoSound.loop;
 
 while(true)
