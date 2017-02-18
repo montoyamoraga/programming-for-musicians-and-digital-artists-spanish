@@ -185,11 +185,104 @@ numSamples :: samp => now;
 
 ### 4.2.4 Manejo de múltiples samples a la vez
 
-La habilidad final a aprender en esta sección es cómo reproducir múltiples SndBuf al mismo timepo. Existen dos maneras para hacerlo, dpendiendo de cuán largos sean tus sonidos y cuáles sean tus necesidades de composición. Una forma es usar solo un SndBuf y volver a cargar los diferentes sonidos. Digamos que tienes tres diferentes grabaciones de cajas, y quieres intercambiarlas durante una composición. Puedes hacerlo con un arreglo de strings para almacenar las direcciones de los archivos y nombres (1), como se muestra en el listado 4.4. Ahora en cualquier momento puedes acceder a las direcciones de los archivos de sonido y cargarlos en memoria en cualquier punto durante el programa.
+La habilidad final a aprender en esta sección es cómo reproducir múltiples SndBuf al mismo timepo. Existen dos maneras para hacerlo, dpendiendo de cuán largos sean tus sonidos y cuáles sean tus necesidades de composición. Una forma es usar solo un SndBuf y volver a cargar los diferentes sonidos. Digamos que tienes tres diferentes grabaciones de cajas, y quieres intercambiarlas durante una composición. Puedes hacerlo con un arreglo de strings para almacenar las direcciones de los archivos y nombres (1), como se muestra en el listado 4.4. Ahora en cualquier momento puedes acceder a las direcciones de los archivos de sonido y cargarlos en memoria en cualquier punto durante el programa. Como un ejemplo simple aquí, en un bucle infinito, generas un número aleatorio (2) y lo usas para decidir cuál archivo será cargado y reproducido (3).
+
+Observa aquí que lo que estás haciendo es levemento distinto para reproducir estos archivos, ya que no tienes que explícitamente definir el puntero .pos a cero. Dentro de SndBuf, cuando se carga un archivo automáticamente se define el puntero .pos a cero y la tasa .rate a 1.0. Entonces, todos los archivos de sonido se reproducirán automáticametne una vez que son cargados, siempre y cuando el tiempo avance.
+
+Listado 4.4 Reproduccion de distintos archivos de sonido usando un SndBuf
+
+```chuck
+//Reproduce múltiples sonidos
+//por programador de ChucK, julio 2023
+SndBuf snare => dac;
+
+//construye y puebla un arreglo de direcciones de archivos de sonido + nombres
+//(1) Crea y puebla un arreglo de nombres de archivos de sonido
+string snare_samples[3];
+me.dir() + "/audio/snare_01.wav" => snare_samples[0];
+me.dir() + "/audio/snare_02.wav" => snare_samples[1];
+me.dir() + "/audio/snare_03.wav" => snare_samples[2];
+
+//bulce infinito
+while (true)
+{
+  //escoge un número aleatorio entre 0 y el número de archivos - 1
+  //(2) Escoge un número aleatorio entre 0 y 2
+  Math.random2(0, snare_samples.cap() - 1) => int which;
+
+  //carga ese archivo
+  //(3) Carga el archivo aleatorio asociado
+  snare_samples[which] => snare.read;
+
+  //Deja que el tiempo transcurra para la reproducción
+  0.5 :: second => now;
+}
+```
+
+El método del listado 4.4 puede funcionar sin problemas, pero también puede causar clicks si otros procesos de tu computador se interponen en la carga de los archivos siendo cargados a tiempo y reproducidos o si los archivos son muy largos. Existe una mejor manera. ¿Reucerdas cuando en el capítulo 3 dijimos que podías hacer arreglos para almacenar cualquier tipo de datos? Aquí usaremos esto para declarar un arreglo de SndBufs (1) y precargarlos con diferentes archivos de sonido (2), como se muestra en el siguiente listado. De esta forma, todos los archivos de sonido son cargados antes de que entres al bucle principal, y puedes evitar clicks evitando cargar los archivos mientras algún sonido esté en reproducción
+
+Listado 4.5 Reproducción de distintos archivos de sonido (método 2) usando múltiples SndBufs
+
+```chuck
+//Reproducción de múltiples sonidos (método 2)
+//por programador ChucK, agosto 2023
+//(1) Declara un arreglo de thres SndBufs
+SndBuf snare[3];
+
+//por diversión, hagamos paneo a izquierda, centro y derecha
+snare[0] => dac.left;
+snare[1] => dac;
+snare[2] => dac.right;
+
+//precarga todos los archivos de sonido al principio
+//(2) Carga los tres sonidos diferentes
+me.dir() + "/audio/snare_01.wav" => snare[0].read;
+me.dir() + "/audio/snare_02.wav" => snare[1].read;
+me.dir() + "/audio/snare_03.wav" => snare[2].read;
+
+//bucle infinito
+while (true)
+{
+  //escoge un número aleatorio entre 0 y número de archivos - 1
+  Math.random2(0, snare.cap() - 1) => int which;
+
+  //Reproduce ese sonido
+  0 => snare[which].pos;
+
+  //Permite que suene
+  0.5 :: second => now;
+}
+```
+
+Puedes haber notado que los resultados sonoros del código del listado 4.5 son los mismos que los del listado 4.4 Esto es común en la programación, donde, tanto con los bucles for como while, viste que existen múltiples maneras de obtener los mismos resultados. Sin embargo, existen casos donde el método del listado 4.5 puede no ser el deseado. Un ejemplo puede ser si estás usando archivos de sonido muy grandes (como canciones completas, que no recomendamos por el momento) o si estás corriendo ChucK en una máquina con poca RAM. ChucK core en algunas máquinas muy pequeñas, como Macs y PCs muy antiguos, e incluso en Raspberry Pi, un computador Linux muy barato y pequeño. En casos como este, precargar todos los archivos que necesitas podría ser imposible. Podrías quedarte sin memoria, antes de que todo sea cargado. ¡Pero ahora conoces ambos métodos y puedes escoger cuál usar!
+
+Hemos visto cómo usar Pan2 (listado 4.2) y cómo lograr paneo extremo - conexión directa a la izquierda, centro y derecha, como se muestra en el listado 4.5 - para obtener efectos stereo usando SndBuf. ¿Pero qué ocurre con archivos stereo? ¡No hay problema! Sigue leyendo.
+
+## 4.3 Archivos de sonido stereo y reproducción
+
+El código que hemos visto hasta el momento trata los archivos de sample como si fueran de un solo canal, o mono (abreviación de monoaural, lo que significa "un oído"). No obstante, tienes dos oídos y usualmente escuchas sonidos y música usando dos parlantes o audífonos con dos casos. Recuerda que ya has estado usando un generador unitario Pan2 para mover ruido entre tus parlantes o audífonos izquierdos y derechos. Ahora vas a querer ser capaz de usar archivos de sonido stereo, de dos canales. Los archivos de sonido stereo, en un sentido, vienen pre-espacializados, así que no necesitas usar Pan2 para ubicarlos en el campo espacial sonoro. Un archivo stereo bien producido tendrá un sentido de espacio más auténtico que lo que puede lograrse con un archivo mono procesado por Pan2. Eso sí, es más difícil cambiar la espacialización una vez que el archivo ha sido grabado, haciendo que los ajustes de paneo dinámicamente sean mucho más difíciles con código.
+
+La carga de archivos de sonido stereo en ChucK es casi lo mismo que con archicos mono, pero en vez de usar SndBuf usas SndBuf2, como se muestra en el listado 4.6. La añadidura del 2 en el nombre indica que la unidad generadora es stereo, esto es, tiene dos canales de salida. Todo debería ser bastante standard hasta ahora, excepto por una nueva función/método que usas (1), para obtener una duración para avanzar el tiempo. EL método .length() de SndBuf y SndBuf2 retorna una duración que es exactamente igual al tiempo requerido para reproducir ese archivo. Entonces, puedes usarlo para preguntarle a SndBuf2 cuánto tiempo sonar y hacer ChucKing de esto inmediatamente a now.
+
+Listado 4.6 Carga y reproducción de archivos de sonido stereo usando SndBuf2
+
+```chuck
+//
+//
+//
+SndBuf2 myStereoSound => dac;
+
+//
+//
+me.dir() + "/audio/stereo_fx_01.wav" => myStereoSound.read;
+
+//
+myStereoSiund,length() => now;
+```
+
+Observa que ya no estás usando
 
 HEREIAM
-page 79
-page 80
 page 81
 page 82
 page 83
@@ -202,12 +295,12 @@ page 89
 page 90
 page 91
 
-Listado 4.4 Reproduccion de distintos archivos de sonido con un solo SndBuf
 
 
 
 
-## 4.3 Archivos de sonido stereo y reproducción
+
+
 
 ## 4.4
 
