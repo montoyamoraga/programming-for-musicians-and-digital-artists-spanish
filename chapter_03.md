@@ -163,9 +163,47 @@ else
 }
 ```
 
+También hemos dicho que los arreglos pueden almacenar cualquier tipo de datos, lo que es realmente poderoso para hacer música o cualquier tipo de programación en general. Si piensas en todas las cosas que te gustarían manipular para hacer una cacnión, podrías tener en tu lista altura, duración, volumen entre otros (¡incluso letras!). Podrías guardar cualquiera de estos o todos en arreglos.
+
+Almacenemos tus duraciones de notas en un arreglo, como se muestra en el listado 3.6. Aquí realizas la misma configuración del listado 3.4. Primero declaras y conectas el oscilador de onda cuadrada (1). Luego declaras e inicializas las ganancias para noteOn y noteOff (2) y creas tu arreglo de notas MIDI (3) (ahora se lama myNote, según tu aprendizaje de que las variables tienen que tener nombres con sentido). Declaras dos variables de tipo duración, una para las notas negras llamada q (de quarter note, su nombre en inglés) (4) y una para las notas blancas llamada h (de half note, su nombre en inglés) (5). Luego usas esos nombres cortos de variables para declarar e inicializar un arreglo de duraciones llamado myDurs (6).
+
+Una vez que todo ha sido declarado, puedes introducir un bucle for para tocar tu canción, accediendo al arreglo de notas de la misma manera (8), encendiendo cada nota usando la variable onGain que declaraste (9). Pero ahora puedes usar tu arreglo myDurs para tocar cada nota según la duración correcta mediante hacer ChucKing de la duración apropiada a now (10). Después de que el tiempo pasa, apagas cada nota (11) y haces ChucK de tu duración de apagado a now. Repites para cada nota; luego el bucle termina cuando tu variable contador i alcanza el tamaño de tu arreglo de notas myNotes.cap() (7).
+
+Listado 3.6 Almacenammiento de duraciones en un arreglo
+
+```chuck
+//
+SqrOsc s => dac;
+
+//
+0.7 => float onGain;
+0.0 => float offGain;
+
+//
+[57, 57, 64, 64, 66, 66, 64, 62, 62, 61, 61, 59, 59, 57] @=> int myNotes[];
+
+//
+0.3 :: second => dur q;
+0.8 :: second => dur h;
+
+[q, q, q, q, q, q, h, q, q, q, q, q, q, h] @=> dur myDurs[];
+
+//
+for (0 => int i; i < myNotes.cap(); i++) {
+  Std.mtof(myNotes[i]) => s.freq;
+  onGain => s.gain;
+  myDurs[i] => now;
+
+  //
+  offGain => s.gain;
+  0.2 :: second => now;
+}
+```
+
+
+### 3.4.2 Arreglos de strings: el texto también puede ser musical
 
 HEREIAM
-page 66
 page 67
 page 68
 page 69
