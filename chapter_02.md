@@ -260,10 +260,35 @@ Existen otras funciones de Math, incluyendo logaritmos, exponentes y trigonometr
 
 ## 2.3 Stereo y paneo
 
+Tomemos un descanso de las matemáticas (pero solo uno breve, porque usaremos una función Math muy pront) para revisar uan técnica de audio entretenida conocida como paneo (panning). Paneo viene de la palabra panorama, lo que significa una "vista de una región que rodea a un observador". En audio, el paneo es una manera en que los mezcladores de audio ubican el sonido en el campo stereo entre los parlantes izquierdo y derecho. En la música moderna y la producción de sonido, muchas de las fuentes sonoras son grabadas en diferentes canales y a menudo en momentos y ubicaciones distintos. El mezclador (tanto el dispositivo llamado mezclador como la persona que lo opera) tiene que combinar los elementos de forma artificial para crear un sentido de espacio. Como se muestra en la figura 2.2, cuando se mezcla una canción, los ingenieros de audio a menudo ubican distintos elementos en regiones discretas (por ejemplo, los vientos a la izquierda y la guitarra más a la derecha).
+
+Vamos a presentar tres métodos (mostrados en los listados, 2.4, 2.5 y 2.6) que puedes usar para hacer paneo en ChucK, y te otorgarán más parámetros para componer. El primer ejemplo muestra dos osciladores, uno siendo paneado fuertemente al parlante izquierdo y el otro al parlante derecho (o audífono izquierdo y derecho) usando dac.left (1) y dac.right (2) (left significa izquierda, right signfica derecha). ¡Exacto! el dac tiene algunas funciones extra escondidas, entre ellas la conexión a distintos canales de audio. Cuando ejecutas este ejemplo, escucharás dos tonos sinusoidales que son distintos en altura (3), (4) en cada lado de tu campo stereo (una sinusoide a la izquierda y otra a la derecha).
+
+Listado 2.4 Usando dac.left y dac.right para conectar a los parlantes izquierdo y derecho.
+
+```chuck
+//dos ondas sinusoidales en stereo
+//(1) conecta un SinOsc al canal izquierdo...
+SinOsc s => dac.left;
+//(2) ... y otro al canal derecho
+SinOsc t -> dac.right;
+
+//definir frecuencias
+//(3) define la frecuencia del oscilador izquierdo...
+220 => s.freq;
+//(4) ... y la frecuencia del derecho a una distinta
+361 => t.freq;
+
+//avanzar el tiempo
+second -> now;
+```
+
+La segunda técnica para panear es similar, pero puede ser usada para hacer audio multicanal (como el sistema 5.1 envolvente de sonido en los cines y usados en muchos sistemas de cine casero y videojuegos). Si tienes una configuración en tu estudio con más de dos parlantes, y tienes una tarjeta multicanal de sonido o una interfaz externa que soporta más de dos canales, entonces puedes usar el método dac.chan() (chan por channel, que significa canal) para definir qué quieres reproducir en cada parlante. El siguiente listado muestra la conexión multicanal de cuatro osciladores.
+
+Listado 2.5 Usando dac.chan() para conectar a múltiples parlantes
 
 
 HEREIAM
-page 56
 page 57
 page 58
 page 59
