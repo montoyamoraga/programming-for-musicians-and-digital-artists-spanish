@@ -350,7 +350,30 @@ Listado 4.8 Construir una máquina de ritmos con SndBufs en ChucK
 
 ```chuck
 //
+//
+
+//
+//
+SndBuf kick => Gain master => dac;
+SndBuf snare => master;
+
+//
+me.dir() + "/audio/kick_01.wav" => kick.read;
+me.dir() + "/audio/snare_01.wav" => snare.read;
+
+while(true)
+{
+  //
+  0 => kick.pos;
+  0.6 :: second => now;
+
+  //
+  0 => kick.pos;
+  0 => snare.pos;
+  0.6 :: second => now;
+}
 ```
+### 4.4.1 Añadir lógica para tener distintos tambores en distintos momentos
 
 HEREIAM
 page 83
@@ -363,7 +386,7 @@ page 89
 page 90
 page 91
 
-### 4.4.1 Añadir lógica para tener distintos tambores en distintos momentos
+
 
 ### 4.4.2 Control la reproducción de los tambores usando arreglos lógicos
 
