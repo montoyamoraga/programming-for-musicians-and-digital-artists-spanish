@@ -171,10 +171,19 @@ Tabla 2.1 Funciones de la biblioteca Standard de ChucK para convertir datos de t
 | Std.itoa(int)    | string    | Convierte int en ASCII (string)   |
 | Std.ftoa(float)  | string    | Convierte float en ASCII (string) |
 
+Existen más funciones útiles de la biblioteca Std, cuyo listado y descripción completos se encuentra en el apéndice B, incluyendo los de calcular el valor absoluto de números (la función valor absoluta retorna números negativos como positivos, y no altera los números positivos) y retorna el signo, negativo o positivo, de los números
+
+Standard no es la única biblioteca disponible en ChucK, así que dejémosla por ahora y continuemos con otra biblioteca muy útil, llamada Math
+
+## 2.2 La biblioteca Math de ChucK
+
+¿Recuerdas cuán entretenido era cuando usabas Math.random() para definir las frecuencias y duraciones de notas en un bucle infinito? En las siguientes subsecciones, profundizaremos en otra biblioteca, conocida como Math, que tiene un gran número de funciones útiles que te permitirán hacer que tus programas sean mucho más poderosos y expresivos.
+
+### 2.2.1 Funciones random de la biblitoeca Math
+
 
 
 HEREIAM
-page 52
 page 53
 page 54
 page 55
@@ -183,8 +192,6 @@ page 57
 page 58
 page 59
 page 60
-
-## 2.2
 
 ## 2.3
 
