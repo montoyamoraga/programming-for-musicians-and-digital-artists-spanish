@@ -94,8 +94,41 @@ Puedes estar preguntándote ahora. "¿Que pasa si cambio el tamaño del arreglo 
 
 ## 3.3 Usar datos de arreglos para tocar una melodía
 
+Ya sabes cómo crear y llenar arrglos, así que ahora finalmente puedes usar tu arreglo para controlar sonido, tocando la melodía que has guardado. Empiezas en el listado 3.4 declarando y conectando un SqrOsc como la fuente de tu cadena de señal de audio (1). Luego defines algunas ganancias para encender y apagar tus notas (0.7 para encendido y 0.0 para apagado) (2). Luego declaras e inicializas un arreglo tal como lo hiciste antes, pero esta vez tienes más datos (¡más notas para tu canción!) (3).
+
+Es hora de un nuevo método: a.cap() (cap por capacity, capacidad), que retorna el tamaño del arreglo a[]. En este caso el tamaño es 14. Puedes entonces usar este número en un bucle for para iterar sobre cada elemento en el arreglo a[]. Imprimes el valor del índice i y los contenidos del arreglo en ese índice a[i] (4). Observa que cuando ejecutas el código, se corresponde con el dibujo del arreglo de la figura 3.1.
+
+Todo calza musicalmente cuando tu nota MIDI del arreglo a[i] es convertida en frecuencia con el método Std.mtof() (5). Después de eso, es el método standard de tocar notas: definir la ganancia a un número distinto de cero (6), avanzar el tiempo (7), y apagar la nota por un momento (8) antes de volver y tocar la siguiente nota. Esto termina cuando i llega a 14 y no quedan más notas que tocar.
+
+Listado 3.4 Tocar una melodía almacenada en un arreglo
+
+```chuck
+//
+SqrOsc s => dac;
+
+//
+0.7 => float onGain;
+0.0 => float offGain;
+
+//
+[57, 57, 64, 64, 66, 66, 64, 62, 62, 61, 61, 59, 59, 57] @=> int a[];
+
+//
+for (0 => int i; i < a.cap(); i++) {
+  <<< i, a[i] >>>;
+
+  //
+  Std.mtof(a[i]) => s.freq;
+  onGain => s.gain;
+  0.3 :: second => now;;
+
+  //
+  offGain => s.gain;
+  0.2 :: second => now;
+}
+```
+
 HEREIAM
-page 64
 page 65
 page 66
 page 67
