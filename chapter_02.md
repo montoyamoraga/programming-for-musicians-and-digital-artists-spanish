@@ -106,7 +106,29 @@ for (0 => int i; i < 127; i++) {
 }
 ```
 
-En la segunda iteración,
+En la segunda iteración, la nota MIDI 1 es convertida a 8.661597 Hz. Cada vez que se ejecuta el bucle, el programa imprime el valor de la nota MIDI correspondiente y el valor convertido a frecuencia en Hz. El valor de frecuencia es ChucKed a t.freq (2) en cada iteración para que escuches la escala. En la tercera iteración, la nota MIDI 2 se convierte en 9.177024 Hz. No serás capaz de escuchar muchas de las primeras notas graves, porque son muy bajas en frecuencia como para ser posibles de reproducir con tus parlantes. Incluso cuando empieces a escuchar o sentir el sonido, tus oídos no serán capaces de percibir una altura en las frecuencias muy graves.
+
+PRUEBA ESTO Corre el código del listado 2.1 varias veces, y trata de determinar la frecuencia más grave que puedes escuchar. Prueba con parlantes y con audífonos. ¿En qué frecuencia realmente empiezas a escuchar alturas en vez de solo sentir el sonido? El oído humano es más sensible a ciertos rangos de frecuencias que otros. ¿Cuál es la frecuencia que escuchas a mayor volumen?
+
+PRUEBA ESTO Reescribe el bucle for para tocar la escala cromática, usando un bucle tipo while. ¡Recuerda incrementar el contador dentro del bucle!
+
+Como puedes imaginar, en adelante el método Std.mtof() va a jugar un gran rol en la creación de melodías. Es también posible ir en la otra dirección y usar el método Std.ftom() para convertir frecuencias en notas MIDI. Esto puede resultar útil si tú tienes alguna frecuencia particular y quieres saber la nota musical más cercana a ella, or si estás utilizando un sintetizador externo de software o hardware que acepta notas MIDI. Aprenderás sobre cómo enviar notas MIDI a sintetizadores y otros dispositivos conectados a tu computador en el capítulo 11.
+
+NOTA PARA MÚSICOS Std.mtof() puede también aceptar valores de punto flotante para ayudarte con escalas microtonales y alturas, con lo que Std.mtof(60.5) resulta en un cuarto de tono entre C y C#.
+
+### 2.1.2 Convirtiendo entre tipos de datos: float a int
+
+El siguiente método de la bilbioteca Standard te permitirá convertir números de punto flotante en enteros. Cuando te empezaste a dar cuenta que necesitabas números de punto flotante para expresar de forma precisa frecuencias y ganancias, es posible que hayas escrito alguna línea que arrojara un error porque estabas tratando de almacenar una variable tipo float en otra tipo int. El ejemplo más simple de esto es
+
+```chuck
+220.0 => int myFreq;
+```
+
+que arroja un error que es impreso en la ventana Console Monitor:
+
+```chuck
+line(1): cannto resolve operator "=>" on types 'float' and 'int'...
+```
 
 HEREIAM
 page 51
