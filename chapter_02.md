@@ -56,13 +56,13 @@ El número en los paréntesis (57 en este caso) es llamado el argumento de la fu
 
 Ahora prueba escribiendo
 
-> ```chuck
+```chuck
 <<< Std.mtof(60), Std.mtof(62), Std.mtof(64), Std.mtof(65), Std.mtof(67)>>>;
 ```
 
 lo que debería arrojar lo siguiente en la ventana Console:
 
-> ```chuck
+```chuck
 261.625565 293.664768 329.627557 349.228231 391.995436
 ```
 
@@ -72,13 +72,13 @@ Nota sobre programar en ChucK
 
 > Tal como en el resto de la programación de computadores, existen múltiples maneras de lograr el mismo resultado. Las funciones de ChucK pueden ser usadas de dos maneras distintas: llamándolas con paréntesis y un argumento, como
 
-```chuck
+> ```chuck
 <<< Std.mtof(64) >>>;
 ```
 
 > o haciendo ChucKing del argumento a la función:
 
-```chuck
+> ```chuck
 <<< 64 => Std.mtof >>>;
 ```
 
@@ -88,7 +88,6 @@ Ahora,
 
 
 HEREIAM
-page 49
 page 50
 page 51
 page 52
