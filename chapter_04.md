@@ -342,7 +342,15 @@ Como viste anteriormente cuando precargabas un arrego de UGens SndBuff, los arre
 
 ## 4.4 Ejemplo: construcción de una máquina de ritmos
 
-Ahora que
+Ahora que has visto formas de usar reproducción de samples en ChucK, combinemos todo esto para hacer una máquina de ritmos que haga bailar, con múltiples archivos de sonido. Empezemos con el bombo (kick drum, tambor en un set de batería tocado con un pedal) y una caja (snare drum), conectados al dac (1), a través de un mezclador UGen Gain que llamaremos master, como se muestra en el listado 4.8. El objeto UGen Gain te permite hacer un control de ganancia en cualquier parte de tu cadena de audio, en este caso antes de la salida al dac, para que puedas controlar el volumen de tu composición completa por medio de modificar master.gain. Podrías recordar que todos los UGens permiten control de ganancia, pero también proveen un punto de conexión para mezclar múltiples fuentes y otras funcioens que aprenderás más adelante.
+
+Una vez que has creado y conectado en tu código, solo necesitarás conectar nuevos SndBufs adicionales al UGen Gain master (2). Esto es porque ya has conectado el Gain master al dac. Después de conecetar tus Sndbufs, puedes cargarlos con los archivos de sonido adecuados (3). Luego entras al bucle infinito y tocas el bombo (0 => kick.pos) por sí mismo en el tiempo 1 (4), y luego tocas ambos tambores juntos en el tiempo 2 (5), por medio de hacer ChucKing de 0 a tanto kick.pos como snare.pos.
+
+Listado 4.8 Construir una máquina de ritmos con SndBufs en ChucK
+
+```chuck
+//
+```
 
 HEREIAM
 page 83
