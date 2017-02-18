@@ -130,8 +130,50 @@ que arroja un error que es impreso en la ventana Console Monitor:
 line(1): cannto resolve operator "=>" on types 'float' and 'int'...
 ```
 
+Esto es ChucK protegiéndote de una forma, al decirte que podrías estar perdiendo en la conversión de número flotante a entero. Un ejemplo de esto sería
+
+```chuck
+220.5 => int myInt;
+```
+
+donde la parte .5 sería desechada sin que te dieras cuenta. Es por esto que ChucK se niega a hacerlo e imprime un error. ChucK como lenguaje es de tipado fuerte, lo que significa que los tipos de datos son mantenidos con relativa pureza, y convertir de uno a otro puede requerir un poco de trabajo de tu parte. Interesantemente, convertir un int a un float no requiere trabajo, porque no se pierdan datos en el proceso. Entonces
+
+```chuck
+220 => float myFloatFreq;
+```
+
+sí funciona, porque 220 es cambiado a 220.0, no se pierden datos, y de hecho se gana precisión, para uso posterior.
+
+Ir en dirección contraria, de float a int, requiere lo que se llaama una conversión o casteo de tipo, lo que significa tomar datos de un tipo y castearlos en otro de la mejor forma posible en otro tipo de datos. La más común que necesitarás como programador de ChucK es ir de float a int, lo que se logra usando la función Std.ftoi (float to integer, de punto flotante a entero) de la siguiente forma:
+
+```chuck
+220.5 => Std.ftoi => int myFreq; (o también Std.ftoi(220.5) => int myFreq;)
+```
+
+Nota que en este caso, la parte fraccional es truncada (desechada), resultando en 220. Incluso si especificaras
+
+```chuck
+Std.ftoi(220.999999999) => int myFreq;
+```
+
+también obtendrías 220, porque toda parte fraccional es desechada.
+
+### 2.1.3 Obteniendo un entero a partir de un número expresado como texto
+
+Otro ejemplo de conversión de tipo de datos podría ser si tuvieras una variable string con valor "128.7", y lo quisieras usar como float para definir una frecuencia u otra cosa. Muchos programs aceptan entradas del usuario mediante la escritura de la información en el computador, y ChucK también puede leer datos de tu computador, algunos de los que podrían contener texto. Afortunadamente, existen también métodos de la biblioteca Std para convertir strings (conocidos también como ASCII, de donde proviene la a de la función atoi) a y en enteros y números de punto flotante. Para hacerlo usa Std.atoi("128.7"); como se muestra en la tabla 2.1
+
+Tabla 2.1 Funciones de la biblioteca Standard de ChucK para convertir datos de tipo string, float e int
+
+| Método           | Resultado | Descripción                       |
+| :--------------  | :-------- | :-------------------------------- |
+| Std.atoi(string) | int       | Convierte ASCII (string) en int   |
+| Std.atof(string) | float     | Convierte ASCII (string) en float |
+| Std.itoa(int)    | string    | Convierte int en ASCII (string)   |
+| Std.ftoa(float)  | string    | Convierte float en ASCII (string) |
+
+
+
 HEREIAM
-page 51
 page 52
 page 53
 page 54
