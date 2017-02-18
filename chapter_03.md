@@ -163,7 +163,7 @@ else
 }
 ```
 
-También hemos dicho que los arreglos pueden almacenar cualquier tipo de datos, lo que es realmente poderoso para hacer música o cualquier tipo de programación en general. Si piensas en todas las cosas que te gustarían manipular para hacer una cacnión, podrías tener en tu lista altura, duración, volumen entre otros (¡incluso letras!). Podrías guardar cualquiera de estos o todos en arreglos.
+También hemos dicho que los arreglos pueden almacenar cualquier tipo de datos, lo que es realmente poderoso para hacer música o cualquier tipo de programación en general. Si piensas en todas las cosas que te gustarían manipular para hacer una canción, podrías tener en tu lista altura, duración, volumen entre otros (¡incluso letras!). Podrías guardar cualquiera de estos o todos en arreglos.
 
 Almacenemos tus duraciones de notas en un arreglo, como se muestra en el listado 3.6. Aquí realizas la misma configuración del listado 3.4. Primero declaras y conectas el oscilador de onda cuadrada (1). Luego declaras e inicializas las ganancias para noteOn y noteOff (2) y creas tu arreglo de notas MIDI (3) (ahora se lama myNote, según tu aprendizaje de que las variables tienen que tener nombres con sentido). Declaras dos variables de tipo duración, una para las notas negras llamada q (de quarter note, su nombre en inglés) (4) y una para las notas blancas llamada h (de half note, su nombre en inglés) (5). Luego usas esos nombres cortos de variables para declarar e inicializar un arreglo de duraciones llamado myDurs (6).
 
@@ -172,34 +172,43 @@ Una vez que todo ha sido declarado, puedes introducir un bucle for para tocar tu
 Listado 3.6 Almacenammiento de duraciones en un arreglo
 
 ```chuck
-//
+//Hagamos Twinkle con una onda cuadrada
+//(1) Oscilador de onda cuadrada para melodía
 SqrOsc s => dac;
 
-//
+//ganancias para separar nuestras notas
+//(2) Ganancias de encendido y apagado
 0.7 => float onGain;
 0.0 => float offGain;
 
-//
+//declarar e inicializar arreglo de notas MIDI
+//(3) Arreglo de notas MIDI (int) para melodía
 [57, 57, 64, 64, 66, 66, 64, 62, 62, 61, 61, 59, 59, 57] @=> int myNotes[];
 
-//
+//duraciones de notas negras y blancas
+//(4) Duración de notas negras
 0.3 :: second => dur q;
+//(5) Duración de notas blancas
 0.8 :: second => dur h;
-
+//(6) Arreglo de duraciones para notas de la melodía
 [q, q, q, q, q, q, h, q, q, q, q, q, q, h] @=> dur myDurs[];
 
-//
+//bucle de duración del arreglo
+//(7) El bucle for itera sobre el arreglo de notas
 for (0 => int i; i < myNotes.cap(); i++) {
+  //(8) Define la altura de las notas de la melodía
   Std.mtof(myNotes[i]) => s.freq;
+  //(9) Enciende la nota
   onGain => s.gain;
+  //(10) Trasncurre el tiempo según la duración en el arreglo para esa nota
   myDurs[i] => now;
 
-  //
+  //apaga nuestra nota para separarla de la siguiente
+  //(11) Apaga la nota
   offGain => s.gain;
   0.2 :: second => now;
 }
 ```
-
 
 ### 3.4.2 Arreglos de strings: el texto también puede ser musical
 
