@@ -233,23 +233,42 @@ for (0 => int i; i < 16; i++) {
   //(6) Deja que cada note suene durante 1/5 de segundo
   0.2 :: second => now;
 }
-
 ```
 
 Los generadores de números aleatorios te permite escribir programas musicales que nunca sonarán exactamente iguales, pero puedes hacerlo de una manera bastante controlable, lo que puede ser una técnica atractiva pra un compositor moderno. Existe una manera de asegurarse que una secuencia de números aleatorios sea siempre la misma pero diferente de todas las otras secuencias. Imaginemos que que no quieres escribir cuáles son las notas específicas, y quieres que sean generadas aleatoriamente, pero quieres que tu composición sea siempre la misma cada vez que la ejecutas. ¿Cómo lograr esto?
 
+La clave para controlar la generación de números aleatorias, además de especificar el rango, es generando una semilla, que el generador de números aleatorios sua para empezar la secuencia de números aleatorios que generará a partir de entonces. Típicamente la semilla es creada usando algo que está cambiando constantemente, como el reloj del sistema de tu computador. Entonces, cada vez que corres el programa del listado 2.3, una semilla diferente es generada y el programa genera un conjunto completamente nuevo de notas y volúmenes. Pero si empiezas con la misma semilla te aseguras que la secuencia de números aleatorios sea siempre la misma a lo largo de distintas ejecuciones del mismo programa. ¿Entonces cómo puedes definir tú mismo la semilla? Escribe la siguiente línea de código e insértala en el listado 2.3, justo antes del bucle for en (1):
+
+```chuck
+//define la semilla (seed)
+Math.srandom(134);
+```
+
+El número 134 en este ejemplo fue escogido de forma arbitraria. Prueba jugando con el valor de la semilla. Cámbialo a 133 y observa qué sucede. De forma contraria a lo que podrías pensar, cambiar la semilla solo un poco no genera cambios sutiles en la secuencia. Cada valor de semilla genera una secuencia completamente distinta, sin relación a ninguna otra.
+
+PRUEBA ESTO Cambia el valor de la semilla en Math.srandom a unos pocos números distintos, y observa lo que le hace a tu composición. DEberías escuchar un patrón particular para cada valor de semilla pero distinto para cada semilla. Además, cambia los números en el rango especificado donde defines el número de nota ((2) en el listado 2.3). Por ejemplo, aumenta el número más alto, y observa que empiezas a escuchar ocasionalmente notas más altas que anteriormente.
+
+### 2.2.2 Redondeando números: siendo más justos en las conversions float a int
+
+Ahora has empezado a ver el poder de la biblioteca Math, y existen muchas más herramientas útiles en ella. ¿Recuerdas cuándo casteaste tus números float a enteros, y la parte fraccional fue perdida por el truncamiento? Recuerda que 220.9999 fue truncado a 220, lo que no parece justo. La solución es redondead, lo que significa que cualquier parte fraccional mayor o igual a 0.5 se redondea hacia arriba, y cualquiera menor se redondea hacia abajo (es truncada). Math provee una función llamada round que se encarga de esto. Pruébala con esta línea:
+
+```chuck
+<<< Math.round(220.501), Math.round(220.49) >>>
+```
+
+Existen otras funciones de Math, incluyendo logaritmos, exponentes y trigonometría (seno, coseno y tangente). Si estás familiarizado con estas funciones, puedes encontrar la lista en el ya familiar apéndice B. Estarás usando algunas de ellas en los siguientes capítulos a medida que avanzemos a programación avanzada y técnicas de procesamiento de señales.
+
+## 2.3 Stereo y paneo
+
 
 
 HEREIAM
-page 55
 page 56
 page 57
 page 58
 page 59
 page 60
 
-## 2.3
+## 2.4 Ejemplo: música aleatoria con dos voces y paneo
 
-## 2.4
-
-## 2.5
+## 2.5 Resumen
