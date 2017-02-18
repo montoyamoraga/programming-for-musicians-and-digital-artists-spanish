@@ -14,8 +14,35 @@ Hasta el momento has generado melodías usando bucles para aumetnar o disminuir 
 
 ## 3.1 Declaración y almacenamiento de datos en arreglos
 
+Aquí empezarás a aprender sobre cómo tocar notas de nuestra canción "Twinkle" mediante el almacenamiento de ellas en un solo arreglo. En este caso, grabarás tu melodía como una lista de números de notas MIDI. Para empezar, visualicemos conceptualmente qué es un arreglo.
+
+En la figura 3.1 puedes ver siete celdas que contienen enteros. Estas celdas son siete trozos de memoria adjuntados a tu arreglo. Dentro de las celdas tenemos números enteros; en este caso ellos representan las notas MIDI de nuestra melodía "Twinkle". Bajo cada celda, puedes ver números que corresponden al índice de cada celda. Observa que los índices empiezan en 0. Todos los arreglos empiezan con el índice 0. El índice 3 del arreglo te dará el dato en la celda, en este caso, el número 64 de nota MIDI, la cuarta nota de Twinkle.
+
+Ahora vemaos cómo representar este concepto con código. Representas un arreglo con paréntesis cuadrados [], con el número dentro de los paréntesis cuadrados siendo el número de elementos en el arreglo. En este caso hay sietes notas MIDI, así que declaras un arreglo a como int a[7] (1) en el siguiente listado. Observa que el arreglo es de tipo entero (puedes hacer arreglos de cualquier tipo, como verás más adelante). A continuación, tienes que almacenar tu melodía en el arreglo. Esto lo haces poniendo cada entero en su ubicación correspondiente en el arreglo, uno a la vez, como se ve en las líneas entre (2) y (3).
+
+Listado 3.1 Declarando y llenando de forma larga un arreglo de enteros
+
+```chuck
+//delaración de arreglo (método 1)
+//(1) declara un arreglo de un largo específico (7)
+int a[7];
+
+//(2)define el valor almacenado en el elemento cero
+57 => a[0];
+57 => a[1];
+64 => a[2];
+64 => a[3];
+66 => a[4];
+66 => a[5];
+64 => a[6];
+//(3)define el valor almacenado en el último elemento
+
+<<< a[0], a[1], a[2], a[3], a[4], a[5], a[6] >>>
+```
+
+Ahora tienes
+
 HEREIAM
-page 62
 page 63
 page 64
 page 65
@@ -24,7 +51,7 @@ page 67
 page 68
 page 69
 
-## 3.1
+## 3.2 Grabar y modificar datos en arreglos
 
 ## 3.3
 
