@@ -48,7 +48,7 @@ Deberías ver lo siguiente impreso en la ventana Console Monitor
 220.000000 :(float)
 ```
 
-¡corresponde la frecuencia de tu primra nota "Twinkle"!
+¡Corresponde la frecuencia de tu primra nota "Twinkle"!
 
 FUNCIONES: ARGUMENTOS Y VALORES DE RETORNO
 
@@ -56,13 +56,13 @@ El número en los paréntesis (57 en este caso) es llamado el argumento de la fu
 
 Ahora prueba escribiendo
 
-```chuck
+> ```chuck
 <<< Std.mtof(60), Std.mtof(62), Std.mtof(64), Std.mtof(65), Std.mtof(67)>>>;
 ```
 
 lo que debería arrojar lo siguiente en la ventana Console:
 
-```chuck
+> ```chuck
 261.625565 293.664768 329.627557 349.228231 391.995436
 ```
 
@@ -84,7 +84,7 @@ Nota sobre programar en ChucK
 
 > Ambos hacen lo mismo y arrojarán el mismo resultado (valor de retorno).
 
-Ahora, 
+Ahora,
 
 
 HEREIAM
