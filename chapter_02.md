@@ -359,58 +359,68 @@ Listado 2.8 Caminata aleatoria a dos voces con paneo
 
 
 ```chuck
-//
-//
+//Caminata aleatoria a dos voces con paneo
+//Por el equipo ChucK, 25 de septiembre, 2020
 
-//
+//dos osciladores, melodía y armonía
+//(1) SinOsc a través de Pan2 para poder otorgarle movimiento
 SinOsc s => Pan2 mpan => dac;
+//(2) TriOsc en una posición fija al centro
 TriOsc t => dac;
 
-//
+//usaremos estos más adelante para separar las notas
+//(3) variables tipo float pra controlar tus ganancias de notas
 0.5 => t.gain;
 0.5 => float onGain;
 0.5 => float offGain;
 
+//variable entera para controlar tu melodía
 72 => int melodyNote
 
 while (true) {
 
-  //
+  //define la altura de la melodía aleatoriamente, con límites
+  //(5) cambia la melodía aleatoriamente hacia arriba o hacia abajo o nada
   Math.random2(-3, 3) +=> melodyNote;
 
+  //(6) límite inferior de la melodía
   if (melodyNote < 60) {
     60 => melodyNote
   }
+  //(7) límite superior de la melodía
   if (melodyNote > 84) {
     84 => melodyNote;
   }
 
+  //(8) define la altura del oscilador SinOsc
   Std.mtof(melodyNote) => s.freq;
 
-  //
+  //"la melodía tiene un paneo aleatorio para cada nota
   Math.random2f(-1.0, 1.0) => mpan.pan;
 
-  //
+  //"tira un dado", cambia la nota de la armonía
   if (Math.random2(1,6) == 1) {
+    //(9) mantiene aleatoriamente la altura del TriOsc
     Std.mtof(melodyNote - 12) => t.freq;
   }
 
-  //
+  //elige aleatoriamente entre tres duraciones
   Math.random2(1.3) * 0.2 => float myDur;
 
-  //
+  //la nota suena durante el 80% de la duración
   onGain => s.gain;
   (myDur * 0.8) :: second => now;
 
-  //
+  //el espacio entre notas es el 20% de la duración
   offGain => s.gain;
   (myDur * 0.2) :: second => now;
 }
 ```
 
+En el bloque while de bucle infinito, estás aleatoriamente aumentando o disminuyendo tu nota de melodía MIDI nota entre -3 y +3 ntoas (teclas del teclado MIDI) (5). Esto recibe el nombre de caminata aleatoria, donde en vez de definir la nota en sí misma como un número aleatorio, caminas aleatoriamente hacia arriba o abajo del teclado (o te mantienes quieto si es que el número aleatorio es 0). Para asegurarte que no caminas muy a la izquierda o muy a la derecha,
+
 
 HEREIAM
-page 59
 page 60
 
 ## 2.5 Resumen
