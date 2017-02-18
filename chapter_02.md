@@ -179,13 +179,68 @@ Standard no es la única biblioteca disponible en ChucK, así que dejémosla por
 
 ¿Recuerdas cuán entretenido era cuando usabas Math.random() para definir las frecuencias y duraciones de notas en un bucle infinito? En las siguientes subsecciones, profundizaremos en otra biblioteca, conocida como Math, que tiene un gran número de funciones útiles que te permitirán hacer que tus programas sean mucho más poderosos y expresivos.
 
-### 2.2.1 Funciones random de la biblitoeca Math
+### 2.2.1 Funciones aleatorias de la biblioteca Math
+
+El primer conjunto de métodos de la biblioteca Math es usado para generar números aleatorios (random). Los usaste en el capítulo 1 para tocar un flujo infinito de frecuencias y duraciones aleatorias, así que ahora revisaremos cómo exactamente funcionan. Los números aleatorios son muy útiles para hacer arte digital. Es muy tedioso para un programador definir cada uno de los valores únicos de cada parámetro en el tiempo, al momento de explorar un sonido con muchos parámetros, por ejemplo. No obstante, el uso de funciones aleatorias te permite encargarles aquellas tareas al computador, mientras buscas las partes que te gustan, tal como lo hiciste con las notas aleatorias en el capítulo 1.
+
+A pesar de que ChucK no es realmente un lenguaje de programación de juegos (aunque mucha gente ha escrito juegos con él), digamos que quieres simular tirar un dado. Necesitarás una manera de generar aleatoriamente un número que puede ser 1, 2, 3, 4, 5 o 6. En el ejemplo del listado 2.2, usarás la biblioteca Math para generar enteros aleatorios entre 1 y 6 usando el método Math.random2(). Este programa corre para siempre (la condición while(true) siempre es verdadera) y genera un número aleatoria cada medio segundo. El 2 en random2 significa que vas a especificar 2 números, un mínimo y un máximo, entre los que la función generará números aleatorios. Los números especificados también son permitidos, así que en este caso el 1 y el 6 aparecerán con igual probabilidad que todos los enteros entre 1 y 6.
+
+Listado 2.2 Generación de números enteros usando la biblioteca Math
+
+```chuck
+//generación de números enteros aleatorios
+//simula tirar un dado
+while(true) {
+  <<< "el dado arroja = ", Math.random2(1,6) >>>;
+  second / 2 => now;
+}
+```
+
+La biblioteca Math tiene cuatro maneras de crear números aleatorios, como se ve en la tabla 2.2. Los enteros son hechos con los métodos Math.random2() y Math.random().
+
+Tabla 2.2 Funciones de la biblioteca Math de ChucK para crear números aleatorios
+
+| Método                               | Resultado | Descripción |
+| :----------------------------------  | :-------- | :---------- |
+| Math.random()                        | int       | Genera enteros aleatorios entre 0 y Math.RAMDOM_MAx   |
+| Math.random2(int min, int max)       | int       | Genera enteros aleatorios en el rango [min, max]|
+| Math.randomf()                       | float     | Genera números de punto flotante en el rango [0, 1] |
+| Math.random2f(float min, float max)  | float     | Genera números de punto flotante en el rango [min, max] |
+
+Los números aleatorios de punto flotante son creados usando Math.randomf(), que retorna un número entre 0.0 y 1.0, y Math.random2f(), que retorna un número dentro de un rango. Nuevamente, como programador tú tienes que especificar los valores mínimo y máximo.
+
+NOTA: Math.random() no es usado frecuentemente, pero se incluye en ChucK para ser más compatible con otros lenguajes de programación.
+
+El programa del listado 2.3 demuestra cóm los números aleatorios pueden ser utilizados en el proceso de composición. Como puedes ver, hemos definido un bucle for que toca un total de 16 notas (1). En cada iteración del bucle, un entero aleatorio entre 48 y 72es creato y almacenado en la variable entera myNote (2), y un número aleatorio de punto flotante entre 0.05 y 0.9 es generado y almacenado en la variable myGain de tipo float (3). Después de imprimir ambos a la consola, myNote es usada para definir la frecuencia del oscilador s a través de tu viejo amigo Std.mtof() y myGain es usada para definir el volumen (4). Es así que una nueva nota MIDI (frecuencia) (5) y volumen son generados cada un quinto de segundo (6), haciendo una composición que genera notas aleatoriamente. Aunque no genera una melodía conocida, creemos que puedes estar de acuerdo en que es musical, debido a los cambios nota a nota de volumen (llamados acentos por músicos y compositores) y las siempre cambiantes frecuencias. Ejecútalo unas veces más y escucharás que las notas y los volúmenes generados son diferentes cada vez. Lo único que está garantizado es que serán exactamente 16 notas.
+
+Listado 2.3 Música aleatoria usando la biblioteca Math
+
+```chuck
+//Música aleatoria de onda cuadrada
+SqrOsc s => dac;
+
+//(1)El bucle for toca 16 notas
+for (0 => int i; i < 16; i++) {
+  //(2) Nota entera aleatoria (C3 - C5)
+  Math.random2(48, 72) => int myNote;
+  //(3) Ganancia aleatoria entre .05 y .9
+  Math.random2f(0.05, 0.9) => float myGain;
+  //(4) Imprime la nota y la ganancia actuales
+  <<< myNote, myGain>>>;
+  //(5) Define la frecuencia y la ganancia del oscilador
+  Std.mtof(myNote) => s.freq;
+  myGain => s.gain;
+  //(6) Deja que cada note suene durante 1/5 de segundo
+  0.2 :: second => now;
+}
+
+```
+
+Los generadores de números aleatorios te permite escribir programas musicales que nunca sonarán exactamente iguales, pero puedes hacerlo de una manera bastante controlable, lo que puede ser una técnica atractiva pra un compositor moderno. Existe una manera de asegurarse que una secuencia de números aleatorios sea siempre la misma pero diferente de todas las otras secuencias. Imaginemos que que no quieres escribir cuáles son las notas específicas, y quieres que sean generadas aleatoriamente, pero quieres que tu composición sea siempre la misma cada vez que la ejecutas. ¿Cómo lograr esto?
 
 
 
 HEREIAM
-page 53
-page 54
 page 55
 page 56
 page 57
