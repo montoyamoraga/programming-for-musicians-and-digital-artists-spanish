@@ -119,6 +119,44 @@ page 89
 page 90
 page 91
 
+Tú defines el tiempo a esperar (5), antes de repetir el bucle. Aquí esperas 500 :: ms (1/2 segundo) entre cada nuevo golpe. Puedes aumentar este número y observar que tu reproducción en bucle se hace más lenta, hazlo más corto y escucha como acelera.
+
+Listado 4.2 Uso de un bucle para repetir la reproducción de un archivo de sonido
+
+```chuck
+//Reproduce un sonido repetidamente en un bucle
+//por programador de ChucK, 12 de enero 2017
+//Conecta un SndBuf a través de un objeto de paneo Pan2 al DAC
+SndBuf mysound => Pan2 pan => dac;
+
+//obtener la dirección del archivo y cargarlo en la misma línea
+me.dir() + "audio/cowbell_01.wav" => mySound.read;
+
+//reproduce nuestro sonido una y otra vez en un bucle infinito
+while (true)
+{
+  //ganancia, tasa (altura), y paneo aleatorios cada vez
+  //(1) Ganancia aleatoria para el archivo de sonido
+  Math.random2f(0.1, 1.0) => mySound.gain;
+  //(2) Posición de paneo aleatoria
+  Math.random2f(-1.0, 1.0) => pan.pan;
+  //(3) Tasa aleatoria (velocidad y altura)
+  Math.random2(0.2, 1.8) => mySound.rate;
+
+  //(re)comienza el sonido configurando la posición a 0
+  //(4) Configura la posición a 0 para que empiece a sonar
+  0 => mySound.pos;
+
+  //avanza el tiempo para poder escucharlo
+  //(5) Espera un poco mientras toca
+  500.0 :: ms => now;
+}
+```
+
+> Controlando y deteniendo tus bucles con Replace Shred y Clear VM
+
+> Reuerda que para hacer un cambio, como el rango de números aleatorios o el tiempo que usas para ChucKing a now para controlar la sincronización de tus sonidos en bucle, necesitas hacer click en el botón Replace Shred para detener el bucle antiguo y reemplazarlo con el nuevo. Como esto es un bucle infinito (while (true)), cuando has finalizado y estás listo para continuar, tienes que detener lo que está siendo ejecutado haciendo click en Clear VM.
+
 ### 4.2.3 Reproducción de tus samples en reversa
 
 ### 4.2.4 Manejo de múltiples samples a la vez
