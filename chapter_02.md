@@ -343,13 +343,17 @@ while (true) {
 }
 ```
 
-Existen otras 
+Existen muchas otras funciones matemáticas basadas en trigonometría en la biblioteca Math, las que están listadas junto a a todas las otras funciones de las librerías Std y Math en el apéndice B. ¿Cuál es la diferencia entre Math.sin() y el objeto SinOsc? El objeto SinOsc es un objeto que emite sonido y de tipo UGen. Como tal, SinOsc automáticamente produce una onda sinusoidal al ser conectada al dac, pero Math.sin() requiere que la llames con un argumento, y luego retorna un punto específico dentro de una onda sinusoidal. Las funciones de la biblioteca Math sirven para hacer cálculos matemáticos y también como parámetros, como controlar métodos .pan o .gain. Los usos compositivos de las funciones Math pueden incluir la añadidura de vibrato o incluso la generación de notas.
+
+Ahora que has adquirido muchas nuevas herramientas, las funcioens de las bibliotecas Std y Math, deberías usarlas para hacer música. Así que hagamos justo eso.
+
+## 2.4 Ejemplo: música aleatoria con dos voces y paneo
+
+
 
 HEREIAM
 page 58
 page 59
 page 60
-
-## 2.4 Ejemplo: música aleatoria con dos voces y paneo
 
 ## 2.5 Resumen
