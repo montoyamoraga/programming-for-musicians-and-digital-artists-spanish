@@ -343,7 +343,7 @@ while (true) {
 }
 ```
 
-Existen muchas otras funciones matemáticas basadas en trigonometría en la biblioteca Math, las que están listadas junto a a todas las otras funciones de las librerías Std y Math en el apéndice B. ¿Cuál es la diferencia entre Math.sin() y el objeto SinOsc? El objeto SinOsc es un objeto que emite sonido y de tipo UGen. Como tal, SinOsc automáticamente produce una onda sinusoidal al ser conectada al dac, pero Math.sin() requiere que la llames con un argumento, y luego retorna un punto específico dentro de una onda sinusoidal. Las funciones de la biblioteca Math sirven para hacer cálculos matemáticos y también como parámetros, como controlar métodos .pan o .gain. Los usos compositivos de las funciones Math pueden incluir la añadidura de vibrato o incluso la generación de notas.
+Existen muchas otras funciones matemáticas basadas en trigonometría en la biblioteca Math, las que están listadas junto a a todas las otras funciones de las bibliotecas Std y Math en el apéndice B. ¿Cuál es la diferencia entre Math.sin() y el objeto SinOsc? El objeto SinOsc es un objeto que emite sonido y de tipo UGen. Como tal, SinOsc automáticamente produce una onda sinusoidal al ser conectada al dac, pero Math.sin() requiere que la llames con un argumento, y luego retorna un punto específico dentro de una onda sinusoidal. Las funciones de la biblioteca Math sirven para hacer cálculos matemáticos y también como parámetros, como controlar métodos .pan o .gain. Los usos compositivos de las funciones Math pueden incluir la añadidura de vibrato o incluso la generación de notas.
 
 Ahora que has adquirido muchas nuevas herramientas, las funcioens de las bibliotecas Std y Math, deberías usarlas para hacer música. Así que hagamos justo eso.
 
@@ -417,10 +417,24 @@ while (true) {
 }
 ```
 
-En el bloque while de bucle infinito, estás aleatoriamente aumentando o disminuyendo tu nota de melodía MIDI nota entre -3 y +3 ntoas (teclas del teclado MIDI) (5). Esto recibe el nombre de caminata aleatoria, donde en vez de definir la nota en sí misma como un número aleatorio, caminas aleatoriamente hacia arriba o abajo del teclado (o te mantienes quieto si es que el número aleatorio es 0). Para asegurarte que no caminas muy a la izquierda o muy a la derecha,
+En el bloque while de bucle infinito, estás aleatoriamente aumentando o disminuyendo tu nota de melodía MIDI nota entre -3 y +3 ntoas (teclas del teclado MIDI) (5). Esto recibe el nombre de caminata aleatoria, donde en vez de definir la nota en sí misma como un número aleatorio, caminas aleatoriamente hacia arriba o abajo del teclado (o te mantienes quieto si es que el número aleatorio es 0). Para asegurarte que no caminas muy a la izquierda o muy a la derecha, tocando así notas muy altas o bajas en altura, compruebas la nueva nota MIDI para asegurarte que esté entre C central (6) y dos octavas más arriba (7). Una vez que has definido tu nueva nota, usas Std.mtof para convertir el número en una altura para tu SinOsc (8). También defines un nuevo paneo aleatorio para tu melodía (a través de Pan2) entre izquierda (-1.0) y derecha (1.0).
 
+A continuación, arrojas un dado (números entre 1 y 6 incluidos) y decides si cambiarás la altura de tu armonía TriOsc (9). Existe una posibilidad uno a seis de hacerlo. Si cambia, se le da la misma altura que el oscilador de melodía pero una octava más grave (+/- 12 en notas MIDI es subir o bajar una octava).
 
-HEREIAM
-page 60
+Finalmente, calculas una duración aleatoria entre 0.2, 0.4 y 0.6 segundos (1, 2 o 3 multiplicado por 0.2), para tu nota de melodía hasta que corra de nuevo el bucle. Enciendes la melodía durante el 80% del tiempo y lo apagas durante el 20%. Luego el bucle se ejecuta de nuevo, para siempre, hasta que hagas click en Remove Shred o en Remove All Shreds.
+
+PRUEBA ESTO Añade una llamada a Math.srandom() para definir la semilla de generación de números aleatorios, antes del bucle while principal. Cambia el valor de la semilla un par de veces, observando que cada número genera una canción distinta pero igual si usas la misma semilla. Encuentra una semila que genere tu nueva y original canción favorita.
 
 ## 2.5 Resumen
+
+¿Vaya, no? Acabas de hacer una composición musical sonora interesante, pero optaste por dejarle la mayoría de las decisiones reales sobre notas y duraciones y sincronización de la melodía y de la armonía completamente a cargo del computador. Fuiste capaz de esto usando todo lo que has aprendido hasta el momento:
+
+* Uso de funciones de la biblioteca Standard como Std.mtof
+* Conversión de variables a y float (y al revés) y redondeo
+* Uso de funciones de la biblioteca Math como Math.random
+* Paneo usando el UGen Pan2
+* Composición de música aleatoria y control de la aleatoreidad (rango y semilla)
+
+Harás mucho más con las funciones de las bibliotecas en el futuro, y aprenderás cómo escribir tus propias funciones desde cero (capítulo 5).
+
+El siguiente capítulo tratará sobre arrelgos, que son colecciones de datos que puedes usar para organizar tus notas, alturas, duraciones, parámetros, incluso strings de texto, o lo que sea. Una vez que sepas cómo crearlos y usarlos, serás capaz de programar canciones completas más fácilmente, escribiendo mucho menos, y también harás que tus programas sean de más fácil lectura para ti y otros usuarios.
