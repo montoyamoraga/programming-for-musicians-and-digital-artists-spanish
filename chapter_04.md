@@ -45,9 +45,7 @@ Como se muestra en la figura 4.2, recomendamos primero crear un directorio (carp
 
 Ahora que tienes configurada una estructura de archivos en tu computador que hace fácil usar archivos de sonido, puedes usar ChucK para probarla, usando samples pregrabados del toque de un tambor ubicado en el directorio audio. El listado 4.1 muestra cómo lograr justo eso, usando SndBuf, que es una nuevo UGen generador de onisod que te permite cargar y reproducir samples. Aunque lo conectes al dac tal como lo habías hecho con otros UGen hasta el moento, cuando se comparar con nuestro oscilador (SinOsc, TriOsc, entre otros) y generadores de ruido, existen un númbero de cosas sobre SndBuf que necesitas conocer para usarlo.
 
-Primero, cuando
-
-Listado 4.1
+Primero, cuando le dices a SndBuf que cargue un archivo,
 
 HEREIAM
 page 74
@@ -68,6 +66,8 @@ page 88
 page 89
 page 90
 page 91
+
+Listado 4.1
 
 ### 4.2.2 Looping (repetición automática) de tus samples
 
