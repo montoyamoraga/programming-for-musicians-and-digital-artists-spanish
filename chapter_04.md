@@ -267,16 +267,16 @@ La carga de archivos de sonido stereo en ChucK es casi lo mismo que con archicos
 Listado 4.6 Carga y reproducción de archivos de sonido stereo usando SndBuf2
 
 ```chuck
-//
-//
-//
+//Carga y reproducción de archivos de sonido stereo
+//por programador ChucK, septiembre 2023
+// Hace un SndBuf2 stereo y lo conecta al dac (¡se hace stereo automáticamente!)
 SndBuf2 myStereoSound => dac;
 
-//
-//
+//se carga un archivo stereo usando .read
 me.dir() + "/audio/stereo_fx_01.wav" => myStereoSound.read;
 
-//
+//y lo hace sonar por el tiempo apropiado
+//(1) ¡Nueva función / método! .length retorna la duración exacta del archivo de sonido
 myStereoSiund,length() => now;
 ```
 
