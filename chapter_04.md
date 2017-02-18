@@ -147,9 +147,47 @@ while (true)
 
 ### 4.2.3 Reproducción de tus samples en reversa
 
+Como esto tuvo un sonido tan interesante, no nos detengamos aquí en nuestra experimentación con samples. ¿Y si quisieras reproducir un sample en reversa? Esta es una técnica útil que puede añadir un motif expresivo adicional a tus composiciones, y eso es usado para efectos sonoros, efectos musicales especiaesl, diseño sonoro, entre otros.
+
+El listado 4.3 muestra cómo lograr esto, usando un diferente sonido, un tipo de platillo llamado hi-hat. Después de declarar un SndBuf y conectarlo al dac, cargas tu archivo de sonido hi-hat usando me.dir() y otros métodos que ya hemos visto (1).
+
+Para reproducir un archivo de sonido en reversa, necesitas hacer dos cosas. Lo primero es ubicar la posición de la cabeza de reproducción al final del archivo, un arreglo interno en SndBuf. ¿Pero cómo sabemos cuántos samples hay en el archivo de sonido? SndBuf tiene un método llamado .samples() que arroja el número de samples en tu archivo de sonido, y lo almacenas en una variable entera llamada numSamples (2). Otra forma de pensar esto es que le estás preguntando a SndBuf, cuán grande es tu arreglo interno que almacena el archivo de sonido (similar al método .cap() de los arreglos normales)? Primero debes reproducir el sonido una vez hacia adelante y a velocidad normal; observa que aquí estás usando numSamples para avanzar el tiempo en exactamente el número correcto (3). Usando el método .samples(), puedes ahhora usar el número como un límite superior con el método .pos para definir dónde empieza la posición de la cabeza de reproducción (4), como se muestra en la figura 4.4.
+
+Lo segundo que debes hacer para reproducir un archivo en reversa es definir .rate para que vaya en reversa en vez de hacia adelante. Como debes haberlo adivinado, se logra haciendo que el valor de la tasa sea negativo -1.0 (5) para ir en reversa a la velocidad correcta. También puedes usar -.2 para ir más lento y en reversa, -2.0 para ir en reversa al doble de velocidad, entre otros.
+
+Listado 4.3 Reproduciendo un archivo de sonido en reversa
+
+```chuck
+//Reproducción de sonidos en reversa
+//por programador de ChucK, 4102 oiluj
+//La fecha está al revés, tal como el sonido dentro de poco
+SndBuf mySound => dac;
+
+//(1) Construye la dirección del archivo y para cargar en SndBuf
+me.dir() + "/audio/hihat_04.wav" => mySound.read;
+
+//(2) Averigua cuán largo es el sonido (en número de samples)
+mySound.samples() => int numSamples;
+
+//reproduce una vez el sonido hacia adelante
+0 => mySound.pos;
+//(3) deja que el sonido sea reproducido
+numSamples :: samp => now;
+
+//y una vez hacia atrás
+//(4) Hace que la posición del buffer sea el final del archivo
+numSamples => mySound.pos;
+//(5) Hace que la reproducción sea en reversa
+-1.0 => mysound.rate;
+// Reproduce el archivo completo, pero en reversa
+numSamples :: samp => now;
+```
+
+### 4.2.4 Manejo de múltiples samples a la vez
+
+La habilidad final a aprender en esta sección es cómo reproducir múltiples SndBuf al mismo timepo. Existen dos maneras para hacerlo, dpendiendo de cuán largos sean tus sonidos y cuáles sean tus necesidades de composición. Una forma es usar solo un SndBuf y volver a cargar los diferentes sonidos. Digamos que tienes tres diferentes grabaciones de cajas, y quieres intercambiarlas durante una composición. Puedes hacerlo con un arreglo de strings para almacenar las direcciones de los archivos y nombres (1), como se muestra en el listado 4.4. Ahora en cualquier momento puedes acceder a las direcciones de los archivos de sonido y cargarlos en memoria en cualquier punto durante el programa.
+
 HEREIAM
-page 77
-page 78
 page 79
 page 80
 page 81
@@ -164,7 +202,10 @@ page 89
 page 90
 page 91
 
-### 4.2.4 Manejo de múltiples samples a la vez
+Listado 4.4 Reproduccion de distintos archivos de sonido con un solo SndBuf
+
+
+
 
 ## 4.3 Archivos de sonido stereo y reproducción
 
