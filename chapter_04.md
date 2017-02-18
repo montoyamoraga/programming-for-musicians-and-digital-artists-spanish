@@ -314,11 +314,14 @@ mySteroSound.chan[1] => bal[1] => dac.right;
 
 while(true)
 {
-  //
+  //escoge una tasa aleatoria de reproducción y un paneo aleatorio
+  //(5) Define una tasa aleatoria (altura y tiempo)
   Math.random2f(0.2, 1.8) => myStereoSound.rate;
+  //(6) Define un balance aleatorio (paneo)
   Math.random2f(-1.0, 1.0) => float balance;
 
-  //
+  //convierte el balance en ganancias izquierda/derecha entre 0 y 1.0
+  //(7) Implementa el control de balance stereo
   (balance + 1) / 2.0 => float rightGain;
   1.0 - rightGain => float leftGain;
 
@@ -327,11 +330,21 @@ while(true)
 
   0.3 :: second => now;
 }
-
 ```
 
+A continuación haces algo nuevo (4) con tu SndBuf2, que también lo puedes hacer con tu SndBuf regular mono. Haciendo ChucKing de un 1 al método .loop, le dices a SndBuf que quieres que toque en bucle para siempre. Normalmente, cualquier SndBuf se reproduce solo una vez y se queda al final, esperando que hagas que .pos vuelva a cero. Pero al configurar .loop como 1, le estás diciendo al mecanismo interno de SndBuf que cuando el puntero de posición llega al final del arreglo y todos los samples han sido reproducidos, debería volver a 0 automáticamente y empezar a tocar de nuevo. Observa que también podrías usar esto para reproducción en reversa (tasas negativas), y que cuenado el puntero llega a 0, automáticamente vuelve al último sample y repite la reproducción en reversa para siempre.
+
+Ahora vayamos a la sección de paneo. Dentro del bucle infinito, defines una tasa de reproducción aleatoria (5), y creas y defines (aleatoriamente) una nueva variable llamada balance (6). Tal como con Pan2, cuando haces que la variable balance se incline hacia -1.0, el canal izquierdo se vuelve más prominente; si el balance se inclina hacia 1.0, hace que el canal derecho sea más prominente. Una vez que el balance es definido aleatoriamente entre -1 y 1, y haces los cálculos para convertir eso en ganancias, entre 0 y 1, para controlar los canales izquierdo y derecho (7).
+
+PRUEBA ESTO En papel, define balance a -1.0; luego haz los cálculos para llegar a los valores de leftGain y rightGain. Haz lo mismo para balance definido como 0.0 y balance definido como 1.9. Observa cómo mover balance de -1.0 a 1.0 causa que el paneo se mueva de izquierda a derecha. Haz esto también en código ChucK para que puedas escuchar la diferencia a medida que cambias balance.
+
+Como viste anteriormente cuando precargabas un arrego de UGens SndBuff, los arreglos de UGens son una técnica común para crear y manipular patches de síntesis multicanal en ChucK.
+
+## 4.4 Ejemplo: construcción de una máquina de ritmos
+
+Ahora que
+
 HEREIAM
-page 82
 page 83
 page 84
 page 85
@@ -341,9 +354,6 @@ page 88
 page 89
 page 90
 page 91
-
-
-## 4.4 Ejemplo: construcción de una máquina de ritmos
 
 ### 4.4.1 Añadir lógica para tener distintos tambores en distintos momentos
 
