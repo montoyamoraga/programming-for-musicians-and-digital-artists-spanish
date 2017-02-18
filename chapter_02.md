@@ -36,11 +36,58 @@ El teclado musical standard tipo pianos
 
 > Algunos fabricantes decidieron que el C central debería ser C3, lo que corresponde a la nota MIDI #48, así que podrías encontrar diferencias en octavas entre distintos dispositivos y software computacional. Nosotros vamos a seguir con el C central correcto según la teoría musical, esto es, C central = C4 = 60.
 
+Los números de notas MIDI combinados con la función Std.mtof(), hacen fácil crear melodías, tocar escalas y hacer otras tareas musicaesl. Para probarla, escribe y corre este código:
 
+```chuck
+<<< Std.mtof(57) >>>;
+```
+
+Deberías ver lo siguiente impreso en la ventana Console Monitor
+
+```chuck
+220.000000 :(float)
+```
+
+¡corresponde la frecuencia de tu primra nota "Twinkle"!
+
+FUNCIONES: ARGUMENTOS Y VALORES DE RETORNO
+
+El número en los paréntesis (57 en este caso) es llamado el argumento de la función. La ejecuión de una función recibe el nombre de invocar o llamar a la función. El valor que resulta de usar la función es llamado el valor de retorno.
+
+Ahora prueba escribiendo
+
+```chuck
+<<< Std.mtof(60), Std.mtof(62), Std.mtof(64), Std.mtof(65), Std.mtof(67)>>>;
+```
+
+lo que debería arrojar lo siguiente en la ventana Console:
+
+```chuck
+261.625565 293.664768 329.627557 349.228231 391.995436
+```
+
+Estas son las frecuencias de las primeras cinco notas de la escala de C: C, D, E, F, G. Revisando el teclado de la figura 2.1, puedes ver que si cuentas cada tecla (tanto blanca como negra), empezando en la 60 correspondiente a C4, las teclas blancas de la escala de C están asociadas a los números 60, 62, 64, 65 y 67.
+
+Nota sobre programar en ChucK
+
+> Tal como en el resto de la programación de computadores, existen múltiples maneras de lograr el mismo resultado. Las funciones de ChucK pueden ser usadas de dos maneras distintas: llamándolas con paréntesis y un argumento, como
+
+```chuck
+<<< Std.mtof(64) >>>;
+```
+
+> o haciendo ChucKing del argumento a la función:
+
+```chuck
+<<< 64 => Std.mtof >>>;
+```
+
+> Ambos hacen lo mismo y arrojarán el mismo resultado (valor de retorno).
+
+Ahora, 
 
 
 HEREIAM
-page 48
 page 49
 page 50
 page 51

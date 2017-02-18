@@ -52,7 +52,7 @@ Cuando haces click en Start Virtual Machine (iniciar la máquina virtual), crea 
 
 En casi todos los lenguajes, el primer programa que escribes es "Hello World" (Hola Mundo), así que empezaremos mostrándote cómo lograr esto en ChucK. Dirígite a la ventana llamada Untitled, grábala con el nombre helloworld.ck usando el menú File (Archivo), y luego escribe esta línea:
 
-```
+```chuck
 <<< "Hello World" >>>;
 ```
 
@@ -74,6 +74,7 @@ Cuando ingresas el código de la sección 1.1, asegúrate de grabarlo como un nu
 También nota que mientras escribes el programa del listado 1.1 en el editor de miniAudicle, algunas de las palabras mágicamente cambian de color. Esto ocurre porque el miniAudicle reconoce estas palabras reservadas y las colorea según su tipo. Aprenderemos más de esto más adelante.
 
 Listado 1.1 Hello Sine!
+
 ```chuck
 //Conecta una onda sinusoidal
 SinOsc s => dac;
