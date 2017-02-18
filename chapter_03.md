@@ -212,14 +212,26 @@ for (0 => int i; i < myNotes.cap(); i++) {
 
 ### 3.4.2 Arreglos de strings: el texto también puede ser musical
 
+Ahora que ya sabes almacenar cosas en arreglos, pongamos algunas palabras en un arreglo de strings. El listado 3.7 te muestra cómo hacerlo. Tal como tus otros arreglos, usa los mismos paréntesis cuadrados [...] par almacenar tu lista de strings (1). Separa elemento con comas y usa el operador ChucK @=> de copia (2) para almacenar esa lisat en un arreglo recién declarado de tipo string, el que se llamará words[] (3). Observa aquí que cada elemento tiene un largo diferente como string individual ("Twin" versus "kle"), y que ChucK se encarga de hacer todo por ti, reclamando el espacio de almacenamiento justo para contener lo que has declarado.
+
+Extendiendo el código a través de varias líneas
+> Observa aquí que hemos usado una característica de programación en ChucK que permite que una línea de código pueda ser extendida a través de varías líneas de texto. El punto y coma es lo que finaliza una línea de código ejecutable de ChucK, así que puedes escribir la mitad de tu lista de palabras, notas o lo que sea en un línea y la otra mitad en la siguiente (o incluso extender a más líneas), y ChucK se encarga de juntar todo cuando encuentra el primer punto y coma.
+
+Listado 3.7 Un arreglo de strings (la letra de "Twinkle")
+
+```chuck
+//haz un arrelgo para contener todas las letras y sílabas
+//(1) Declara e inicializa un arreglo de strings para las letras
+["Twin", "kle", "twin", "kle", "lit", "tle", "star",
+//(2) Usa la forma del operador ChucK de copia @=>
+"how", ""I, "won", "der", "what", "you", "are." ] @=> string words[];
+//(3) ChucK se encarga de calcular el tamaño del arreglo words[]
+```
+
+## 3.5 Ejemplo: una canción con melodía, armonía y letras
+
 HEREIAM
-page 67
 page 68
 page 69
-
-
-### 3.4.2
-
-## 3.5
 
 ## 3.6 Resumen
