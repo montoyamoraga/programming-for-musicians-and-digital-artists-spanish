@@ -60,7 +60,41 @@ EMPEZAR EN CERO Podrías estar preguntándote por qué este libro empezó con el
 
 ¿Qué pasa si quieres cambiar la melodía desde dentro de tu programa? No es un problema; un arreglo contiene variables, así que puedes cambiar lo que está en el arreglo en cualquier momento, definiendo un nuevo entero en la ubicación a[2] del arreglo (o cualquier otra ubicación) (3).
 
- HEREIAM
+Listado 3.3 Acceso (lectura y escritura) a datos en un arreglo
+
+```chuck
+//Declara e inicializa un arreglo
+[57, 57, 64, 64, 66, 66, 64] @=> int a[];
+
+//lectura del arreglo según índice
+//(1) busca la nota en el arreglo según un índice entero
+a[2] => int myNote;
+
+//(2) lo imprime
+<<< myNote >>>;
+
+//¿quieres modificar los datos? ¡cero problema! (imprime también)
+//(3) cambia el valor elemento del arreglo según índice
+61 => a[2];
+<<< myNote, a[2] >>>;
+
+<<< a[0], a[1], a[2], a[3], a[4], a[5], a[6] >>>
+```
+
+Este código debe imprimir en la ventana Console
+
+```chuck
+64 :(int)
+64 61
+```
+
+Esta salida refleja el hecho de que cambiaste los datos en un elemento de tu arreglo (a 61), pero el dato que previamente habías leído ahí y almacenado en la variable myNote no cambia (todavía es 64). La variable myNote está almacenada de forma separada que el dato del arreglo, así que puedes cambiar uno sin afectar al otro.
+
+Puedes estar preguntándote ahora. "¿Que pasa si cambio el tamaño del arreglo después de declararlo?" Es posible hacerlo, como lo describimos en detalle en el apéndice B, sección B.6. Pero eso es un poco avanzado para nuestra tarea actual, así que prosigamos.
+
+## 3.3 Usar datos de arreglos para tocar una melodía
+
+HEREIAM
 page 64
 page 65
 page 66
@@ -68,11 +102,9 @@ page 67
 page 68
 page 69
 
-## 3.3
+## 3.4 Grabar otros tipos de datos en un arreglo
 
-## 3.4
-
-### 3.4.1
+### 3.4.1 Uso de un arreglo para almacenar duraciones
 
 ### 3.4.2
 
