@@ -99,25 +99,13 @@ Asumiendo que has escrito todo de forma correcta y que todos los archivos están
 
 Como has visto, el objeto SndBuf tiene un número de métodos distntos para controlar sonido. Recuerda que nuestros osciladores tenían métodos .gain y .freq, y como has visto, SndVuf tiene un objeto .gain, pero no posee un método .freq. La razón de esto es que como SndBuf contiene una grabación, no tienes idea de qué frecuencia, o si incluso tiene una, contiene esta grabación. Pronto verás cómo hacer que la altura del sonido de un SndBuf aumente o disminuya.
 
-También has visto que SndBuf tiene un método .pos, que es usado para definir la ubicación donde empiezas la reproducción de un archivo, llamado la cabeza de reproducción.
+También has visto que SndBuf tiene un método .pos, que es usado para definir la ubicación donde empiezas la reproducción de un archivo, llamado la cabeza de reproducción. Una manera de pensarlo es imaginarte tu archivo de sonido como una grabación en vinilo. El método .pos sería donde ubicas la aguja en el disco. Observando los samples almacenadas en el SndBuf de la figura 4.3, nota que cada sample sucesivo yendo hacia la derecha se corresponde exactamente con los valores de sample de nuestra forma de onda "eee" de la figura 4.1. Otra manera de verlo es recordando que tu archivo de sonido está almacenado en un gran arreglo, y que el método .pos te indica en cuál índice del arreglo debes empezar, como se muestra en la figura 4.3.
 
-HEREIAM
-page 76
-page 77
-page 78
-page 79
-page 80
-page 81
-page 82
-page 83
-page 84
-page 85
-page 86
-page 87
-page 88
-page 89
-page 90
-page 91
+En la figura 4.3, la posición cero (con valor cero de sample) es el principio del sample, el momento cero del archivo de sonido. La posición etiquetada como 1 (valor 40) contiene el sample un T (periodo de sampleo) posterior. Cada posición es el sample un T más tarde, y así hasta el final del archivo de sonido.
+
+¿Y si quiesieras tocar tu sample SndBuf una y otra vez, quizás en un bucle? Puedes hacerlo si repetidamente retornas la cabeza de reproducción a cero usando el método .pos. Mientras estás en esto, vas a añadir otras características expresivas, como un objeto de paneo, que recuerdas del capítulo 2. Como ya lo has hecho antes, ubicarás el control de tu sonido dentro de un bucle while, como se muestra en el listado 4.2. Graba este archivo en tu directorio chuck una vez que lo hayas escrito. En el listado 4.2, usas números aleatorios para definir el volumen/ganancia de tu archivo de sonido (1), y defines una posición de paneo aleatoria (2). Como es costumbre ya, cerarás un nuevo volumen y una nueva posición espacial para cada toque (4).
+
+Para aún mayor variedad musicak, usarás un método adicional incluido en el objeto SndBuf. Uno de los aspectos más expresivos de trabajar con archivos de audio es obtener el control de la tasa de reproducción del sample. Piensa de nuevo en el reproductor de discos: cuando un disco es reproducido más rápidamente de lo normal, el sonido sube en altura. Similarmente, cuando se reproduce a una velocidad menor, el sonido baja en altura. En una sola línea de código, puedes alterar y experimentar con este parámetro para obtener una gran variedad de expresión en tus composiciones. Lo haces usando el método .rate, para obtener un valor aleatorio entre .2 y 1.8. La tasa de reproducción original es 1.0 (3). Arriba de 1.0 será más rápido y por lo tanto más alto, y bajo 1.0 será más lento y por lo tanto más grave.
 
 Tú defines el tiempo a esperar (5), antes de repetir el bucle. Aquí esperas 500 :: ms (1/2 segundo) entre cada nuevo golpe. Puedes aumentar este número y observar que tu reproducción en bucle se hace más lenta, hazlo más corto y escucha como acelera.
 
@@ -158,6 +146,23 @@ while (true)
 > Reuerda que para hacer un cambio, como el rango de números aleatorios o el tiempo que usas para ChucKing a now para controlar la sincronización de tus sonidos en bucle, necesitas hacer click en el botón Replace Shred para detener el bucle antiguo y reemplazarlo con el nuevo. Como esto es un bucle infinito (while (true)), cuando has finalizado y estás listo para continuar, tienes que detener lo que está siendo ejecutado haciendo click en Clear VM.
 
 ### 4.2.3 Reproducción de tus samples en reversa
+
+HEREIAM
+page 77
+page 78
+page 79
+page 80
+page 81
+page 82
+page 83
+page 84
+page 85
+page 86
+page 87
+page 88
+page 89
+page 90
+page 91
 
 ### 4.2.4 Manejo de múltiples samples a la vez
 
