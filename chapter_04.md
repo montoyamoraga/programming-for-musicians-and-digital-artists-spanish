@@ -589,12 +589,30 @@ me.dir() + "/audio/cowbell_01.wav" => cowbell.read;
 me.dir() + "/audio/clap_01.wav" => claps.read;
 ```
 
-UNa vez que hayas declarado todos tus sonidos de batería, conectados a ganancias, objetos de paneo y el dac, y una vez que hayas cargado todos tus archivos de sonido, necesitas declarar variables que usarás en tu bucle principal para controlar tu batería. En el siguiente listado declaras un arreglo para controlar lógicamente los golpes al cencerro (1). Luego declaras otras variables globales que usará la batería.
+Una vez que hayas declarado todos tus sonidos de batería, conectados a ganancias, objetos de paneo y el dac, y una vez que hayas cargado todos tus archivos de sonido, necesitas declarar variables que usarás en tu bucle principal para controlar tu batería. En el siguiente listado declaras un arreglo para controlar lógicamente los golpes al cencerro (1). Luego declaras otras variables globales que usará la batería.
 
 Listado 4.12b Configuración de variables para tu gran máquina de ritmos
 
 ```chuck
+//(1) Arreglo para controlar el toque del cencerro
+[1,0,1,0, 1,0,0,1, 0,1,0,1, 0,1,1,1] @=> int cowHits[];
+
+//contorla el largo global de nuestros "compases"
+//en mayúsculas, ¿te acuerdas?
+cowHits.cap() => int MAX_BEAT;
+
+//numero modulo constante para controlar kick y snare
+4 => int MOD;
+
+//control general de velocidad
+0.15 :: second => dur tempo;
+
+//contadores, tiempo (beat) dentro de cada compás (measure), y compás (measure)
+0 => int beat;
+0 => int measure;
 ```
+
+En el bucle principal, mostrado en el siguiente listado, de tu gran máquina de ritmos, vas a usar una mezcla de todas las técnicas que has usado hasta ahora: un bucle, un contador de tiempos, lógica y condicionales, arreglos y el operador modulo.
 
 Listado 4.12c Bucle principal para realmente tocar patrones de batería
 
