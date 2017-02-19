@@ -230,11 +230,52 @@ Observa que estas funciones tienen el mismo nombre, originalFreq, para el argume
 
 Si escarbas un poco más hondo, verás que la nueva función octave() es diferente de la anterior (que aceptaba un número de nota MIDI entero). Esta toma la variable de entrada y la multiplica por 2.0. La función espera un valor de frecuencia en Hertz. La teoría acústica postula que un salto de una octava ocurre cada vez que se duplica la frecuencia. La función fifth() multiplica por 1.5 resultando en un intervalo musical llamado "quinta justa" (el nombre se debe a que es la quinta nota en una escala musical standard) sobre cualquier argumento de frecuencia.
 
-Observemos ahora un programa completo que usa ambas funciones.
+Revisemos ahora un programa completo que usa ambas funciones, para crear un barrido ascendente en frecuencia de riqueza sonora, como se muestra en el listado 5.6. Primero haces tres osciladores y los conectas a los canales izquierdo, central y derecho del dac (1). Luego defines la ganancia de todos los osciladores (2), para que cuando sean sumados, en total no excedan 1.0, lo podría casuar que el dac o los parlantes se saturen y suenen mal. Observa que te aprovechas de una característica de ChucK que permite que los tres osciladores sean configurados al mismo valor (2); definir un parámetro o valor de variable también retorna el mismo valor. El programa principal gira en torno a un bucle for que aumenta de 100 a 500 en incrementos de 0.5 (3). Cada vez que ocurre, el valor de la variable freq del bucle for es usada para definir la freucencia del oscilador SqrOsc s (4). Luego usas el valor de retorno de la función octave() para definir la frecuencia de t (6), y usas la función fifth() para definir la frecuencia de u (6).
+
+Listado 5.6 Uso de funciones para definir frecuencias de osciladores
+
+```chuck
+//tres osciladores en stereo
+//(1) Tres ondas cuadradas, paneadas a izquierda, centro y derecha
+SqrOsc s => dac.left;
+SqrOsc t => dac.;
+SqrOsc u => dac.right;
+
+//define las ganancias para no sobrecargar ael dac
+//(2) Define las tres ganancias
+0.4 => s.gain => t.gain => u.gain;
+
+//funciones octave y fifth
+fun float octave(float originalFreq)
+{
+  return 2.0 * originalFreq;
+}
+
+fun float fifth(float originalFreq)
+{
+  return 1.5 * originalFreq;
+}
+
+//programa principal
+//(3) Barrido en frecuencia de 100 a 500 en pasos de 1/2 Hz
+for (100 => float freq; freq < 500; 0.5 +=> freq)
+{
+  //(4) Define la frecuencia de la onda cuadrada izquierda como freq
+  freq => s.freq;
+  //(5) Define la frecuencia de la onda cuadrada central una octava arriba
+  octave(freq) => t.freq;
+  //(6) Define la frecuencia de la onda cuadrada derecha una quinta mrriba
+  fifth(freq) => u.freq;
+  <<< s.freq(), t.freq(), u.freq() >>>;
+  10 :: ms => now;
+}
+```
+
+Has visto dos ejemplos de cómo las funciones pueden ser usadas para ayudar a manipular métodos .gain y .freq de tus unidades generadores tipo oscilador. No obstante, has estado controlando .freq y .gain sin usar tus propias funciones, ¿no es cierto? Es agradable, por otro lado, haber nombrado con sentido las funciones, incluso si hacían algo que pudiste haber hecho de otra manera, porque cualquiera que lea tu código (incluyéndote a ti en el futuro) puede adivinar qué están haciendo las funciones octave y fifth.
+
+### 5.2.2 Uso de una función para cambiar gradualmente parámetros sonoros 
 
 HEREIAM
-
-page 99
 page 100
 page 101
 page 102
@@ -252,10 +293,7 @@ page 113
 page 114
 
 
-
-### 5.2.2
-
-### 5.2.3
+### 5.2.3 Granularizar: una función licuadora de audio para SndBuf
 
 ## 5.3
 
