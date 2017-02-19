@@ -143,8 +143,43 @@ interval (67, 60) => int int2;
 
 ### 5.1.3 Variable globales versus locales
 
+En la versión modificada del programa mostrada en el listado 5.4, es importante entender que las variables globales pueden ser usadas en cualquier lugar, incluyendo dentro de las funciones o estructuras con un par de llaves {}; las variables locales de la función, en este caso, result, no pueden ser llamadas fuera del ámbito (scope).
+
+Cada variable tiene un ámbito basado en dónde fue definida, llamado localidad. En cada función, existe un par de llaves {}. Esto define el área del ámbito local. Entonces en los programas 5.4 y 5.5, la función interval posee las variables de ámbito local note1, note2 y result.  El programa principal, como se muestra en el listado 5.4, posee las variables de ámbito global int1, int2, glob y howdy.
+
+El programa en el siguiente listado dará un error, "line 16: undefined variable result" (línea 16: resultado de variable indefinida). Pero si decides borrar la última línea, o comentarla al insertar // al principio, el programa correrá sin problemas.
+
+Listado 5.4 Ámbito de variables locales versus globales
+
+```chuck
+//define algunas variables globales
+"HODY" => string howdy;
+100.0 => float glob;
+int int1, int2;
+
+//Definición de la función
+fun int interval(int note1, int note2)
+{
+  int result;
+  note2 - note1 => result;
+  <<< howdy, glob >>>;
+  return result;
+}
+
+//Programa principal, prueba e imprime
+interval(60, 72) => int1;
+interval(67, 60) => int2;
+
+<<< int1, int2 >>>;
+
+<<< result >>>; //Esta línea causará el error
+```
+
+Hasta el momento has hecho y usado muchas funciones simples que operan en enteros interpretados como números de notas MIDI. Ahora harás y usarás algunas nuevas funciones tipo float para ganancia y frecuencia.
+
+## 5.2 Algunas funciones para calcular ganancia y frecuencia
+
 HEREIAM
-page 96
 page 97
 page 98
 page 99
@@ -163,10 +198,6 @@ page 111
 page 112
 page 113
 page 114
-
-
-
-## 5.2 Algunas funciones para calcular ganancia y frecuencia
 
 ### 5.2.1
 
