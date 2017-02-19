@@ -90,7 +90,7 @@ Llamar a addOctage con un argumento de 72 retorna 84, 90 retorna 102, y así. De
 addOctave(60);
 ```
 
-o
+> o
 
 >  ```chuck
 60 => addOctave;
