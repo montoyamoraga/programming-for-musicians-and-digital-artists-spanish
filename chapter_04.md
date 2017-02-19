@@ -31,7 +31,7 @@ Los ingenieros necesitan considerar muchas aritas cuando crean y trabajan con ar
 
 Para más información sobre sampling, formatos de archivos de sonido, entre otros, ve la referencia al final de este capítulo.
 
-Ahora sabes un poco más sobre cómo el sonido llega a tu computador. Profundicemos más ahora y reproduzcamos archivos de sonido usando el generador unitario incluido en ChucK llamado SndBuf.
+Ahora sabes un poco más sobre cómo el sonido llega a tu computador. Profundicemos más ahora y reproduzcamos archivos de sonido usando la unidad generadora incluida en ChucK llamada SndBuf.
 
 ## 4.2 SndBuf: carga y reproducción de archivos de sonido en ChucK
 
@@ -260,7 +260,7 @@ Hemos visto cómo usar Pan2 (listado 4.2) y cómo lograr paneo extremo - conexi�
 
 ## 4.3 Archivos de sonido stereo y reproducción
 
-El código que hemos visto hasta el momento trata los archivos de sample como si fueran de un solo canal, o mono (abreviación de monoaural, lo que significa "un oído"). No obstante, tienes dos oídos y usualmente escuchas sonidos y música usando dos parlantes o audífonos con dos casos. Recuerda que ya has estado usando un generador unitario Pan2 para mover ruido entre tus parlantes o audífonos izquierdos y derechos. Ahora vas a querer ser capaz de usar archivos de sonido stereo, de dos canales. Los archivos de sonido stereo, en un sentido, vienen pre-espacializados, así que no necesitas usar Pan2 para ubicarlos en el campo espacial sonoro. Un archivo stereo bien producido tendrá un sentido de espacio más auténtico que lo que puede lograrse con un archivo mono procesado por Pan2. Eso sí, es más difícil cambiar la espacialización una vez que el archivo ha sido grabado, haciendo que los ajustes de paneo dinámicamente sean mucho más difíciles con código.
+El código que hemos visto hasta el momento trata los archivos de sample como si fueran de un solo canal, o mono (abreviación de monoaural, lo que significa "un oído"). No obstante, tienes dos oídos y usualmente escuchas sonidos y música usando dos parlantes o audífonos con dos casos. Recuerda que ya has estado usando una unidad generadora Pan2 para mover ruido entre tus parlantes o audífonos izquierdos y derechos. Ahora vas a querer ser capaz de usar archivos de sonido stereo, de dos canales. Los archivos de sonido stereo, en un sentido, vienen pre-espacializados, así que no necesitas usar Pan2 para ubicarlos en el campo espacial sonoro. Un archivo stereo bien producido tendrá un sentido de espacio más auténtico que lo que puede lograrse con un archivo mono procesado por Pan2. Eso sí, es más difícil cambiar la espacialización una vez que el archivo ha sido grabado, haciendo que los ajustes de paneo dinámicamente sean mucho más difíciles con código.
 
 La carga de archivos de sonido stereo en ChucK es casi lo mismo que con archicos mono, pero en vez de usar SndBuf usas SndBuf2, como se muestra en el listado 4.6. La añadidura del 2 en el nombre indica que la unidad generadora es stereo, esto es, tiene dos canales de salida. Todo debería ser bastante standard hasta ahora, excepto por una nueva función/método que usas (1), para obtener una duración para avanzar el tiempo. EL método .length() de SndBuf y SndBuf2 retorna una duración que es exactamente igual al tiempo requerido para reproducir ese archivo. Entonces, puedes usarlo para preguntarle a SndBuf2 cuánto tiempo sonar y hacer ChucKing de esto inmediatamente a now.
 

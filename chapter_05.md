@@ -1,11 +1,13 @@
 # Funciones: haciendo tus propias herramientas
 
 Este capítulo cubre:
-*
-*
-*
-*
-*
+* Escribir y usar funciones en ChucK
+* Definir y nombrar funciones
+* Argumentos de función y tipos de retorno
+* Funciones que se llaman a sí mismas
+* Uso de funciones para composición de sonido y música
+
+Ahora que te has divertido creando una máquina de ritmos usando el UGen SndBuf
 
 HEREIAM
 page 92
