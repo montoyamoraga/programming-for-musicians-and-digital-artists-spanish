@@ -617,41 +617,52 @@ En el bucle principal, mostrado en el siguiente listado, de tu gran máquina de 
 Listado 4.12c Bucle principal para realmente tocar patrones de batería
 
 ```chuck
-//
+//Bucle infinito principal de batería
 while (true)
 {
-  //
+  //reproduce el bombo en todos los tiempos principales (0, 4, ...)
+  //(1) Usa MOD 4 para reproducir el bombo cada cuatro tiempos
   if (beat % 4 == 0)
   {
     0 => kick.pos;
   }
-  //
+  //después de un rato, reproduce la caja en los tiempos 2, 6, ...
+  //(2) reproduce la caja solo en algunos tiempos específicos
   if (beat % 4 == 2 && measure % 2 == 1)
   {
-    0 => sanre.pos;
+    0 => snare.pos;
   }
-  //
+  //después de un rato, reproduce aleatoriamente el hihat o el cencerro
+  //(3) reproduce el cencerro y el hihat solo después del primer compás
   if (measure > 1)
   {
+    //(4) reproduce el cencerro, controlado por un arreglo
     if (cowHits[beat])
     {
       0 => cowBell.pos;
     }
+    //(5) si no es el cencerro, entonces el hi-hat
     else
     {
+      //(6) el hi-hat tiene una ganancia aleatoria
       Math.random2f(0.0, 1.0) => hihat.gain;
       0 => hihat.pos;
     }
   }
 
-  //
+  //después de un rato, reproduce aplausos aleatoriamente espaciados al final del compás
+  //(7) reproduce los aplausos solo en algunos compases y tiempos
   if (beat > 11 && measure > 3)
   {
+    //(8) los aplausos tienen un paneo aleatorio
     Math.random2f(-1.0, 1.0) => claPan.pan;
     0 => claps.pos;
   }
+  //(9) espera un tiempo
   tempo => now;
-  (Beat + 1) % MAX_BEAT => beat;
+  //(10) y luego actualiza el contador de tiempo (MOD MAX)
+  (beat + 1) % MAX_BEAT => beat;
+  //(11) incrementa el contador de compases en cada nuevo compás
   if (beat == 0)
   {
     measure ++;
@@ -659,11 +670,13 @@ while (true)
 }
 ```
 
+USas un arreglo para controlar la reproducción del cencerro (1) en el listado 4.12b. Usas modulo para tocar el bombo en los tiempos 0, 4,8 y 12 (2) y la caja en los tiemops (2, 6, 10 y 14) (3), pero tocas la caja solo durante los compases impares - más sobre esto pronto. Para darle una estructura de composición a tu canción en batería, usas más lógica condicional (declaraciones if), comprobando el número de compás; que aumenta en uno cada MAX_BEAT tiempos, para comprobar si se deben tocar otros instrumentos. Por ejemplo, una vez que el contador de compases es mayor que 1 (4) empiezas a tocar o cencerro (5), según lo determinado por el arreglo (5), o hihat con  ganancia aleatoria (6), (7). Cuando el contador de compases es mayor a 3, añades aplausos con paneo aleatorio (9), pero solo en los tiempos 12 a 15 (8).
 
+Después de avanzar el tiempo según la duración tempo (10), todos los tambores pueden sonar, si es que son gatillados al hacer ChucKing de 0 a .pos, usas el operador matemático modulo para actualizar tu contador de tiempos (11). Al incrementar beat, y luego tomar el modulo de ese número con MAX_BEAT y grabando de vuelta ese valor en beat, automáticamente vuelves beat a cero cuando alcanza MAX_BEAT. Si el resultado de esa operación modulo en beat es cero (12), entonces incrementas el contador de compases, para que puedas usarlo en tu lógica para darle a tu canción una creciente tensión en la composición (3), (4), (8).
 
 ## 4.7 Resumen
 
-Ahora sabes c'omo hacer sonidos realísticos en ChucK, usando SndBuf para cargar y reproducir archivos de sonido, o samples. Aprendiste cómo cargar y reproducir sonidos usando lo siguiente:
+Ahora sabes cómo hacer sonidos realísticos en ChucK, usando SndBuf para cargar y reproducir archivos de sonido, o samples. Aprendiste cómo cargar y reproducir sonidos usando lo siguiente:
 
 * El método .read de SndBuf, en conjunto con me.dir(), para cargar un archivo de sonido desde la memoria
 * El método .pos para definir tu posición de reproducción
