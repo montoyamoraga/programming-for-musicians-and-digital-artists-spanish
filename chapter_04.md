@@ -545,8 +545,63 @@ Escuchando cómo esto suena, debería quedar claro que modulo puede tener usos m
 
 ## 4.6 Uniendo todas las partes: tu máquina de ritmos más genial hasta el momento
 
+Unamos todas las partes que hemos cubierto y hagamos un último asombroso ejemplo de máquina de ritmos para este capítulo. Usarás un número de sonidos de batería a través de SndBufs, y harás paneo stereo usando ambos Gains y el objeto Pan2. El siguiente listado muestra el comienzo de tu programa, donde configuras todo esto.
+
+Listado 4.12a SndBufs y conexiones de paneo para tu gran máquina de ritmos
+
+```chuck
+//Máquina de ritmos, versión 4.0
+//por un programador con ritmo, 1 de enero, 2099
+//Aquí usaremos Modulo % y aleatoreidad para tocar tambores
+
+//define Gains para izquierda, centro, derecha
+//declara un arreglo de gains maestros
+//izquierda [0], centro [1] y derecha [2]
+Gain master[3];
+master[0] => dac.left;
+master[1] => dac;
+master[2] => dac.right;
+
+//declara SndBufs para los sonidos de batería
+//se conectan a distintas posiciones de paneo
+//conecta kick al centro
+SndBuf kick => master[1];
+//conecta snare al centro
+SndBuf snare => master[1];
+//conecta hihat a la derecha
+SndBuf hihat => master[2];
+//conecta cowbell a la izquierda
+SndBuf cowbell => master[0];
+
+//usa un objeto Pan2 para los aplausos (claps)
+//conéctalos a las posiciones de paneo
+SndBuf claps => Pan2 claPan;
+//conecta el canal izquierdo (0) al gain maestro izquierdo
+claPan.chan(0) => master[0];
+//conecta el canal derecho (1) al gain maestro derecho
+claPan.chan(1) => master[2];
+
+//carga todos los archivos de sonido
+me.dir() + "/audio/kick_01.wav" => kick.read;
+me.dir() + "/audio/snare_01.wav" => snare.read;
+me.dir() + "/audio/hihat_01.wav" => hihat.read;
+me.dir() + "/audio/cowbell_01.wav" => cowbell.read;
+me.dir() + "/audio/clap_01.wav" => claps.read;
+```
+
+UNa vez que hayas declarado todos tus sonidos de batería, conectados a ganancias, objetos de paneo y el dac, y una vez que hayas cargado todos tus archivos de sonido, necesitas declarar variables que usarás en tu bucle principal para controlar tu batería. En el siguiente listado declaras un arreglo para controlar lógicamente los golpes al cencerro (1). Luego declaras otras variables globales que usará la batería.
+
+Listado 4.12b Configuración de variables para tu gran máquina de ritmos
+
+```chuck
+```
+
+Listado 4.12c Bucle principal para realmente tocar patrones de batería
+
+```chuck
+```
+
 HEREIAM
-page 88
 page 89
 page 90
 page 91
