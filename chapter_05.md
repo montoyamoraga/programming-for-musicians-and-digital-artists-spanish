@@ -179,8 +179,39 @@ Hasta el momento has hecho y usado muchas funciones simples que operan en entero
 
 ## 5.2 Algunas funciones para calcular ganancia y frecuencia
 
+Ahora que has visto los fundamentos de las funciones y los has usado para resolver un par de problemas simples, pongámoslos en acción para controlar sonido. Definirás funciones que operan en floats, interpretados como ganancias (0.0 a 1.0) y frecuencias, y luego los usarás para hacer que tus programas sean más expresivos musicalmente. Configurarás ganancias y frecuencias de oscilador usando tus nuevas funciones. Luego verás cómo definir y usar una función que aumente y disminuye gradualmente como una rampa, creando una envolvente de amplitud suave para cada nota que tocas. Luego volverás a usar un SndBuf para reproducir un archivo de sonido, pero con la adición de una función que hace cortes aleatorios en el archivo, granulariza, mientras se reproduce.
+
+Comencemos con un programa simple, mostrado en el listado 5.5, que tiene una función llamada halfGain (mitad de la ganancia) (2), que toma una valor de entrada de punto flotante llamado originalGain y arroja una salida de punto flotante. Como puedes ver, esta función es extremadamente simple, solo divide la entrada por la mitad antes de ser retornada al programa principal. Para usarla, haz un SinOsc s conectado al dac (1). Después salta al programa principal; la ejecución omite la definición de la función hasta que la función es llamada de forma explícita. Luego imprimies el valor actual de s.gain() (3). Observa que cuando llamas a s.gain() con un con junto vacío de paréntesis, un método interno de SinOsc retorna el valor actual de la ganancia .gain de s. Espera por un segundo, dejando que la onda sinusoidal toque a su volumen incial. Luego llama a la función p con la entrada s.gain() (4). La función se ejecuta, diviendo originalGain por la mitad y retornando el nuevo valor de 0.5 para definir s.gain. De nuevo espera 1 segundo mientras el objeto s es reproducido al nuevo volumen más bajo.
+
+Listado 5.5 Función para dividir la ganancia (o cualquier float) por la mitad
+
+```chuck
+SinOsc s => dac;
+
+//
+fun float halfGain(float originalGain)
+{
+  return (originalGain * 0.5);
+}
+
+//
+<<< "ganancia completa: ", s.gain() >>>;
+
+second => now;
+
+//
+halfGain(s.gain()) => s.gain;
+
+<<< "la ganancia es ahora la mitad: ", s.gain() >>>;
+
+second => now;
+```
+
 HEREIAM
-page 97
+
+### 5.2.1 Hacer música real con funciones
+
+
 page 98
 page 99
 page 100
@@ -199,7 +230,7 @@ page 112
 page 113
 page 114
 
-### 5.2.1
+
 
 ### 5.2.2
 
