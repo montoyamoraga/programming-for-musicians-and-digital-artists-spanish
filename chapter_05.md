@@ -273,7 +273,7 @@ for (100 => float freq; freq < 500; 0.5 +=> freq)
 
 Has visto dos ejemplos de cómo las funciones pueden ser usadas para ayudar a manipular métodos .gain y .freq de tus unidades generadores tipo oscilador. No obstante, has estado controlando .freq y .gain sin usar tus propias funciones, ¿no es cierto? Es agradable, por otro lado, haber nombrado con sentido las funciones, incluso si hacían algo que pudiste haber hecho de otra manera, porque cualquiera que lea tu código (incluyéndote a ti en el futuro) puede adivinar qué están haciendo las funciones octave y fifth.
 
-### 5.2.2 Uso de una función para cambiar gradualmente parámetros sonoros 
+### 5.2.2 Uso de una función para cambiar gradualmente parámetros sonoros
 
 HEREIAM
 page 100
@@ -295,22 +295,22 @@ page 114
 
 ### 5.2.3 Granularizar: una función licuadora de audio para SndBuf
 
-## 5.3
+## 5.3 Funciones para construir formas de composición
 
-### 5.3.1
+### 5.3.1 Tocar una escala con funciones y variables globales
 
-### 5.3.2
+### 5.3.2 Cambiar alturas de ecsalas usando una función en un arreglo
 
-### 5.3.3
+### 5.3.3 Construir una máquina de ritmos con funciones y arreglos
 
-## 5.4
+## 5.4 Recursión (funciones que se llaman a sí mismas)
 
-### 5.4.1
+### 5.4.1 Cálculo factorial con recursión
 
-### 5.4.2
+### 5.4.2 Sonificación de la función factorial recursiva
 
-### 5.4.3
+### 5.4.3 Uso de recursión para crear estructuras rítmicas
 
-## 5.5
+## 5.5 Ejemplo: hacer acordes con funciones
 
 ## 5.6 Resumen
