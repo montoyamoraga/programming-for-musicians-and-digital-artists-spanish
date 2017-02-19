@@ -435,6 +435,13 @@ En el listado 4.9 usas un bucle for (1) para tocar 16 tiempos cada vez. Músicos
 
 ### 4.4.2 Control la reproducción de los tambores usando arreglos lógicos
 
+Usa tu conocimiento sobre arreglos para controlar cuando la batería toca, como se muestra en el listado 4.10. Ahora añade otro sonido de batería (1), un sonido de platillo hi-hat. Aquí cambias el bucle for por uno while; nuevamente, existen múltiples formas de resolver problemas en ChucK. Defines dos arreglos (2) que contienen valores lógicos, o 1 o 0, para decirle a la batería si toca o no en ese tiempo. Entonces aquí el índice en el arreglo es el número de tiempo. Eso hace que tu lógica sea muy simple: en vez de todos esos || o condiciones, lees la variable lógica desde el arreglo en el índice adecuado de tiempo, y te indica si debes o no tocar ese sonido. Usas un arreglo para el bombo y uno para la caja, mientras que el sonido hi-hat es tocado en cada tiempo. No obstante, sería muy fácil introducir un tercer arreglo hatHits[] y someter ese platillo a su propia declaración lógica también. Observa que de nuevo usas la función .cap() para determinar el tamaño de uno de tus arreglos.
+
+Listado 4.10 Uso de arreglos para mejorar aún más tu máquina de ritmos
+
+```chuck
+```
+
 HEREIAM
 page 85
 page 86
@@ -443,9 +450,6 @@ page 88
 page 89
 page 90
 page 91
-
-
-
 
 ## 4.5 Una nueva herramienta matemática/musical: el operador modulo
 
