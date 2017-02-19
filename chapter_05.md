@@ -186,33 +186,54 @@ Comencemos con un programa simple, mostrado en el listado 5.5, que tiene una fun
 Listado 5.5 Función para dividir la ganancia (o cualquier float) por la mitad
 
 ```chuck
+//(1) Oscilador para probar la función halfGain
 SinOsc s => dac;
 
-//
+//nuestra función
+//(2) Define la función halfGain
 fun float halfGain(float originalGain)
 {
   return (originalGain * 0.5);
 }
 
-//
+//recuerda que .gain es una función interna de SinOsc
+//(3) Imprime la ganancia inicial de SinOsc
 <<< "ganancia completa: ", s.gain() >>>;
 
 second => now;
 
-//
+//llamada a halfGain()
 halfGain(s.gain()) => s.gain;
-
+//(4) Imprime la nueva ganancia de SinOsc tras ser divivida por la mitad
 <<< "la ganancia es ahora la mitad: ", s.gain() >>>;
-
 second => now;
 ```
 
-HEREIAM
-
 ### 5.2.1 Hacer música real con funciones
 
+A continuación, vas a construir un ejemplo musical real que usa tres diferentes osciladores de onda cuadrada: s, t y u. Esta vez quieres usar las funciones para ayudar a configurar las frecuencias de todos los osciladores. Primero, define dos funciones, octave() y fifth() (octava y quinta):
 
-page 98
+```chuck
+//Funciones para octava y quinta
+fun float octave(float originalFreq)
+{
+  return 2.0 * originalFreq;
+}
+
+fun float fifth(float originalFreq)
+{
+  return 1.5 * originalFreq;
+}
+```
+
+Observa que estas funciones tienen el mismo nombre, originalFreq, para el argumento de entrada. Como el ámbito de ambas variables es solo local a cada una de las funciones, ¡todo está bien! El originalFreq en la función octave() solo puede ser visto dentro de su propio ámbito local, tal como el originalFreq de la función fifth() que solo puede ser visto localmente a esa función. Para evitar confusión, probablemente no quieres nombrar alguna variable local con el nombre originalFreq.
+
+Si escarbas un poco más hondo, verás que la nueva función octave() es diferente de la anterior (que aceptaba un número de nota MIDI entero). Esta toma la variable de entrada y la multiplica por 2.0. La función espera un valor de frecuencia en Hertz. La teoría acústica postula que un salto de una octava ocurre cada vez que se duplica la frecuencia. La función fifth() multiplica por 1.5 resultando en un intervalo musical llamado "quinta justa" (el nombre se debe a que es la quinta nota en una escala musical standard) sobre cualquier argumento de frecuencia.
+
+Observemos ahora un programa completo que usa ambas funciones.
+
+HEREIAM
+
 page 99
 page 100
 page 101
