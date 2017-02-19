@@ -98,9 +98,52 @@ addOctave(60);
 
 > Estas dos maneras de invocar una función funcionan exactamente de la misma manera.
 
+Hagamos una prueba simple sonora/musical de la función addOctave y probemos también dos maneras de llamar funciones, añadiendo estas líneas al listado 5.1. En el listado 5.2 tocas un tono sinusoidal (1) en el C central (nota MIDI 60, asignada a una variable entera llamada note (2)). Primero usa la forma con paréntesis de llamar a Std.mtof (3) y luego usa la forma "hacer ChucKing" de la función addOctave y la función Std.mtof (4). Como puedes ver, las dos funcionan bien.
+
+Listado 5.2 Prueba con sonido de la función addOctave
+
+```chuck
+//Usemos la función addOctave para hacer música
+//(1) Oscilador para poder escuchar la función addOctave
+SinOsc s => dac;
+//(2) Nota inicial
+60 => int myNote;
+
+//(3) Toca la nota inicial
+Std.mtof(myNote) => s.freq;
+second => now;
+
+//(4) Toca una octava más arriba
+myNote => addOctave => Std.mtof => s.freq;
+second => now;
+```
+
+Ahora volvamos atrás y probemos la  función interval. Pasa dos argumentos de entrada a la función, note1 y note2, como se muestra en el siguiente listado. La función es ejecutada dps veces, con dos pares de números distintos, que luego calculan result, dos veces, retornándolo al programa principal para ser impresos, resultando esto en la consola:
+
+```chuck
+12 -7
+```
+
+Listado 5.3 Definición y prueba de una función de intervalo MIDI
+
+```chuck
+//Definición de la función
+fun int interval(int note1, int note2)
+{
+  note2 - note1 => int result;
+  return result;
+}
+
+//programa principal, prueba e imprime
+interval (60, 72) => int int1;
+interval (67, 60) => int int2;
+
+<<< int1, int2 >>>
+```
+
+### 5.1.3 Variable globales versus locales
 
 HEREIAM
-page 95
 page 96
 page 97
 page 98
@@ -121,9 +164,9 @@ page 112
 page 113
 page 114
 
-### 5.1.3
 
-## 5.2
+
+## 5.2 Algunas funciones para calcular ganancia y frecuencia
 
 ### 5.2.1
 
