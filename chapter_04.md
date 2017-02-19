@@ -502,7 +502,44 @@ El programa en el listado 4.11 imprimime y "sonifica" tus números modulo para a
 
 > Una nota sobre estilo de programación
 
-> En el listado 4.11, defines y asignas un entero llamado MOd para usar por el resto del programa. 
+> En el listado 4.11, defines y asignas un entero llamado MOD a usar por el resto del programa, sin modificarlo mientras el programa está corriendo. Puedes cambiar la definición inicial, que cambia el sonido, pero MOD es una constante durante cualquier ejecución del programa. Es común en programación llamarle a estas variables constantes con nombres usando solo letras mayúsculas. Es así que MOD es el nombre que hemos seleccionado para esta variable. En nuestro último ejemplo de este capítulo, declararemos y usaremos otra variable constante llamada MAX_BEAT. Mantente atento a su aparición, y recuerda que puedes hacer esto en tus propios programas para hacerlos de más fácil lectura.
+
+En un bucle for con una variable contador llamada beat ascendente desde cero (3), tocas el click más agudo en cada tiempo (4). No obstante, toca el click grave solo cuando la condiciñón beat % MOD (en este caso, beat % 4, que se le e como "beat modulo cuatro") sea igual a cero (5). Esto será cierto en cada tiempo MOD-ésimo, y verás el resultado del sonido sonificado. Sigue la cuenta y ovserva los resultados impresos en la consola.
+
+Listado 4.11 Uso del operador modulo
+
+```
+//
+//
+
+//
+SndBuf clickhi => dac;
+SndBuf clicklo => dac;
+
+me.dir() + "/audio/click_02.wav" => clickhi.read;
+me.dir() + "/audio/click_01.wav" => clicklo.read;
+
+//
+4 => int MOD;
+
+for (0 => int beat; beat < 24; beat++)
+{
+  //
+  <<< beat, "modulo", MOD, " is: ", beat % MOD >>>;
+
+  //
+  0 => clickhi.pos;
+
+  //
+  if (beat % MOD == 0)
+  {
+    0 => clicklo.pos;
+  }
+  0.5 :: second => now;
+}
+```
+
+
 
 HEREIAM
 page 87
