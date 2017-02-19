@@ -440,10 +440,64 @@ Usa tu conocimiento sobre arreglos para controlar cuando la batería toca, como 
 Listado 4.10 Uso de arreglos para mejorar aún más tu máquina de ritmos
 
 ```chuck
+//Máquina de ritmos, versión 3.0
+//por programador con ritmo, 31 de diciembre, 1999
+
+//SndBufs para bombo (kick, bass drum) y caja (snare) y hi-hat
+//(1) Los SndBufs kick, snare y hihat van al mezclador y al dac
+SndBuf kick => Gain master => dac;
+SndBuf snare => master;
+SndBuf hihat => master;
+
+
+//carga algunos archivos
+me.dir() + "/audio/kick_01.wav" => kick.read;
+me.dir() + "/audio/snare_01.wav" => snare.read;
+me.dir() + "/audio/hihat_01.wav" => hihat.read;
+
+0.3 => hihat.gain;
+
+0.15 :: second -> dur tempo;
+
+//partituras (arreglos) para decirle a la batería cuando tocar
+//(2) Arreglos para controlar cuando tocan kick y snare
+[1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0] @=> int kickHits[];
+[0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1] @=> int snareHits[];
+
+
+while (true)
+{
+  0 => int beat;
+  while (beat < kickHits.cap())
+  {
+    //toca el kick basado en el valor del arreglo
+    if (kickHits[beat])
+    {
+      0 => kick.pos;
+    }
+    //toca el snare basado en el valor del arreglo
+    if (snareHits[beat])
+    {
+      0 => snare.pos;
+    }
+    //siempre toca el hihat
+    0 => hihat.pos;
+    //avanza el tiempo para que el sonido sea emitido
+    tempo => now;
+    //Incrementa al siguiente tiempo
+    beat++;
+  }
+}
 ```
 
+PRUEBA ESTO Añade un arregllo hatHits lleno de 1s y 0s y añade el código para tocar el hihat, condicional a cada entrada del arreglo. Cambia los 1s y 0s en todos los arreglos para hacer tus propios patrones de batería. Aún más, prueba cambiando las duraciones de los patrones, cambiando los largos de los arreglos. Asegúrate de que todos tengan el mismo largo después de que hayas hecho los cambios, o podrías obtener un error de "Array index out of bounds" (índice del arreglo fuera de rango).
+
+Has mejorado tu máquina de ritmos usando lógica y estructuras de bucle y poniendo variables lógicas en arreglos, correspondientes a patrones de batería que tus bucles internos pueden tocar automáticamente. Pero hay mucho más que puedes hacer. A continuación, aprenderás un operador matemático que puede ser extremadamente útil para hacer patrones musicales.
+
+## 4.5 Una nueva herramienta matemática/musical: el operador modulo
+
+
 HEREIAM
-page 85
 page 86
 page 87
 page 88
@@ -451,7 +505,6 @@ page 89
 page 90
 page 91
 
-## 4.5 Una nueva herramienta matemática/musical: el operador modulo
 
 ## 4.6 Uniendo todas las partes: tu máquina de ritmos más genial hasta el momento
 
