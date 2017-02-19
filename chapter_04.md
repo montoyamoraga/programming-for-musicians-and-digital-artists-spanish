@@ -617,10 +617,50 @@ En el bucle principal, mostrado en el siguiente listado, de tu gran máquina de 
 Listado 4.12c Bucle principal para realmente tocar patrones de batería
 
 ```chuck
+//
+while (true)
+{
+  //
+  if (beat % 4 == 0)
+  {
+    0 => kick.pos;
+  }
+  //
+  if (beat % 4 == 2 && measure % 2 == 1)
+  {
+    0 => sanre.pos;
+  }
+  //
+  if (measure > 1)
+  {
+    if (cowHits[beat])
+    {
+      0 => cowBell.pos;
+    }
+    else
+    {
+      Math.random2f(0.0, 1.0) => hihat.gain;
+      0 => hihat.pos;
+    }
+  }
+
+  //
+  if (beat > 11 && measure > 3)
+  {
+    Math.random2f(-1.0, 1.0) => claPan.pan;
+    0 => claps.pos;
+  }
+  tempo => now;
+  (Beat + 1) % MAX_BEAT => beat;
+  if (beat == 0)
+  {
+    measure ++;
+  }
+}
 ```
 
+
 HEREIAM
-page 89
 page 90
 page 91
 
