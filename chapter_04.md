@@ -385,31 +385,37 @@ while(true)
 Listado 4.9 Mejorando el bucle while de tu máquina de ritmos
 
 ```chuck
-//
-//
+//Máquina de ritmos, versión 2.0
+//por programador con ritmo, 32 de diciembre, 1999
 
-//
-//
+//SndBufs para bombo (kick, bass drum) y caja (snare)
+//(1) Bombo al mezclador Gain master y al dac
 SndBuf kick => Gain master => dac;
+//(2) La caja también va al mezclador
 SndBuf snare => master;
 
-//
+//carga algunos archivos
+//(3) Carga tus archivos de sonido
 me.dir() + "/audio/kick_01.wav" => kick.read;
 me.dir() + "/audio/snare_01.wav" => snare.read;
 
-//
+//declara una nueva variable de tempo
+//(4) La duración del tempo es la separación entre los tiempos
 0.15 :: second => dur tempo;
 
 while(true)
 {
+  //(5) Bucle sobre una "barra" de 16 tiempos
   for (0 => int beat; beat < 16; beat++)
   {
-    //
+    //reproduce el bombo en los tiempos 0, 4, 8 y 12
+    //(6) Toca solo el bombo son el algunos tiempos específicos
     if (beat == 0 || beat == 4 || beat == 8 || beat == 12)
     {
       0 => kick.pos;
     }
-    //
+    //reproduce la caja en los tiempos 4, 10, 13 y 14
+    //(7) Toca solo la caja en algunos tiempos específicos
     if (beat == 4 || beat == 10 || beat == 13 || beat == 14)
     {
       0 => snare.pos;
@@ -421,8 +427,15 @@ while(true)
 
 NOTA: Puedes cambiar los números de if (beat == N) para revisar cómo cambia el patrón en general
 
+En el listado 4.9 usas un bucle for (1) para tocar 16 tiempos cada vez. Músicos y compositores llaman a esto un compás. Usas operadores lógicos para y expresiones como if y || (or) para tocar los distintos tambores en diferentes tiempos dentro de tu compás; tocas el bombo en algunos tiempos (2) y la caja en otros (3). Prueba cambiando los números en las condiciones beat == #, haciendo click en el botón Replace Shred, y observa como el patrón cambia. Puedes volverte muy bueno en hacer click en el botón en el momento correcto, para que tu patrón de batería cambie, pero conservando el tiempo básico. En los próximos capítulos aprenderás técnicas para usar el fuerte sentido y control de tiempo de ChucK para lograr este tipo de temporización sobre la marcha de forma exacta.
+
+> Bucles y otras estructuras de control pueden ser anidadas
+
+> Nota que en el listado 4.9 se ha anidado un bucle for dentro un bucle while, y lo hemos hecho también en ejemplos anteriores en otro capítulos. Esto no presenta ningún problema, por supuesto, y es realmente poderoso. Puedes anidar bucles for dentro de bucles for, bucles while dentro de bucles while o for, ifs dentro de ifs, ifs dentro de elses, con cuánta profundidad quieras. Mientras mantengas tus llaves derechas y alineadas, para lo que miniAudicle te brinda ayuda, puedes saber con mayor facilidad en qué parte cada bloque empieza y termina.
+
+### 4.4.2 Control la reproducción de los tambores usando arreglos lógicos
+
 HEREIAM
-page 84
 page 85
 page 86
 page 87
@@ -433,9 +446,8 @@ page 91
 
 
 
-### 4.4.2 Control la reproducción de los tambores usando arreglos lógicos
 
-## 4.5 Una nueva herramienta matemática/musical:: el operador modulo
+## 4.5 Una nueva herramienta matemática/musical: el operador modulo
 
 ## 4.6 Uniendo todas las partes: tu máquina de ritmos más genial hasta el momento
 
