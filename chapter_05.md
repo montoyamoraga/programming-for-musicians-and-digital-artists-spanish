@@ -41,9 +41,65 @@ function int interval(int note1, int note2)
 }
 ```
 
+Sí, esto es bastante trivial, porque podrías haber restado los dos números de notas, pero hacerlo en una función cumple con dos propósitos; puedes usarla una y otra vez y puedes nombrarla con algo que te recuerde por qué estás haciendo el cálculo, en este caso, interval.
+
+Como puedes ver en la figura 5.3, puedes pensar en una función como un módulo de código con valores de entradas y un valor de salida. Este tiene dos entradas de variables enteras llamadas note1 y note2. La función usa esos valores y crea un resultado de valor entero que es luego entregado al programa que llamó a la función. Por ejemplo, si pasas (72, 60) como entrada, como los argumentos, la función interval retorna 12 (72-60), el número de pasos en una octava.
+
+Para entender mejor este proceso, empecemos con un ejemplo aún más simple, una función que sube en una octava cualquier número de nota MIDI que se le pasa, como se muestra en el listado 5.1. Primero creas una función llamada addOctave (1) con un arugmento de entrada entero que llamas note y declaras un tipo de retono int. Luego creas un resultado entero llamado result (2), que puedes usar para almacenar tu respuesta final. Sumas 12 (una octava) a tu variable note (3) y almacenas ese nuevo valor en tu variable result. La variable result es retornada al programa principal.
+
+Cuando el programa empieza, siempre parte en el programa principal y no corre la función hasta sque es llamada. El programa empieza donde addOctave() es llamada (5). Observa que addOctave() tiene un par de paréntesis, y aquí puedes ingresar cualquier entrada que quieras (pero debe ser un entero). En este caso empiezas pasando el número 60, y la función es ejecutada usando 60 como argumento y corriendo la función. Al final de la función, el resultado es retornado, enviando 72 a answer (6).
+
+Listado 5.2 Definición y prueba de una función que suma una octava a cualquier número de nota MIDI
+
+```chuck
+//Una función simple de ejemplo
+
+//declaramos nuestra función aquí
+//(1) Declaración de la función
+fun int addOctave(int note)
+{
+  //(2) Resultado a retornar
+  int result;
+  //(3) Calcula el valor a retornar
+  note + 12 => result;
+  //(4) Lo retorna
+  return result
+}
+
+//Programa principal de prueba de addOctave, llama e imprime el resultado
+//(5) Usa la función
+addOctave(60) => int answer;
+
+//(6) Revisa el resultado
+<<< answer >>>;
+```
+
+answer imprime esto en la consola:
+
+```chuck
+72 :(int)
+```
+
+Llamar a addOctage con un argumento de 72 retorna 84, 90 retorna 102, y así. Definir una función como addOctave te permite usarla una y otra vez y como tiene un nombre lleno de significado, puedes saber qué estas haciendo cada vez que la usas o la vez en el código.
+
+> Dos maneras de llamar funciones en ChucK
+
+> Las funciones con un argumento pueden ser llamadas de dos maneras:
+
+```chuck
+addOctave(60);
+```
+
+o
+
+```chuck
+60 => addOctave;
+```
+
+> Estas dos maneras de invocar una función funcionan exactamente de la misma manera.
+
 
 HEREIAM
-page 94
 page 95
 page 96
 page 97
