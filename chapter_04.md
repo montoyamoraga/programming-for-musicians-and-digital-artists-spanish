@@ -496,9 +496,15 @@ Has mejorado tu máquina de ritmos usando lógica y estructuras de bucle y ponie
 
 ## 4.5 Una nueva herramienta matemática/musical: el operador modulo
 
+Digamos que quieres tocar un tambor en particular cada cuatro tiempos, o un tiempo por medio cada N tiempos, con N arbitrario. Para darte otra herramienta de ChucK y hacer que tu máqiuna de ritmos - y composiciones en general - sea aún más flexible, vamos a introducir un nuevo operador matemático llamado modulo. Denotado por el símbolo %, modulo es un tipo de división. A diferencia de la división normal, modulo retorna el resto de una operación de división. Por ejemplo 9 % 4 retorna el número 1, porque 9 dividido por 4 es 2 con un resto de 1. Similarmente, 14 % 4 retorna 2 (3 con un resto de 2, pero modulo solo retorna el resto).
+
+El programa en el listado 4.11 imprimime y "sonifica" tus números modulo para ayudarte a ntender mejor cómo funciona el operador modulo. La sonificación es la muestra de datos o estado de procesos a través de sonidos, siendo ChucK una herramienta muy buena en eso. Aquí usas un par de sonidos click (uno agudo, otro grave) cargados en SndBufs (1). También defines y asignas una variable llamada MOD (2), que será usada (y luego cambiada) para hacer una demostración del operador modulo.
+
+> Una nota sobre estilo de programación
+
+> En el listado 4.11, defines y asignas un entero llamado MOd para usar por el resto del programa. 
 
 HEREIAM
-page 86
 page 87
 page 88
 page 89
