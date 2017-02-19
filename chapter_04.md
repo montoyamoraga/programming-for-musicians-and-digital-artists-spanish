@@ -509,28 +509,30 @@ En un bucle for con una variable contador llamada beat ascendente desde cero (3)
 Listado 4.11 Uso del operador modulo
 
 ```
-//
-//
+//Matemática de moudlo para músico
+//por allguien matemático y musical, 11/11/11
 
-//
+//Crear y cargar un par de SndBufs para sonificar modulo
+//(1) Cargar dos archivos de sonido distintos
 SndBuf clickhi => dac;
 SndBuf clicklo => dac;
-
 me.dir() + "/audio/click_02.wav" => clickhi.read;
 me.dir() + "/audio/click_01.wav" => clicklo.read;
 
-//
+//define un número para nuestro modulo
+//(2) Modulo limita a MOD
 4 => int MOD;
 
+//(3) Compás de 24 tiempos
 for (0 => int beat; beat < 24; beat++)
 {
-  //
+  //imprime el tiempo y tiempo modulo MOD
   <<< beat, "modulo", MOD, " is: ", beat % MOD >>>;
 
-  //
+  //(4) sonido agudo en cada tiempo
   0 => clickhi.pos;
 
-  //
+  //(5) Sonido grave solo en cada MOD-ésimo tiempo
   if (beat % MOD == 0)
   {
     0 => clicklo.pos;
@@ -539,17 +541,18 @@ for (0 => int beat; beat < 24; beat++)
 }
 ```
 
+Escuchando cómo esto suena, debería quedar claro que modulo puede tener usos musicales; de otro manera, no la habríamos introducido. Modulo puede jugar un rol importante en la construcción de máquinas de ritmo, secuenciadores (bucles que tocan baterías, notas, lo que sea) y composiciones en general. Es así que tienes otra herramienta para usar al determinar cuándo la batería u otros elementos deben reproducirse y también para computar índices cíclicos, como los que podrías necesitar para leer arreglos una y otra vez.
 
+## 4.6 Uniendo todas las partes: tu máquina de ritmos más genial hasta el momento
 
 HEREIAM
-page 87
 page 88
 page 89
 page 90
 page 91
 
 
-## 4.6 Uniendo todas las partes: tu máquina de ritmos más genial hasta el momento
+
 
 ## 4.7 Resumen
 
