@@ -1,7 +1,5 @@
 #
 
-page 115
-page 116
 page 117
 page 118
 page 118
