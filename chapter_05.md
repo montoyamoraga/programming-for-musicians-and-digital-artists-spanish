@@ -86,13 +86,13 @@ Llamar a addOctage con un argumento de 72 retorna 84, 90 retorna 102, y así. De
 
 > Las funciones con un argumento pueden ser llamadas de dos maneras:
 
-```chuck
+> ```chuck
 addOctave(60);
 ```
 
 o
 
-```chuck
+>  ```chuck
 60 => addOctave;
 ```
 
