@@ -660,14 +660,21 @@ while (true)
 ```
 
 
-HEREIAM
-page 90
-page 91
-
-
-
 
 ## 4.7 Resumen
+
+Ahora sabes c'omo hacer sonidos realísticos en ChucK, usando SndBuf para cargar y reproducir archivos de sonido, o samples. Aprendiste cómo cargar y reproducir sonidos usando lo siguiente:
+
+* El método .read de SndBuf, en conjunto con me.dir(), para cargar un archivo de sonido desde la memoria
+* El método .pos para definir tu posición de reproducción
+* El método .rate para controlar cuán rápido y cuán hacia adelante o hacia atrás se reproduce un archivo
+* SndBuf2 para archivos stereo
+* Uno o varios SndBufs para múltiples archivos de sonido
+* El operador matemático modulo
+
+Ahora que hemos programado nuestro primer secuenciador de batería, tu programación para composición puede avanzar a un nuevo nivel de diversión y expresión. Fue un ejemplo bastante complejo, pero fue hecho a partir de todo lo que hemos usado hasta el momento en nuestra travesía de aprender ChucK. Los resultados son decididamente asombrosos. Te motivamos a juntar más items que has aprendido hasta el momento y modificar este ritmo techno expresivo para solidificar el conocimiento que has obtenido hasta ahora.
+
+Podrás estar preguntándote si existe una manera de factorizar un poco de ese código, algún tipo de atajo o método para agrupar cosas, para hacer tu código más fácil de leer y reusable. Resulta que esta es la dirección que tomaremos a continuación. Hemos estado hablando de métodos (funciones) todo el tiempo, como cuando defines .gain o .freq o .pos. A continuación, vas a aprender cómo escribir tus propias funciones para hacer tu vida más fácil y darle superpoderes a tus programas. Nos vemos en el capítulo 5.
 
 Otras lecturas recomendadas
 
