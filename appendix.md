@@ -92,7 +92,6 @@ $ miniAudicle
 
 El editor de miniAudicle y las ventanas asociadas deberían aparecer en tu pantalla. ¡Ahora estás listo para trabajar con ChucK!
 
-
 > Chuck en Raspberry Pi
 
 > Correr ChucK en una Raspberry Pi es también muy sencillo. Si tu Raspberry Pi está corriendo Ubuntu Linux o una variante relacionada, puedes seguir las instrucciones previas para Linux. Alternativamente, te recomendamos instalar Satellite CCRMA en tu Raspberry Pi. Satellite CCRMA es una versión completamente personalizada de Linux que incluye un número de aplicaciones para música por computador y computación física, incluyendo ChucK. Para más información, visita [http://ccrma.stanford.edu/~eberdahl/satellite/](http://ccrma.stanford.edu/~eberdahl/satellite/).
