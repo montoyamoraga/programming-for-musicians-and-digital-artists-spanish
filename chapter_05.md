@@ -681,7 +681,7 @@ recurScale(67, 1.0 :: second);
 
 Es así que con poco de código, eres capaz de tocar muchas y muchas notas estructuradas (no-aleatorias), usando el poder de la recursión. POdrías, por supuesto, lograr lo mismo usando un bucle for o programando explícitamente cada nota, no obstante la recursión te brinda una nueva y poderosa técnica para controlar tu sonido y música.
 
-NOTA Deberíamos advertirte que, aunque extremedamente poderosas, las recursiones en programación pueden ser un poco peligrosas, porque siempre tienes que construir las conidiciones de detención (if note > 40) en tus recursiones. De otro modo, se llamarán a sí mismas para siempre y nunca terminarán. A pesar de eso, siempre tienes los botones Remove Last Shred y Clear VM en el miniAudicle para detener cualquier proceso zombie que no quiera morir.
+NOTA Deberíamos advertirte que, aunque extremadamente poderosas, las recursiones en programación pueden ser un poco peligrosas, porque siempre tienes que construir las conidiciones de detención (if note > 40) en tus recursiones. De otro modo, se llamarán a sí mismas para siempre y nunca terminarán. A pesar de eso, siempre tienes los botones Remove Last Shred y Clear VM en el miniAudicle para detener cualquier proceso zombie que no quiera morir.
 
 ### 5.4.1 Cálculo factorial con recursión
 
