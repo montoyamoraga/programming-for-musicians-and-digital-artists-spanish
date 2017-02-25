@@ -275,11 +275,195 @@ Has visto dos ejemplos de cómo las funciones pueden ser usadas para ayudar a ma
 
 ### 5.2.2 Uso de una función para cambiar gradualmente parámetros sonoros
 
+En el siguiente ejemplo te mostraremos cómo hacer algo que sería mucho más difícil y menos flexible si no usaras una función. Vamos a definir una función para cambiar gradualmente el volumen de un oscilador; haciendo una rampa hacia arriba y abajo a una tasa arbitraria. Si revisas el programa del listado 5.7 verás nuestra nueva función swell() (1). Observa que tiene cuatro argumentos: un UGen llamado osc y tres entradas de punto flotante: begin, end y step. Las últimas tres variables son usadas para controlar dos bucles, uno para aumentar (2) y otro para disminuir (3) el volumen del oscilador osc.
+
+NOTA El tipo de retorno de la función swell es void, lo que significa que no retorna valor alguno, porque no lo necesita. ¿Recuerdas el capítulo 1 cuando introducimos tipos de datos, y te prometimos que usaremos void después? Bueno, aquí estamos. También puedes hacer funciones con argumentos void, como lo hiciste con s.gain() en el listado 5.6, porque no necesita una entrada de datos para cumplir su labor. Algunas funciones como esta tienen un valor de retorno, otras realizan tareas útiles sin pedir ni arrojar datos. Esto podría servir para variables globales, entre otros.
+
+Listado 5.7 Uso de una función swell para hacer rampas arriba y abajo del volumen de un oscilador
+
+```chuck
+//función swell, opera sobre cualquier tipo de UGen
+//(1) definición de la función swell
+fun void swell(UGen osc, float begin, float end, float step)
+{
+  float val;
+  //aumenta el volumen
+  //(2) bucle for para hacer una rampa ascendente de volumen
+  for (begin => val; val < end; step+=val)
+  {
+    val => osc.gain;
+    0.01 :: second => now;
+  }
+
+  //disminuye el volumen
+  //(3) bucle for para hacer una rampa descendente de volumen
+  while (val < begin)
+  {
+    val => osc.gain;
+    step -=> val;
+    0.01 :: second => now;
+  }
+}
+```
+
+NOTA Cuando definimos nuestra función swell(), especificamos que el primer argumento sea un UGen, lo que significa que le puedes pasar a la función absolutamente cualquier unidad generadora en ese lugar. Esto se aprovecha de de una propiedad llamada herencia, sobre la que aprenderemos más en un capítulo más adelante. Por ahora, puedes usarla para hacer que tus funciones sean extremadamente flexibles y mucho más reusables. También aprenderás sobre muchos más tipos de UGens, a partir del próximo capítulo.
+
+Si revisas nuestra programa principal, mostrado en el listado 5.8, que usa swell, verás una cadena de audio oscilador => dac (1) y un arreglo que usaremos para tocar una melodía (2). Luego entras a un bucle para tocar todas las notas del arreglo (3). En cada oportunidad, se llama a la función swell(5). Observa que swell() hace que el tiempo transcurra dentro de ella. Es importante enteder que el programa principal salta a la función en (4) y procede a ejecutar cada línea de código. El tiempo pasa en esta función mientras el volumen cambia, y cuando la función temrina, la función retorna al programa principal, que ejecuta otra vez el bucle.
+
+Listado 5.8 Programa principal que usa swell de forma expresiva para tocar una melodía
+
+```chuck
+//programa principal
+//nuestro patch sonro
+//(1) oscilador de onda triangular para probar la función swell
+TriOsc tri => dac;
+
+//(2)arreglo global de las notas a tocar
+[60, 62, 63, 65, 63, 64, 65, 58, 57, 56] @=> int notes[];
+
+//función swell aplicada a cada nota
+//(3) itera sobre las notas del arreglo
+for (0 => int i; i < notes.cap(); i++) {
+  //(4) define la frecuencia
+  Std.mtof(notes[i]) => tri.freq;
+  //(5) llamada a la función swell
+  swell(tri, 0.2, 1.0, 0.01);
+}
+```
+
+Como puedes ver, esta es una función altamente expresiva que puede ser usada para convertir un oscilador simple en un instrumento musical con comienzos y finales suaves de notas indidividuales.
+
+### 5.2.3 Granularizar: una función licuadora de audio para SndBuf
+
+En un ejemplo final para esta sección, usarás conceptos que has aprendido en el capítulo 4 (sobre samples y archivos de audio), pero ahora usando una función. El programa en el listado 5.9 carga y reproduce un SndBuf (1) pero constantemente lo secciona, reproduciendo pedazos aleatorios usando el método .pos() (5). Esto es una forma de síntesis y manipulación sonora llamada síntesis granular, que ha existido hace un tiempo; incluso antes de la era digital, la gente cortaba y pegaba pedazos de cinta de audio para realizar síntesis granular.
+
+En el listado 5.9, primero haces un SndBuf2 llamado click, lo conectas al dac (1), y cargas un archivo de sonido stereo (2). Recuerda el el directior de audio que contiene tus archivos de audio debe estar en el mismo lugar que el programa. Para aprovechar las funciones, crea una nueva llamada granularize() (3), que toma un argumento llamado myWav (cualquier SndBuf) y un entero llamado steps. Esta función usa steps para crear granos aleatorios (pequeñas secciones) de sonido a partir de myWav. Para lograrlo, toma el número total de samples en el archivo de sonido y lo divide por la variable steps para obtener un tamaño de grano (4). Luego puedes seleccionar una posición aleatoria de reproducción dentro del archivo de sonido (5). Luego avanzas el tiempo según grain y retornas al bucle principal, que será ejecutado otra vez y para siempre.
+
+Listado 5.9 Crear y usar una función granularize() para cortar un archivo de sonido
+
+```chuck
+//(1) crea un SndBuf2 stereo y lo conecta
+SndBuf2 click => dac;
+
+//(2) carga un archivo stereo de sonido
+me.dir*() + "/audio/stereo_fx_01.wav" => click.read;
+
+//función para seccionar cualquier archivo de sonido
+//(3) define la función granularize
+function void granularize(SndBuf myWav, int steps)
+{
+  //(4) calcula el tamaño del grano
+  myWav.samples() / steps => int grain;
+  //(5) Hace que el puntero apunte a una posición aleatoria de grano en el buffer
+  Math.random2(0, myWav.samples() - grain) + grain => myWav.pos;
+  grain :: samp => now;
+}
+
+//programa principal
+while (true)
+{
+  //llama a la función, aquí transcurre el tiempo
+  granularize(click, 70);
+}
+```
+
+Además de los asombros sonidos que hace tu función granularize(), lo maravilloso es que esta función puede tomar cualquier archivo de sonido y seccionarlo, para luego ser reusado una y otra vez. Todo lo que tienes que hacer es cargar un archivo de sonido distinto.
+
+PRUEBA ESTO Carga distintos archivos de sonido en el objeto click SndBuf2 del listado 5.9. Hay otros archivos stereo y de mayor duración en el directorio de audio que has estado usando, prúebalos. Cambia el argumento steps y escucha la diferencia. Además, encuentra otros archivos de sonido (.wav, .aiff) en tu computador, cópialos al directorio de audio, cárgalos en click, y escucha cómo suenan cuando son granularizados.
+
+## 5.3 Funciones para construir formas de composición
+
+Has empezado a ver cómo puedes usar funciones para brindar un gran control expresivo y de maneras que puedes volver usar. En esta sección verás cómo las funciones pueden ser usadas para ayudar a crear nuevas formas de composición. Primero crearás un patrón melódico, luego aprenderás cómo puedes usar funciones para operar en arreglos, tanto leyendo como modificando los elementos internos. Finalmente, construirás una máquina de ritmos súper flexible usando funciones y arreglos.
+
+### 5.3.1 Tocar una escala con funciones y variables globales
+
+Exploremos cómo las funciones y las variables globales pueden trabajar en conjunto, escribiendo un programa que camina hacia arriba y abajo a través de un pequeño patrón de escala, subiendo siempre en altura. En el listado 5.10, usarás un nuevo UGen generador de sonido, llamado Mandolin (mandolina), y lo conectarás al dac (1). Mandolin es un "instrumento" completo que puedes tocar con comandos simples como .freq (al igual que SndBuf) y .noteOn (que esencialmente toca una nota en la Mandolin). Hablaremos más sobre Mandolin y otros UGens a partir del próximo capítulo. Continuando en el listado 5.10, también defines una variable global llamada note y la inicializas a 60 (C central) (2). Tanto mand como note son globales, porque las declaras al principio de tu programa, afuera de cualquier par de llaves. A continuación, defines dos funciones: noteUp() (3) y noteDown (7), que no tienen argumentos de entrada, porque solo operan sobre variables globales. También observa que los tipos de salida son void (lo que denota que no tienen un valor de retorno). Si ahora observas con mayor detención a noteUp() (3), verás que actualiza la variable global note, sumándole uno (4), e imprime el nuevo valor de note (5). noteDown (7) tiene una funcionalidad similar, pero resta 1 a note (8). Defines una función adicional llamada play() (9), que define la altura de tu mand (10), la toca con noteOn (11), y avanza el tiempo en 1 segundo (12). Las dos funciones noteUp() y noteDown() llaman (6) a la función play() (9) para hacer que la mandolina toque.
+
+Listado 5.10 Funciones void sobre variables globales, para diversión escalar musical
+
+```chuck
+//variables globales
+//(1) crea y conecta un UGen instrumento tipo Mandolin
+Mandolin mand => dac;
+//(2) variable global note para nota
+60 => int note;
+
+//funciones
+//(1) definición de la función noteUp
+fun void noteUp()
+{
+  //(4) suma 1 a la variable global note
+  1 +=> note;
+  //(5) la imprime
+  <<< note >>>;
+  //(6) la reproduce
+  play();
+}
+
+//(7) definición de la función noteUp
+fun void noteDown()
+{
+  //(8) resta 1 a la variable global note
+  1 -=> note;
+  <<< note >>>;
+  play();
+}
+
+//(9) define la función play
+fun void play()
+{
+  //(9) define la frecuencia de la Mandolin global usando note, también global
+  Std.mtof(note) => mand.freq;
+  //(10) Toca la nota en la Mandolin
+  1 => mand.noteOn;
+  //(11) Hace transcurrir one secundo antes de volver al bucle principal
+  second => now;
+}
+```
+
+Observemos ahora el listado 5.11, que es el bucle infinito principal del programa (1) que usa nuestras funciones noteUp() y noteDown(). Observa que el bucle no hace que el tiempo transcurra. En muchos casos, esto significa que el programa no funcionará y que ChucK se quedará colgado. Pero como viste en los ejemplos anteriores de swell() y granularize(), el tiempo puede avanzar dentro de las funciones. En este caso, recuerda que cuando llamamos a noteUp() (2), luego de que realiza su tarea, llama a la función play() ((9) en el listado anterior), que realiza su trabajo y hace que el tiempo avance 1 segundo. Después de que esto termina, play retorna a noteUp(), que inmediatamente retorna al programa principal, donde se llama a  noteDown() (3). noteDown() hace que note decrezca, la imprime, llama a play() y luego retorna. El proceso continua en las siguientes llamadas a noteUp() y noteDown().
+
+Listado 5.11 Uso de las funciones noteUp y noteDown dentro de un bucle principal
+
+```chuck
+//programa principal, "melodía" ascendente gradualmente
+//(1) programa principal para probar las funciones noteUp y noteDown
+while (true) {
+  //(2) llamada a noteUp
+  noteUp();
+  //(3) llamada a noteDown
+  noteDown();
+  //dos llamadas a noteUp
+  noteUp();
+  noteUp()
+  //una llamada a noteDown y se repite el bucle
+  noteDown();
+}
+```
+
+Este proceso se sigue repitiendo y este programa toca las notas e imprime lo mostrado a continuación:
+
+```chuck
+61 :(int)
+60 :(int)
+61 :(int)
+62 :(int)
+61 :(int)
+62 :(int)
+61 :(int)
+62 :(int)
+63 :(int)
+62 :(int)
+63 :(int)
+... etc ...
+```
+
+### 5.3.2 Cambiar alturas de ecsalas usando una función en un arreglo
+
+
+
+
 HEREIAM
-page 100
-page 101
-page 102
-page 103
 page 104
 page 105
 page 106
@@ -293,13 +477,7 @@ page 113
 page 114
 
 
-### 5.2.3 Granularizar: una función licuadora de audio para SndBuf
 
-## 5.3 Funciones para construir formas de composición
-
-### 5.3.1 Tocar una escala con funciones y variables globales
-
-### 5.3.2 Cambiar alturas de ecsalas usando una función en un arreglo
 
 ### 5.3.3 Construir una máquina de ritmos con funciones y arreglos
 
