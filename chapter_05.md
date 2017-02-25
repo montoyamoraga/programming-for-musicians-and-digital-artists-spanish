@@ -510,17 +510,14 @@ mostrando que los elementos del arregllo global han sido realmente modificados; 
 > ```chuck
 //variable global entera
 60 => int glob;
-
 //función que suma uno al argumento
 fun void addOne(int loc)
 {
   1 +=> loc;
   <<< "copia local de loc = ", loc >>>;
 }
-
 //
 addOne(glob);
-
 //
 <<< "versión global de glob = ", glob >>>;
 ```
