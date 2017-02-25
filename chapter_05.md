@@ -875,8 +875,16 @@ playChord(60, "major", second/2);
 ```
 ## 5.6 Resumen
 
-En este capítulo
+En este capítulo has aprendido cómo escribir y usar tus propias funciones, incluyendo también los siguientes hechos:
+* Las funciones te permiten organizar y documentar mejor tu código.
+* Las funciones son declaradas por nombre (único, como las variables), tipo de retorno (int, float, UGen, cualquier tipo, incluso void), y argumentos (valores pasados para que la función opere sobre ellos).
+* Las funciones que son diseñadas de manera correcta pueden ser usadas una y otra vez entre programas.
+* Las funciones se pueden llamar a sí mismas. Esto es llamado recursión.
+* Las variables tienen un ámbito (scope), que es local a una función o contexto de llaves o global, visible a todo código.
+
+Has hecho muchos sonidos y estructuras musicales interesantes con tus nuevas habilidades y conocimiento sobre funciones. Recorrer todos estos ejemplos de funcinoes te debería brindar un entendimiento de cómo organizar tu código en módulos y, en esencia, hacer que tus programas sean mucho más expresivos, reusables y de fácil lectura.
+
+En el próximo capítulo, abriremos las puertas a la creación de nuevos sonidos en ChucK, revisando una variedad de unidades generadores, que son los bloques fundamentales de la síntesis y el procesamiento de sonido.
 
 HEREIAM
-page 113
 page 114
