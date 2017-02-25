@@ -54,23 +54,81 @@ El listado 6.2 es un ejemplo de uso de blackhole para hacer algo útil, específ
 Listado 6.2 Un detector de picos de audio en ChucK
 
 ```chuck
-//
+//(1) blackhole succiona samples desde el adc a través de Gain
 adc => Gain g => blackhole;
 
 while(true)
 {
+  //si es lo suficientemente fuerte
+  //(2) .last() obtiene el último sample de cualquier UGen
   if (g.last(0.9) > 0.9)
   {
-    <<< "FUERTE !!", g.last() >>>;
+    //imprime el valor
+    <<< "¡¡FUERTE!!", g.last() >>>;
   }  
+  //haz esto para cada sample
   samp :: now;
 }
 ```
 
-NOTA Este código se aprovecha de tu habilidad  de manipular tiempo en ChucK de una forma completamente flexible, en este caso avanzando el tiempo un sample a la vez, para que puedas mirar valores individuales
+NOTA Este código se aprovecha de tu habilidad  de manipular tiempo en ChucK de una forma completamente flexible, en este caso avanzando el tiempo un sample a la vez, para que puedas mirar valores individuales a medida que llegan desde el ADC.
+
+## 6.2 El oscilador de ancho de pulso: un clásico de la música electrónica
+
+¿Recuerdas cuando escribiste tu primer programa de ChucK para hacer sonido ("Hola onda sinusoidal")? Usaste un UGen IsnOsc, conectándolo al dac para hacer tu primera nota (sonido puro con altura). También hablamos sobre y usamos unos cuantos de los otros UGens tipo oscilador: TriOsc, SawOsc y SqrOsc. ChucK tiene más UGens tipo osciladores, y vamos a usar unos de esos ahora para grandes sonidos y música de tipo electrónica bailable.
+
+El UGen PulseOsc genera un pulso cuadrado (como SqrOsc), per puedes también controlar la fracción de cada periodo que es alta versus baja (esto es llamado el ancho del pulso, o ciclo de trabajo). Puedes definir o variar el ciclo de trabajo de PulseOsc en cualquier punto entre 0.0 y 1.0, para crear distintos espectros de sonido (un ciclo de trabajo pequeño arroja un espectro muy brillante, 0.5 es menos brillante). La figura 6.1 muestra la salida de PulseOsc para dos distintos anchos: 0.1 (alto solo el 10% del tiempo) y 0.5 (igualmente alto y bajo el 50% del tiempo, como una onda cuadrada).
+
+La configuración 0.5, también llamada ciclo de trabajo 50%, genera la misma forma de onda que un SqrOsc. Estos osciladores con anchos de pulso variables con comúnmente usados en música electrónica bailable, usualmente cambiendo el ancho del pulso al ritmo de la música. Hacer un barrido dinámico del ancho de pulso puede crear también efectos de sonido de ciencia ficción.
+
+El código en el listado 6.3 genera una línea de bajo techno bailable, usando un PulseOsc conectado al dac como fuente sonora. En el bucle infinito principal, defines el ancho del pulso aleatoriamente entre 0.01 (realmente puntiagudo, por lo tanto sonido muy brillante) y 0.5 (cuadrado, sonido más meloso). También usas Math.random2(0, 1) para lanzar una moned y determinar una entre dos alturas para tu onda pulso. La frecuencia más grave de 84 Hz es cercana a la nota musical E2 (la cuerda más grave en una guitarra) y la frecuencia de 100 es cercana a la nota G2 sobre esa. Para obtener un ritmo, alterna el encendido y el apagado del oscilador cada décima de segundo, enciende durante 60 milisegundos (0.06 segundos) y apaga por 40 milisegundos (0.04 segundos).
+
+Listado 6.3 Línea de bajo de techno y ciencia ficción usando el UGen PulseOsc
+
+```chuck
+//PulseOsc para techno en bajo, por programador de ChucK, 2014
+//conecta un nuevo PulseOsc al dac
+PulseOsc p => dac;
+
+//bucle infinito de techno tipo ciencia ficción
+while (true)
+{
+  //define un ancho de pulso aleatorio
+  Math.random2f(0.01, 0.5) => p.width;
+  //selecciona una altura aleatoria
+  //entre dos posibilidades
+  if (Math.random2(0, 1))
+  {
+    84.0 => p.freq;
+  }
+  else
+  {
+    100.0 => p.freq;
+  }
+
+  //enciende el oscilador y transcurre un poco de tiempo
+  1 => p.gain;
+  0.06 :: second => now;
+
+  //apaga el oscilador y transcurre un poco de tiempo
+  0 => p.gain;
+  0.04 :: second => now;
+
+
+}
+```
+
+## 6.3 Unidades generadores tipo Envelope (envolvente, función lenta y suave)
+
+Hasta el momento en tus programas, para separar notas repetidas o para hacer sonidos con ritmo, has encendido y apagado tus osciladores cambiando la ganancia en algún lugar de tu cadena de sonido. Lo has configurado a cero para silencio y a no-cero para hacer sonido, cambiando entre ambos para tocar notas individuales. No obstante, la mayoría de los sonidos y las notas musicales no funcionan de esa manera en la naturaleza: cuando soplas en un clarinete o trompeta, o empiezas a arquear un violín, o empiezas a cantar, las notas no se encienden instantáneamente. Cuando dejas de soplar, arquear o cantar, no escuchas un click porque el sonido se ha detenido instantáneamente. En la mayoría de los instrumentos, tú puedes escogar entre comenzar una nota suavemente y aumentar el volumen o empezar con mayor volumen e ir decayendo. Debe existir una mejor manera en ChucK para encender y apagar tus notas de forma más gradual, y de hecho la hay.
+
+Los Ugens Envelope (envolvente) incluidos en ChucK generan rampas hacia arriba y abajo para controlar volumen y otros parámetros que quieas cambiar lentamente. El UGen Envelope hace una rampa de 0.0 a 1.0 en respuesta un mensaje .keyOn (encender nota), en un tiempo definido por el método .time (tiempo). El Ugen Envelope hace una rampa de vuelta a cero en respuesta a un mensaje .keyOff (apagar nota).
+
+### 6.3.1 Construyendo un sonido de clarinete usando SqrOsc y Envelope
+
+
 
 HEREIAM
-page 120
 page 121
 page 122
 page 123
@@ -89,13 +147,6 @@ page 135
 page 136
 page 137
 page 138
-
-
-## 6.2 El oscilador de ancho de pulso: un clásico de la música electrónica
-
-## 6.3 Unidades generadores tipo Envelope (envolvente, función lenta y suave)
-
-### 6.3.1 Construyendo un sonido de clarinete usando SqrOsc y Envelope
 
 ### 6.3.2 Construyendo un sonido de violín con SawOsc y el ADSR UGen Envelope
 
