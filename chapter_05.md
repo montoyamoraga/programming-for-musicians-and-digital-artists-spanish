@@ -458,14 +458,86 @@ Este proceso se sigue repitiendo y este programa toca las notas e imprime lo mos
 ... etc ...
 ```
 
-### 5.3.2 Cambiar alturas de ecsalas usando una función en un arreglo
+### 5.3.2 Cambiar alturas de escalas usando una función sobre un arreglo
+
+Ahora aprenderás cómo puedes usar arreglos con funciones. Tal como pasaste UGens como argumentos en funciones, los arreglos también son argumentos válidos. Por ejemplo, puedes definir una función llamada arrayAdder que modifica un miembro (index, por índice) de un arreglo (temp), para que tenga un nuevo valor (súmale uno). Usarás esto pronto para cambiar las alturas de un arreglo de notas llamado scale.
+
+```chuck
+fun void arrayAdder(int temp[], int index) {
+  1 +=> temp[index];
+}
+```
+
+El siguiente listado prueba esta nueva función, declarando un arreglo global (1), y nuestra función arrayAdder() y luego probándola unas cuantas veces, modificando dos elementos del arreglo.
+
+Listado 5.12
+
+```chuck
+//(1) arreglo global de notas
+[60, 62, 63, 65, 67, 69, 70, 72] @=> int scale[];
+
+//función arrayAdder para modificarllo
+fun void arrayAdder(int temp[], int index)
+{
+  1 +=> temp[index];
+}
+
+//hacer pruebas
+<<< scale[0], scale[1], scale[2], scale[3] >>>;
+arrayAdder(scale, 2);
+<<< scale[0], scale[1], scale[2], scale[3] >>>;
+<<< "scale[6] = ", scale[6] >>>;
+arrayAdder(scale, 6);
+<<< "scale[6] = ", scale[6] >>>;
+```
+
+La consola imprime
+
+```chuck
+60 62 63 65
+60 62 64 65
+scale[6] = 70
+scale[6] = 71
+```
+
+mostrando que los elementos del arregllo global han sido realmente modificados; array[2] cambió de 63 a 64, y array[2] de 70 a 71.
+
+> Más sobre ámbito (scope): copias temporales de argumentos int y float dentro de arreglos
+
+> Cuando passa un int o float a un arreglo, la variable dentro de la función es una copia del valor pasado, local solo a esa función. Este programa entonces:
 
 
+> ```chuck
+//variable global entera
+60 => int glob;
+
+//función que suma uno al argumento
+fun void addOne(int loc)
+{
+  1 +=> loc;
+  <<< "copia local de loc = ", loc >>>;
+}
+
+//
+addOne(glob);
+
+//
+<<< "versión global de glob = ", glob >>>;
+```
+
+>lo que imprime en la consola:
+
+> ```chuck
+copia local de loc = 61
+versión global de glob = 60
+```
+
+> claramente demuestra que aunque la variable local loc es modificada, la variable global pasada como argumento no es modificada. Para los adeptos a la ciencia por computación, esto se llama pasar por valor, donde el valor de glob es copiado a una variable loc localmente declarada. Los arreglos son diferentes porque son pasados a las funciones por referencia, y el nombre variable de arreglo local es solo una referencia al exactamente mismo arreglo que fue pasado.
+
+> En otras palabras, cuando pasas la mayoría de los tipos de datos a una función, necesitas usar explícitamente la palabra clave return para obtener un resultado. Pero cuando pasas un arreglo a una función, los contenidos del arreglo son modificados de forma directa.
 
 
 HEREIAM
-page 104
-page 105
 page 106
 page 107
 page 108
