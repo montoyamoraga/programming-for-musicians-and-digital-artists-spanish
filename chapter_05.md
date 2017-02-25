@@ -504,7 +504,7 @@ mostrando que los elementos del arregllo global han sido realmente modificados; 
 
 > Más sobre ámbito (scope): copias temporales de argumentos int y float dentro de arreglos
 
-> Cuando passa un int o float a un arreglo, la variable dentro de la función es una copia del valor pasado, local solo a esa función. Este programa entonces:
+> Cuando passa un int o float a un arreglo, la variable dentro de la función es una copia del valor pasado, local solo a esa función. Este programa:
 
 
 > ```chuck
@@ -522,20 +522,64 @@ addOne(glob);
 <<< "versión global de glob = ", glob >>>;
 ```
 
->lo que imprime en la consola:
+>Imprime en la consola:
 
 > ```chuck
 copia local de loc = 61
 versión global de glob = 60
 ```
 
-> claramente demuestra que aunque la variable local loc es modificada, la variable global pasada como argumento no es modificada. Para los adeptos a la ciencia por computación, esto se llama pasar por valor, donde el valor de glob es copiado a una variable loc localmente declarada. Los arreglos son diferentes porque son pasados a las funciones por referencia, y el nombre variable de arreglo local es solo una referencia al exactamente mismo arreglo que fue pasado.
+> Esto claramente demuestra que aunque la variable local loc es modificada, la variable global pasada como argumento no es modificada. Para los adeptos a la ciencia por computación, esto se llama pasar por valor, donde el valor de glob es copiado a una variable loc localmente declarada. Los arreglos son diferentes porque son pasados a las funciones por referencia, y el nombre variable de arreglo local es solo una referencia al exactamente mismo arreglo que fue pasado.
 
 > En otras palabras, cuando pasas la mayoría de los tipos de datos a una función, necesitas usar explícitamente la palabra clave return para obtener un resultado. Pero cuando pasas un arreglo a una función, los contenidos del arreglo son modificados de forma directa.
 
+Ahora usemos nuestra función arrayAdder() para un propósito musica. El listado 5.13 crea una Mandolin (1) con la que toca una escala (2), luego usa la función arrayAdder() (3) para convertir el arreglo de la escala original a una escala distinta. Usando una nueva función playScale() (4) que creaste tocas las notas de cualquier arreglo de enteros pasado como un argumento, tocando la escala como fue originalmente creada (5), luego mueve los elementos segundo y sexto uno hacia arriba (6), y luego vuelve a tocar la escala (7). Observa que llamas a la función arrayAdder() dos veces (6) y puedes llamarla las veces que quieras y con dinstintos argumentos. Esto es el poder de las funciones, pueden ser usadas una y otra vez.
+
+NOTA Para los aficionados a la teoría musica, convertmios una escala menor en modo dorio a una escala mayor standard.
+
+Listado 5.1 Uso de la función arrayAdder() para convertir una escala menor a una mayor
+
+```chuck
+//
+Mandolin mand => dac;
+
+//
+[60, 62, 63, 65, 67, 69, 70, 72] @=> int scale[];
+
+//
+fun void arrayAdder(int temp[], int index)
+{
+  1 +=> temp[index];
+}
+
+//
+fun void playScale(int temp[])
+{
+  for (0 => int i; i < temp.cap(); i++)
+  {
+    Std.mtof(temp[i]) => mand.freq;
+    <<< i, temp[i] >>>;
+    1 => mand.noteOn;
+    0.4 :: second => now;
+  }
+  second => now;
+}
+
+//
+<<< "escala original" >>>;
+playScale(scale);
+
+//modifica nuestra escala
+arrayAdder(scale, 2);
+arrayAdder(scale, 6);
+
+//
+<<< "escala modificada" >;
+playScale(scale);
+```
+
 
 HEREIAM
-page 106
 page 107
 page 108
 page 109
