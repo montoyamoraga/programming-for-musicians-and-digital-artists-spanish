@@ -638,21 +638,90 @@ while (true)
 }
 ```
 
+EJERCICIO ¡Personalize tu máquina de ritmos! Modifica los 1s y 0s de los arreglos, cambia los contenidos de los arreglos usados en los llamadas a playSection(), y cambia el tempo por medio la modificación del último argumento en las llamdas a playSection(). Añade más tambores - ¡eres el compositor y el programador!
+
+Hasta el momento en este capítulo, usando funciones y arreglos, has aumentado tu expresividad y también haz tu hecho tu código más flexible y de más fácil lectura. Pero ahora puedes ir más allá, por supuesto.
+
+## 5.4 Recursión (funciones que se llaman a sí mismas)
+
+Has aprendido los fundamentos de las funciones y cómo pueden transformar tu música y la arquitectura de tus programas. Ahora es tiempo de aprender técnicas avanzadas que pueden resultar en materiales sonoros y estructurales muy interesantes. Has visto cómo las funnciones pueden llamar a otras funciones (como cuando noteUp y noteDown() llamaron a play() en el listado 5.10). ¿Pero pueden las funciones llamarse a sí mismas? ¿Y por qué habrías de querer hacerlo? Existen muchas estructuras musicales (como las escalas) y figuras (como trinos y redobles de tambores) que son realmente eventos  o transformaciones repetidos. Muchas de estos podrían beneficiarse de una función que se pueda llamar a sí misma.
+
+Aquí introducimos el concepto de recursión, que en programación significa que cosas útiles pueden ocurrir cuando una función se puede llamar a sí misma. Como las funciones te permiten realizar mucho trabajo, a veces de forma repetida, entonces una función llamándose a sí misma podría multiplicar su poder dramáticamente. El clásico ejemplo de recursión enseñado en casi cada libro de programación es la función matemática factorial, pero como somos artistas, no haremos esto y saltaremos directamente a un ejemplo musical. El listado 5.15 muestra una mandolina (1) que es tocada por la función recurScale() (2). Después de definir frecuencia (3), tocar con noteOn (4), y avanzar el tiempo (5), la función se llama a sí misma, con una nota más baja (restar 1) y una duración más corta (90%) (7). Pero esto lo ahce solo si el argumento es mayor que un valor más bajo (se detiene en la nota 40) (6). De otra forma, la función continuaría llamándose a sí misma para siempre.
+
+Listado 5.15
+```
+//cadena de sonido, mandolina a la salida de audio
+//(1) instrumento tipo Mandolin
+Mandolin mand => dac;
+
+//toca escala recursriva
+//(2) definición de la función recurScale
+fun int recurScale(int note, dur rate) {
+  //(3) define la frecuencia de la nota de la mandolina
+  Std.mtof(note) => mand.freq;
+  //(4) toca la nota usando noteOn
+  1 => mand.noteOn
+  //(5) espera el tiempo indicado por rate
+  rate => now;
+
+  //solo se hace hasta llega al límite
+  //(6) límite para la recursión
+  if (note > 40)
+  {
+    //aquí está la recursión, la función se llama a sí misma
+    //(7) ¡recurScale puede lamar a recurScale!
+    recurScale(note - 1, 0.9 * rate);
+  }
+}
+
+//ahora toca un par de escalas
+recurScale(60, 0.5 :: second);
+recurScale(67, 1.0 :: second);
+```
+
+Es así que con poco de código, eres capaz de tocar muchas y muchas notas estructuradas (no-aleatorias), usando el poder de la recursión. POdrías, por supuesto, lograr lo mismo usando un bucle for o programando explícitamente cada nota, no obstante la recursión te brinda una nueva y poderosa técnica para controlar tu sonido y música.
+
+NOTA Deberíamos advertirte que, aunque extremedamente poderosas, las recursiones en programación pueden ser un poco peligrosas, porque siempre tienes que construir las conidiciones de detención (if note > 40) en tus recursiones. De otro modo, se llamarán a sí mismas para siempre y nunca terminarán. A pesar de eso, siempre tienes los botones Remove Last Shred y Clear VM en el miniAudicle para detener cualquier proceso zombie que no quiera morir.
+
+### 5.4.1 Cálculo factorial con recursión
+
+Volvamos a la función matemática factorial, aunque pronto le agregaremos un giro musical. La función factorial (escrita en matemáticas como N!, pero la escribiremos aquí como una función, factorial(N)) calcula el producto de un entero con cualquier otro entero menor a él, hasta el entero 1. Por ejemplo, factorial(3) = 3 * 2 * 1 = 6, y factorial(4) = 4* 3 * 2 * 1 = 24. La función factorial tiene aplicaciones reales en estadística, cuentas, y en otras áreas. El número de combinaciones (permutaciones) de las cuatro letras ABCD (como ABCD, ACBD, ...) es 24 (factorial(4)). Observa que factorial(4) = 4 * factorial(3), que a su vez es 4 * 3 * factorial(2),y así. Esto te permite usar recursión para calcular todos los factoriales, con tal solo escribir una función, como se muestra en el listado 5.16. La función factorial() se llama a sí misma, a menos que su argumento sea menor a 1, en tal caso retorna 1. Entonces factorial(4) retorna 4 * factorial(3), lo que retorna 3 * factorial(2), lo que retorna 2 * factorial (1), lo que retorna 1. Todo esto retorn el valor final, 24.
+
+Listado 5.16 Calculando factorial con recursión
+
+```chuck
+fun int factorial(int x)
+{
+  if (x <= 1)
+  {
+    //cunado llegamos aquí, nuestra función termina
+    return 1;
+  }
+  else
+  {
+    //la función recursiva se llama a sí misma
+    return (x*factorial(x-1));
+  }
+}
+
+//programa principal, llamada a factorial
+<<< factorial(4) >>>;
+```
+
+### 5.4.2 Sonificación de la función factorial recursiva
+
 
 HEREIAM
-page 108
-page 109
 page 110
 page 111
 page 112
 page 112
 page 114
 
-## 5.4 Recursión (funciones que se llaman a sí mismas)
 
-### 5.4.1 Cálculo factorial con recursión
 
-### 5.4.2 Sonificación de la función factorial recursiva
+
+
 
 ### 5.4.3 Uso de recursión para crear estructuras rítmicas
 
