@@ -710,6 +710,70 @@ fun int factorial(int x)
 
 ### 5.4.2 Sonificación de la función factorial recursiva
 
+Por diversión musical, sonifiquemos (convertir datos o procesar información en sonido) la función recursiva factorial, como se muestra en el listado 5.17. Aquí usaremos un SinOsc (1) pero añadiremos una línea dentro de la función factorial (2) para hacer sonificación del valor actual con sonify() (3). Esa función suma la mitad de ese número a 60
+
+
+Listado 5.17 Sonificación de la función factorial()
+
+
+
+```chuck
+//
+SinOsc s => dac;
+
+//
+fun int factorial(int x)
+{
+  sonify(x);
+  if (x <= 1) return 1;
+  else return (x * factorial(x - 1));
+}
+
+//
+fun void sonify(int note) {
+  //
+  Std.mtof(60 + (0.5 * note)) => s.freq;
+  1.0 => s.gain;
+  300 :: ms => now;
+  0.0 => s.gain;
+  50 :: ms => gain;
+}
+
+//
+sonify(factorial(2));
+second => now;
+sonify(factorial(3));
+second => now;
+sonify(factorial(4));
+second => now;
+sonify(factorial(5));
+second => now;
+```
+
+### 5.4.3 Uso de recursión para crear estructuras rítmicas
+
+```chuck
+Impulse imp => dac;
+
+fun int impRoll(int index){
+  if (index >=1)
+  {
+    1.0 => imp.next;
+    index :: ms => now;
+    return impRoll(index-1);
+  }
+  else {
+    return 0;
+  }
+}
+
+impRoll(20);
+second => now;
+impRoll(50);
+second => now;
+impRoll(60);
+second => now;
+```
 
 HEREIAM
 page 110
@@ -723,7 +787,7 @@ page 114
 
 
 
-### 5.4.3 Uso de recursión para crear estructuras rítmicas
+
 
 ## 5.5 Ejemplo: hacer acordes con funciones
 
