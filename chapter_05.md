@@ -885,6 +885,3 @@ En este capítulo has aprendido cómo escribir y usar tus propias funciones, inc
 Has hecho muchos sonidos y estructuras musicales interesantes con tus nuevas habilidades y conocimiento sobre funciones. Recorrer todos estos ejemplos de funcinoes te debería brindar un entendimiento de cómo organizar tu código en módulos y, en esencia, hacer que tus programas sean mucho más expresivos, reusables y de fácil lectura.
 
 En el próximo capítulo, abriremos las puertas a la creación de nuevos sonidos en ChucK, revisando una variedad de unidades generadores, que son los bloques fundamentales de la síntesis y el procesamiento de sonido.
-
-HEREIAM
-page 114
