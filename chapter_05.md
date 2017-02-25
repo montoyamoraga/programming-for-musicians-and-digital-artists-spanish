@@ -638,7 +638,7 @@ while (true)
 }
 ```
 
-EJERCICIO ¡Personalize tu máquina de ritmos! Modifica los 1s y 0s de los arreglos, cambia los contenidos de los arreglos usados en los llamadas a playSection(), y cambia el tempo por medio la modificación del último argumento en las llamdas a playSection(). Añade más tambores - ¡eres el compositor y el programador!
+EJERCICIO ¡Personaliza tu máquina de ritmos! Modifica los 1s y 0s de los arreglos, cambia los contenidos de los arreglos usados en los llamadas a playSection(), y cambia el tempo por medio la modificación del último argumento en las llamdas a playSection(). Añade más tambores - ¡eres el compositor y el programador!
 
 Hasta el momento en este capítulo, usando funciones y arreglos, has aumentado tu expresividad y también haz tu hecho tu código más flexible y de más fácil lectura. Pero ahora puedes ir más allá, por supuesto.
 
@@ -710,29 +710,32 @@ fun int factorial(int x)
 
 ### 5.4.2 Sonificación de la función factorial recursiva
 
-Por diversión musical, sonifiquemos (convertir datos o procesar información en sonido) la función recursiva factorial, como se muestra en el listado 5.17. Aquí usaremos un SinOsc (1) pero añadiremos una línea dentro de la función factorial (2) para hacer sonificación del valor actual con sonify() (3). Esa función suma la mitad de ese número a 60
-
+Por diversión musical, sonifiquemos (convertir datos o procesar información en sonido) la función recursiva factorial, como se muestra en el listado 5.17. Aquí usaremos un SinOsc (1) pero añadiremos una línea dentro de la función factorial (2) para hacer una sonificación del valor actual con sonify() (3). Esa función suma la mitad de ese número a 60 (C central) (4) y toca la frecuencia asociada en tu SinOsc (5).En el programa principal sonificas las llamadas a factorial (6), entonces lo que realmente escuchas es un número de alturas graves descendientes. Escuchas una nota por cada llamada (recursiva) a factorial, seguida de la altura final más alta del resultado. Escucha atentamente; puedes escuchar que factorial(2) es igual a 2 (la misma nota en el principio y el final) y que factorial(5) resulta en un resultado que es casi demasiado alto como para ser audible. Esto demuestra, a través de sonido, que la función factorial crece rápidamente en valor para valores de argumento crecientes. Esta es una de las geniales características de la sonificación y de ChucK.
 
 Listado 5.17 Sonificación de la función factorial()
 
-
-
 ```chuck
-//
+//cadena sonora, SinOsc a la salida de audio
+//(1) SinOsc para que puedas escuchar el factorial
 SinOsc s => dac;
 
-//
+//nuestra función factorial recursiva
+//(2) definición de la función factorial
 fun int factorial(int x)
 {
+  //(3) llamada la función sonify dentro de factorial
   sonify(x);
   if (x <= 1) return 1;
   else return (x * factorial(x - 1));
 }
 
-//
+//función para sonificar números
+//(4) definición de la función sonify
 fun void sonify(int note) {
-  //
+  //desfase sobre C central
+  //(5) define la frecuencia en función de la nota
   Std.mtof(60 + (0.5 * note)) => s.freq;
+  //(6) enciende el oscilador
   1.0 => s.gain;
   300 :: ms => now;
   0.0 => s.gain;
@@ -752,14 +755,22 @@ second => now;
 
 ### 5.4.3 Uso de recursión para crear estructuras rítmicas
 
+Revisemos otro ejemplo en el listado 5.18, similar a nuestros ejemplos de factorial, esta vez haciendo un patrón de redoble de tambores pero solo usando una unidad generadora tipo Impulse (1). El UGen Impulse genera un click cada vez que se lo pides. En la función impRoll() (2), usas el argumento index como tu contador para determinar cuántas veces la función tiene que llamarse a sí misma recursivamente (4), y también usas index como retraso entre impulsos para avanzar el tiempo (3). El resultado es un redoble en constante aceleración, cuyo tempo inicial y duración total están determinados por el argumento en la llamada a la función impRoll() desde el programa principal (5).
+
+Listado 5.18 Redoble de tambores recursivo usando un UGen tipo Impulse
+
 ```chuck
+//(1) generador de impulsos (click) al dac
 Impulse imp => dac;
 
+//(2) definición de la función impRoll
 fun int impRoll(int index){
   if (index >=1)
   {
     1.0 => imp.next;
+    //(3) la duración es la variable de recursión
     index :: ms => now;
+    //(4) llamada recursiva de impRoll a impRoll
     return impRoll(index-1);
   }
   else {
@@ -767,6 +778,7 @@ fun int impRoll(int index){
   }
 }
 
+//(5) prueba con diferentes duraciones iniciales
 impRoll(20);
 second => now;
 impRoll(50);
@@ -775,20 +787,96 @@ impRoll(60);
 second => now;
 ```
 
-HEREIAM
-page 110
-page 111
-page 112
-page 112
-page 114
-
-
-
-
-
-
-
+Ahora has visto que aunque poderosas, las funciones que pueden llamarse a sí mismas son aún más poderosas. Puedes tocar muchas notas o sonidos y calcular resultados matemáticos complejos usando recursión. No obstante, también tienes que ser cuidadoso al diseñar funcioens recursivas, para asegurarte que tienen una condición garantizada de detención.
 
 ## 5.5 Ejemplo: hacer acordes con funciones
 
+Para cerrar este capítulo, queremos darte otro ejemplo musical usando funciones, dándote la habilidad de tocar diferentes tipos de acordes (múltiples notas simultáneas en armonía). Para empezar, te mostraremos una forma avanzada de declarar tu red sonora de UGens SinOsc llamado chord[] en la primera línea del listado 5.19 (1). Quieres que tu acorde tenga tres notas. Usas un bucle for para hacer ChucKing de cada elemento de tu arreglo chord[] al da(c (2), y luego defines el .gain de cada SinOsc para que sumados sean igual a 1.0 (3).
+
+La función playChord() toma un número de nota MIDI raíz como valor tentero, una quality (calidad) del acorde (mayor o menor), y una duración de tiempo durante la que el acorde sonará, llamada howLong. Los que sean músicos sabrán que un acorde mayor y uno menor están compuestos de tres notas: una nota raíz (4), una nota que se enucentra una tercera arriba y otra nota una quinta arriba. Tanto en acordes mayores como menores, la nota raíz y la quinta coinciden. La quinta es siete notas MIDI más alta que la raíz (5). La diferencia radica en la tercera. Una tercera mayor está cuatro notas MIDI sobre la tónica (6), con un sonido más brillante; una tercera menor está tres notas MIDI por sobre la raíz (7), sonando más oscura. Controlas todo esto con lógica simple de if/else. También haz una prueba adicional para asegurarte que el usuario ha especificado una de las calidades del acorde, major o minor(mayor o menor) (8).
+
+Listado 5.19 Tocar acordes en un arreglo de UGens SinOsc, usando una función
+
+```chuck
+//red de sonido
+//(1) tres osciladores para un acorde
+SinOsc chord[3];
+
+for (0 => int i; i < chord.cap(); i++)
+{
+  //(2) conecta cada elemento de nuestro arreglo al dac
+  chord[i] => dac;
+
+  //(3) ajusta ganancia para no saturar
+  1.0 / chord.cap() => chord[i].gain;
+}
+
+
+fun void playChord(int root, string quality, dur howLong)
+{
+  //(4) define la nota raíz del acorde
+  Std.mtof(root) => chord[0].freq
+
+
+  //(5) quinta del acorde
+  Std.mtof(root + 7) => chord[2].freq
+
+  //la tercera define la calidad, mayor o menor
+  //(6) acorde mayor
+  if (quality == "major")
+  {
+    Std.mtof(root+4) => chord[1].freq;
+  }
+  //(7) acorde menor
+  else if (quality == "minor")
+  {
+    Std.mtof(root+3) => chord[1].freq;
+  }
+  else
+  {
+    //(8) imprime un error en el caso de que el argumento no sea legal
+    <<< "¡¡debes especificar major o minor!!" >>>;
+  }
+
+  howLong => now;
+
+}
+```
+
+El programa principal, mostrado en el siguiente listado, es un bucle infinito que llama a la función playChord (1), generando un número aleatorio para el valor raíz y toca un acorde menor basado en la nota. Luego llama a playChord con dos acordes fijos, un acorde C menor (2) y un acorde G mayor (3).
+
+Listado 5.20 Usando playChord
+
+```chuck
+//programa principal, ¡usemos playChord!
+while (true)
+{
+  //(1) toca un acorde menor en una nota aleatoria
+  playChord(Std.rand2(70, 82), "minor", second/2);
+  //(2) toca un acorde C menor
+  playChord(60, "minor", second/2);
+  //(3) toca un acorde G mayor
+  playChord(67, "major", second/2);
+}
+```
+
+> Ejercicio
+
+> Cambia los parámetros de las llamadas a playChord, incluyendo la raíz, calidad y duración. Agrega más llamadas a playChord en el bucle while. Si eres mmusicalmente muy ambicioso, trata de programar un conjunto completo de acordes para una canción. Pista, "Twinkle" podría empezar así:
+
+>```chuck
+playChord(60, "major", second/2);
+playChord(60, "major", second/2);
+playChord(72, "major", second/2);
+playChord(60, "major", second/2);
+playChord(65, "major", second/2);
+playChord(65, "major", second/2);
+playChord(60, "major", second/2);
+```
 ## 5.6 Resumen
+
+En este capítulo
+
+HEREIAM
+page 113
+page 114
