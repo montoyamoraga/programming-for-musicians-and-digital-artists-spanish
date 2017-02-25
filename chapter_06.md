@@ -43,12 +43,33 @@ adc => Gain g => dac;
 10.0 :: second => now;
 ```
 
-¡PRECAUCIÓN! ¡PRECAUCIÓN! ¡PRECAUCIÓN! Sé extremadamente
+¡PRECAUCIÓN! ¡PRECAUCIÓN! ¡PRECAUCIÓN! Sé extremadamente cuidadoso antes de ejecutar este código, asegurándote que no haya un bucle de retroalimentación que te haga doler los oídos (como puede ocurrir cuando el sonido de tus parlantes es captado por tu micrófono). Conecta audífonos, o baja mucho el volumen de tus parlantes antes de conectar el adc al dac (como en este código).
+
+Estrictamente hablando, no necesitas el UGen Gain entre el adc y el dac, pero deberías siempre evitar la conexión directa entre adc y dac. La razón de esto es que adc y dac son los únicos UGens persistentes en ChucK, y una vez conectados permanecen conectados hasta que sean explícitamente desconectados (haciendo unChucKing con =<). En el listado 6.1, sin embargo, el UGen Gain que llamaste g desaparecerá después de que el código haya finalizado su ejecución, rompiendo así la conexión de entrada con salida. Observa que no tuviste que declarar una variable de tipo adc y darle un nombre, como sí tuviste que hacerlo con el UGen Gain, y que no tuviste que ponerle un nombre a tu dac. Tanto adc como dac son únicos en esta manera. Todas las otras unidades generadoras requieren que tú hagas una variable y la nombres si la quieres usar.
+
+AHora sabes cómo escuchar un micrófono conectado o incluido en tu computador, ¿pero qué pasa si quieres usar un micrófono para detectar si hay un sonido fuerte cerca, para poder hacer cosas interesantes basadas en esto, pero no quieres escuchar directamente el sonido de tu micrófono? ChucK tiene otro UGen especial llamado blackhole (hoyo negro), que actúa como un dac que no está conectado a ningún dispositivo de sonido. Existen muchas razones para que tú quieras conectar sonido a una salida que no emite sonido, pero la principal es que si quieres hacer procesamiento de señal de algún tipo (como detección de altura), o para inspeccionar una señal (como el detector de sonidos fuertes que mencionamos anteriormente), sin conectar ese camino directamente a tu salida de sonido. El UGen blackhole sirve para succionar samples desde cualquier UGen que está conectado a el. Estos UGens no computan ningún nuevo sonido de otra forma, porque ChucK es astuto para lograr eficiencia y no calcula ningún sample que no esté conectado a algún otro lugar. El blackhole sirve para usar estos samples, aunque nunca los escuches.
+
+El listado 6.2 es un ejemplo de uso de blackhole para hacer algo útil, específicamente para mantener en observación la entrada de adc e imprimir un mensaje si las cosas se ponen muy fuertes en volumen (1). El g.last() del if condicional (2) retorna el último sample que ha pasado a través del Gain Ugen, Puedes cambiar el valor de comparación (0.9) por cualquier valor que quieras. Por ejemplo, cambiarlo 0.001 hace que el programa imprima incluso para entradas de bajo volumen (quizás en todo momento) y cambiarlo a 10.0 significa que nunca imprimirá nada. Este tipo de detector de picos de audio es útil para muchas cosas en la vida real, como control automático de ganancia o instalaciones de arte que responden a sonido.
+
+Listado 6.2 Un detector de picos de audio en ChucK
+
+```chuck
+//
+adc => Gain g => blackhole;
+
+while(true)
+{
+  if (g.last(0.9) > 0.9)
+  {
+    <<< "FUERTE !!", g.last() >>>;
+  }  
+  samp :: now;
+}
+```
+
+NOTA Este código se aprovecha de tu habilidad  de manipular tiempo en ChucK de una forma completamente flexible, en este caso avanzando el tiempo un sample a la vez, para que puedas mirar valores individuales
 
 HEREIAM
-page 118
-page 118
-page 119
 page 120
 page 121
 page 122

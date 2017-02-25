@@ -331,7 +331,7 @@ for (0 => int i; i < notes.cap(); i++) {
 }
 ```
 
-Como puedes ver, esta es una función altamente expresiva que puede ser usada para convertir un oscilador simple en un instrumento musical con comienzos y finales suaves de notas indidividuales.
+Como puedes ver, esta es una función altamente expresiva que puede ser usada para convertir un oscilador simple en un instrumento musical con comienzos y finales suaves de notas individuales.
 
 ### 5.2.3 Granularizar: una función licuadora de audio para SndBuf
 
