@@ -873,6 +873,7 @@ playChord(65, "major", second/2);
 playChord(65, "major", second/2);
 playChord(60, "major", second/2);
 ```
+
 ## 5.6 Resumen
 
 En este capítulo has aprendido cómo escribir y usar tus propias funciones, incluyendo también los siguientes hechos:
