@@ -1,43 +1,34 @@
 # translation_programming_for_musicians_and_digital_artists
 translation to spanish of book programming for musicians and digital artists, creating music with chuck, by alay kapur, perry cook, spencer salazar, ge wang
 
-* Foreword: [markdown](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/markdown/intro.md#palabras-previas) [pdf](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/markdown/intro.pdf)
+* Palabras previas, prefacio, agradecimientos, acerca de este libro, acerca de los autores: [markdown](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/markdown/intro.md) [pdf](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/pdf/intro.pdf)
 
-* [Preface](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#prefacio)
+* Capítulo 0: [markdown](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/markdown/chapter_00.md) [pdf](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master//pdf/chapter_00.pdf)
 
-* [Acknowledgments](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#agradecimientos)
+* Parte 1: [Part 1](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/part_1.md)
 
-* [About this book](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#acerca-de-este-libro)
+* Capítulo 1:[Chapter 1](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_01.md)
 
-* [About the authors](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/intro.md#acerca-de-los-autores)
+* Capítulo 2: [Chapter 2](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_02.md)
 
+* Capítulo 3: [Chapter 3](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_03.md)
 
-* [Chapter 0](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_00.md)
+* Capítulo 4: [Chapter 4](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_04.md)
 
-* [Part 1](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/part_1.md)
+* Capítulo 5: [Chapter 5](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_05.md)
 
-* [Chapter 1](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_01.md)
+* Parte 2: [Part 2](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/part_2.md)
 
-* [Chapter 2](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_02.md)
+* Capítulo 6: [Chapter 6](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_06.md)
 
-* [Chapter 3](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_03.md)
+* Capítulo 7: [Chapter 7](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_07.md)
 
-* [Chapter 4](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_04.md)
+* Capítulo 8: [Chapter 8](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_08.md)
 
-* [Chapter 5](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_05.md)
+* Capítulo 9: [Chapter 9](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_09.md)
 
-* [Part 2](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/part_2.md)
+* Capítulo 10: [Chapter 10](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_10.md)
 
-* [Chapter 6](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_06.md)
+* Capítulo 11: [Chapter 11](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_11.md)
 
-* [Chapter 7](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_07.md)
-
-* [Chapter 8](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_08.md)
-
-* [Chapter 9](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_09.md)
-
-* [Chapter 10](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_10.md)
-
-* [Chapter 11](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/chapter_11.md)
-
-* [Appendix](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/appendix.md)
+* Apéndice:  [Appendix](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/appendix.md)
