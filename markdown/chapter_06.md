@@ -225,11 +225,112 @@ Existen otros tipos de osciladores, incluyendo una familia completa de generador
 
 ## 6.4 Síntesis de frecuencia modulada
 
+Si defines la frecuencia del oscilador de vibrato de la figura 6.4 a un valor mucho más alto en el rango audible, escucharás algo bastante extraño. Esto es exactamente lo que le ocurrió al compositor John Chowning en el Stanford Center for Computer Research in Music and Acoustics (CCRMA) cuando escribió 100 en vez de 10 para la frecuencia de un oscilador de vibrato. Estaba usando osciladores de onda sinusoidal en ambos, pero lo que escuchó sonaba mucho más interesante que estas ondas. Hizo consultas y descubrió que lo que estaba escuchando era un espectro complejo creado por modulación de frecuencia (FM, por frequency modulation).
+
+Si cambias el oscilador viol SawOsc del listado 6.5 por un SinOsc, defines vibrato.freq en 100.0 y defines vibrato.gain en un número mayor, como 1000.0, escucharás algo que se parece mucho a lo que Chowning escuchó en 1967. Lo que estás escuchando es un montón de frecuencias sinusoidales que son creadas cuanod la onda (llamada modulante) modula la frecuencia de la otra (llamada portadora). Una manera de ver esto es que cambiando rápidamente la frecuencia de la portadora, la forma de la onda sinusoidal es distorsionada de diferentes formas. De hecho, FM es parte de una clase de algoritmos de síntesis llamados de formación de ondas (wave shaping).
+
+Ahora cambia la línea dentro del bucle ((6) en el listado 6.5 y repetido aquí) para que los osciladores viol y vibrato sean definidos con la misma frecuencia, y modifica vibrato.gain para obtener más modulación:
+
+```chuck
+//define ambas frecuencias según el número de nota
+//(6)
+Std.mtof(scale[i]) => viol.freq => vibrato.freq;
+100.0 => vibrato.gain;
+```
+
+Notarás que esto suena como un instrumento de viento metálico tocando una escala. Ahora cambia la línea (6) por estas dos líneas:
+
+```chuck
+Math.random2f(300.0, 1000.0) => viol.freq;
+Math.random2f(300.0, 1000.0) => vibrato.freq;
+```
+
+Ejecútalo un par de veces. Observarás que cada nota tiene un carácer distinto, generalmente tonos inarmónicos tipo campana (pero sin las características de decaimiento que tienen las campanas).
+
+Chowning resolvió que si las frecuencias de portadora (C, por carrier) y modulante (M) no están relacionadas en razones simples de enteros (razón C:M de 1:2, 2:1, 2:3, 1:3, ...) entonces el espectro resultante sería inarmónico. Continuó sintetizando campanas, instrumentos de viento de metal, voices y otros sonidos interesantes, ¡todos usando solo ondas sinusoidales! La añadidura y combinación de más modulantes y portadoras puede arrojar sonidos aún más interesantes.
+
+ChucK tiene un número de UGens FM y presets incluidos para modelar el espectro de varios instrumentos, incluyendo pianos eléctricos (Rhodey y Wurley). El siguiente listado es un programa simple pra probar el piano eléctrico Wurley.
+
+```chuck
+//programa de prueba de instrumento de unidad generadora FM
+//por persona FM, Marzo 4, 1976
+
+//haz in instrumento FM y conéctalo al dac
+//(1) piano eléctrico FM
+Wurley instr => dac;
+
+//tócalo para siempre con frecuencia y duración aleatoria
+while (true)
+{
+  Math.random2f(100.0, 300.0) => instr.freq;
+
+  //enciende la nota (gatilla ADSR interno)
+  //(2) enciende la nota, espera un momento aleatorio
+  1 => instr.noteOn;
+  Math.random2f(0.2, 0.5) :: second => now;
+
+  //apaga la nota (rampa descendente del ADSR interno)
+  //(3) apaga la nota, espera un momento aleatorio
+  1 => instr.noteOff;
+  Math.random2f(0.05, 0.1) :: second => now;
+}
+```
+
+> Ejercicio
+
+> Otros instrumentos STK FM incluyen órgano (BeeThree), FMVoices, campanas de orquesta (TubeBell), flauta (PercFlut), y guitarra distorsionada (HevyMetl). Intercambia el UGen Wurley en (1) por algúno de los otros (TubeBell, PercFlut, Rhodey, entre otros). Como estos UGens son instrumentos completamente autocontenidos, responden a mensajes noteOn (2) y noteOff (3), que a su vez encienden y apagan el generador de envolvente ADSR que controla los niveles internos de portadora y modulante.
+
+## 6.5 Síntesis de cuerda pulsada por modelamiento físico
+
+Probablemente es tiempo de observar que el clarinete y el violín que has construido hasta ahora no tienen un sonido muy realístico, lo que podría estar bien para muchos propósitos, pero puedes tener mejores resultados tomando en cuenta la física involucrada en instrumentos como el clarinete, el violín y el trombón. La síntesis de modelamiento físico (PM, por physical modeling) resuelve las ecuaciones de las ondas dentro y alrededor de objetos sonoros para generar los sonidos de forma automática. Esto difiere mucho de lo que has hecho hasta ahora, donde has sintetizado una forma de onda o ruido de algún tipo. En PM, enfatizas la física del instrumento, con fe en que la forma de onda resultante será acertada.
+
+En esta sección, estarás construyendo un modelo de cuerda cada vez más realístico, empezando con el modelo de absoluta simpleza (una línea de retraso (delay line) excitada por un impulso, para modelar el sonido de la uñeta viajando hacia abajo y de vuelta a lo largo de la cuerda), luego añadiendo una mejor excitación (ruido), luego mejorando la línea de retraso para permitir una mejor afinación, y finalmente añadiendo aún más control sobre la excitación por uñeta. Empezamos con uno de los primeros modelos computacionales históricos de cuerda.
+
+### 6.5.1 La cuerda pulsada más simple
+
+Uno de los modelos físicos más tempranos y básicos para síntesis de sonido es de cuerda pulsada. La versión más simple de esto involucra una línea de retraso (delay line, un UGen que retrasa la señal entre la entrada y la salida, con lo que cualquier cosa en la entrada sale sin modificaciones, pero después en el tiempo), retroalimentado a sí mismo, y excitado con un impulso como entrada. Por supuesto, ChucK tiene todos estos elementos incluidos como UGens. Este código muestra el UGen Impulse alimentado a una línea de retraso y luego al dac; luego la línea de retraso es retroalimentada a sí misma para formar un bucle:
+
+```chuck
+//Impulse es alimentado a una línea de retraso
+Impulse imp => Delay str => dac;
+//haz un bucle con la línea de retraso
+str => str;
+```
+
+El Ugen Impulse genera una salida de solo un sample cada vez que defines su método .next a cualquier valor distinto de cero. Esto es, la línea 1.0 => imp.next; (1) en el listado 6.7 causa que imp emita un 1.0 en el siguiente sample y luego 0.0 para siempre y hasta que uses de nuevo el método .next.
+
+¿Por qué un impulso alimentado a una línea de retraso y luego retroalimentado a sí mismo es un modelo físico? Porque esta cadena de sonido es una simulación física válida de una cuerda pulsada, donde las ondas viajeras se mueven arriba y abajo a lo largo de la cuerda, con pequeñas pérdidas en cada viaje.
+
+> Historia de la síntesis: modelamiento físico
+
+> El algoritmo de Cuerda Pulsada (llamado también el algoritmo Karplus-Strong) fue descubierto en 1982 por los científicos de la computación de Stanford Kevin Karplus y Alan Strong. Ese mismo año, Julius Smith y David Jaffe (un ingeniero eléctrico y un compositor, trabajando en conjunto en Stanford CCRMA) explicaron el modelo científicamente y lo mejoraron. Smith nombró esta estructura como un "filtro de guía de onda", porque la cuerda (retraso) guía a la onda (impulso) adelante y atrás a lo largo de la cuerda. La síntesis de modelamiento  físco es a veces llamada síntesis de guía de onda.
+
+Si defines la ganancia de viaje ida y vuelta por la cuerda a algo menor a 1.0 (para representar las pequeñas pérdidas) y defines el largo de la cuerda (tiempo de retraso) a un valor razonable para el tiempo de viaje ida y vuelta (el periodo de oscilación de la cuerda), entonces has construido un modelo de cuerda primitivo, como se muestra en el siguiente listado.
+
+Listado 6.7 Modelo físico simple de cuerda pulsada
+```chuck
+//modelo super simple de cuerda pulsada Karplus-Strong
+Impulse imp => Delay str => dac;
+//conecta str a sí mismo
+str => str
+//retraso de cuerda ida y vuelta, 100 Hz a tasa de sampleo 44.1k
+441.0 :: samp => str.delay;
+//definir como menor que 1.0 la ganancia de viaje ida y vuelta
+0.98 => str.gain;
+//"toca" la cuerda
+//(1) le indica al impulso que emita un 1.0 (solo durante el siguiente sample)
+1.0 => imp.next;
+//deja que la cuerda "resuene"
+5.0 :: second => now;
+```
+
+Esto hace un sonido que es vagamente parecido a una cuerda, en el sentido de que empieza súbitamente, decae de forma más lenta y tiene una altura. Pero puedes hacerlo mejor, excitando la cuerda con algo más interesante que un impulso.
+
+### 6.5.2 Excitando con ruido la cuerda pulsada
+
+
 
 HEREIAM
-page 125
-page 126
-page 127
 page 128
 page 129
 page 130
@@ -241,12 +342,6 @@ page 135
 page 136
 page 137
 page 138
-
-## 6.5 Síntesis de cuerda pulsada por modelamiento físico
-
-### 6.5.1 La cuerda pulsada más simple
-
-### 6.5.2 Excitando con ruido la cuerda pulsada
 
 ### 6.5.3 Modelamiento de decaimiento dependiente de frecuencia con un filtro
 
