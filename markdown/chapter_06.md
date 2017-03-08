@@ -114,7 +114,6 @@ while (true)
   0 => p.gain;
   0.04 :: second => now;
 
-
 }
 ```
 
@@ -124,15 +123,110 @@ Hasta el momento en tus programas, para separar notas repetidas o para hacer son
 
 Los Ugens Envelope (envolvente) incluidos en ChucK generan rampas hacia arriba y abajo para controlar volumen y otros parámetros que quieas cambiar lentamente. El UGen Envelope hace una rampa de 0.0 a 1.0 en respuesta un mensaje .keyOn (encender nota), en un tiempo definido por el método .time (tiempo). El Ugen Envelope hace una rampa de vuelta a cero en respuesta a un mensaje .keyOff (apagar nota).
 
-### 6.3.1 Construyendo un sonido de clarinete usando SqrOsc y Envelope
+### 6.3.1 Haciendo un sonido de clarinete usando SqrOsc y Envelope
 
+En el capítulo 1 hablamos sobre cómo una onda cuadrada puede sonar parecida a un clarinete y cómo la física de las cuerdas frotadas generan una onda parecida una diente de sierra. Ahora, aplicando un Envelope a SqrOsc, puedes construir un clarinete muy simple que empieza y finaliza las notas de forma apropiada (gradualmente).
+
+El listado 6.4 muestra un ejemplo simple del uso de UGens Envelope y SqrOsc para hacer un sonido de clarinete. Observa que conectas el oscilador a través de Envelope al dac (1). Después de definir una frecuencia inicial (2), usas un bucle while (3) para tocar notas individuales por medio del accionamiento del Envelope (4), esperando un poco para dejar que suba suavemente, y luego apagando el Envelope (5) (nuevamente esperando un poco antes de hacer una rampa descendente). Usamos un bucle para tocar lo que se llama una "serie armónica", aumentando la altura en 55 Hz cada vez (6).
+
+```chuck
+//síntesis simple de un clarinete
+//Envelope aplicado a SqrOsc
+//(1) La onda cuadrada se asemeja a un clarinete
+SqrOsc clar => Envelope env => dac;
+//(2) define la altura inical (nota A)
+55.0 => clar.freq;
+//toca una serie armónica
+//(3) itera sobre tres octavas de altura
+while (clar.freq() < 441.0)
+{
+  //gatilla la envolvente
+  //(4) Envelope.keyOn inicia la nota
+  1 => env.keyOn;
+  //espera un poco
+  0.2 :: second => now;
+  //haz que la envolvente haga una rampa descendente
+  //(5) Envelope.keyOff finaliza la nota
+  1 => env.keyOff;
+  //espera un poco
+  0.2 :: second => now;
+  //siguiente nota de la serie de sobretonos
+  //(6) aumenta la altura, subiendo por la serie armónica
+  clar.freq() + 55.0 => clar.freq;
+}
+```
+
+El lado izquierdo de la figura 6.2 muestra la forma de onda generada por una nota única del código del listado 6.4. Observa que la nota empieza y termina de forma gradual, en vez de prenderse y apagarse (como se muestra en comparación en el lado derecho de la figura 6.2).
+
+Existen otros métodos que puedes usar con Envelope, como causar que se mueva a un valor objetivo arbitrario en respuesta al mensaje .target (objetivo), o puedes definir la salida de forma inmediata con el método .value (valor). Por ejemplo, 0.5 => env.target causa que el valor de la envolvente haga una rampa a 0.5 (sin importar el valor actual) y permanece ahí una vez que alcanza el valor 0.5. Invocar 0.1 => env.value causa que inmediatamente se emita ese valor, para siempre, hasta que se envíe un mensaje keyOn, keyOff, target o un nuevo value.
+
+### 6.3.2 Haciendo un sonido de violín con SawOsc y el UGen de envolvente ADSR
+
+Cambiando a un nuevo modelo de instrumento, si quieres hacer un sonido parecido a un violín, puedes intercambiar el oscilador de onda cuadrada por uno de diente de sierra en el ejemplo anterior. Pero ahora hagamos cosas más interesantes para hacerlo sonar aún más como un violín tocado con un arco. Los violinistas tienden a usar gestos específicos para atacar las notas, lo que se refleja a menudo en sus movimientos físicos mientras tocan. Existe un generador de envolvente más avanzado y útil en ChucK, el ADSR (attack decay sustain release, por ataque decaimiento sostenimiento liberación). La figura 6.3 muestra una función típica generada por un UGen ADSR, en este caso con attack, decay,  y release configurados en 0.1 segundos y el nivel de sustain en 0.5. Puedes definirlos todos usando los métodos/funciones .attackTime, .decayTime, .sustainLevel y .releaseTime, o puedes hacerlo todo una vez usando el método .set así:
+
+```chuck
+myEnv.set(0.1 :: second, 0.1 :: second, 0.5, 0.1 :: second);
+```
+
+Observa en la figura 6.3 que tanto decay como release duran la mitad de lo que dura attack, incluso cuando sus tiempos fueron definidos en la misma duración. Eso ocurre poque solo tienen que llegar a la mitad, de 1.0 a 0.5 de nivel de sustain para decay y de de 0.5 a 0.0 para la fase de relase.
+
+Para hacer tu sintetizador de violín simple, puedes combinar un generador de envolvente ADSR con un SawOsc, de esta manera:
+
+```chuck
+SawOsc viol => ADSR env => dac;
+```
+
+No obstante, un sonido de violín es más que una onda de diente de sierra. Los violines son famosos por su vibrato, así que podrías querer hacerlo también. Este es un momento perfecto para hablar sobre una característica de los UGens Oscillator, y es que puedes hacer ChucKing a elllos de una señal para modelar cosas como frecuencia y fase. Estas son muy buenas noticias, porque puedes usar un SinOsc para generar vibrato en tu sintetizador de violín, parecido a lo que se muestra en la figura 6.4.
+
+```chuck
+SinOsc vibrato => SawOsc viol => ADSR env => dac;
+```
+
+Esto no funcionará aún, porque primero necesitas decirle a tu SawOsc que interpete la onda sinusoidal ocmo una modulación en frecuencia. PAra hacerlo usa el método .sync() (1), como se muestra en el listado 6.5. También tienes que definir la frecuencia de tu vibrato a algo razonable, como 6 Gz, usando el método .freq() (2). Puedes definir todos los parámetros de envolvente de una vez (3), definir una escala en un arreglo (4), y luego tocar esa escala usando un bucle for (5), definiendo la altura del violín (6) y tocando cada not usando el ADSR. Finalmente, puedes aumentar el vibrato y tocar la última nota durante un tiempo mayor (7).
+
+Listado 6.5 Violín simple usando SawOsc, Envelope y SinOsc para vibrato
+
+```chuck
+//violín simple basado en SawOsc con envolvente ADSR y vibrato
+SinOsc vibrato => SawOsc viol => ADSR env => dac;
+//(1) indicar al SawOsc que interprete la entrada de vibrato como modulación en frecuencia
+2 => viol.sync;
+//define la frecuencia de vibrato
+6.0 => vibrato.freq;
+//(3) configura los parámetros de ADSR
+env.set(0.1 :: second, 0.1 :: second, 0.5, 0.1 :: second);
+//define una escala D mayor (en números de notas MIDI)
+//(4) construye un arreglo de notas de escala
+[62, 64, 66, 67, 69, 71, 73, 74] @=> int scale[];
+//recorre nuestra escala una nota a la vez
+//(5) toca la escala usando un bloque for
+for (0 => int i; i < scale.cap(); i++)
+{
+  //(6) define la frecuencia de cada nota a partir del número de nota
+  Std.mtof(scale[i]) => viol.freq;
+  //gatilla la nota y espera un poco
+  1 => env.keyOn;
+  0.3 :: second => now;
+  //apaga la nota y espera un poco
+  1 => env.keyOff;
+  0.1 :: second => now;
+}
+
+//repite la última nota con mucho vibrato
+1 => env.keyOn;
+//usa más vibrato para la última nota
+10.0 => vibrato.gain;
+1.0 :: second => now;
+0 => env.keyOff;
+0.2 :: second => now;
+```
+
+Existen otros tipos de osciladores, incluyendo una familia completa de generadores de tabla GenX, como exponenciales, polinomiales y de segmentos de línea y UGens que automáticamente suman ondas sinusoidales armónicas. Todas estas funcionan como tablas lookup (entra un valor, sale un valor), peor también pueden ser usadas como osciladores si se recorren con Phasor, un UGen especial. Todos ellos, y más, son cubiertos en mayor profundidad en el apéndice C.
+
+## 6.4 Síntesis de frecuencia modulada
 
 
 HEREIAM
-page 121
-page 122
-page 123
-page 124
 page 125
 page 126
 page 127
@@ -147,10 +241,6 @@ page 135
 page 136
 page 137
 page 138
-
-### 6.3.2 Construyendo un sonido de violín con SawOsc y el ADSR UGen Envelope
-
-## 6.4 Síntesis de frecuencia modulada
 
 ## 6.5 Síntesis de cuerda pulsada por modelamiento físico
 
