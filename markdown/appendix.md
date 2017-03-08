@@ -1,8 +1,6 @@
 # Apéndice A: instalando ChucK y miniAudicle
 
-
 Este apéndice te enseña cómo descargar e instalar miniAudicle, el entorno de desarrollo integrado (IDE, por integrated development environment) de ChucK, y otros componentes de ChucK en tu computador. Para empezar, navega al sitio de ChucK en [http://chuck.stanford.edu/](http://chuck.stanford.edu/) y haz click en "download Chuck", como se muestra en la figura A.1. Esto te lleva a  la p'agina "ChucK : Release ", donde puedes encontrar enlaces de descarga para cada plataforma que soporta ChucK. Para usuarios de Mac, la siguiente sección cubre el proceso desde aquí. Los usuarios de Window pueden saltar a la siguiente sección, "Instalación en Windows", y los usuarios de Linux pueden saltar a la última sección, "Instalación en Ubuntu Linux".
-
 
 ## Instalación en Mac OS X
 
@@ -84,7 +82,7 @@ muchas cosas son impresas...
 $ sudo make install
 ```
 
-Si todo sali'o bien, puedes ahora iniciar miniAudicle tecleando lo siguiente en la línea de comandos:
+Si todo salió bien, puedes ahora iniciar miniAudicle tecleando lo siguiente en la línea de comandos:
 
 ```shell
 $ miniAudicle
