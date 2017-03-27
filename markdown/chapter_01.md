@@ -434,7 +434,7 @@ Listado 1.9 Uso y manipulación de variables float
 1.5 * twinkle => float twinkle2;
 
 //más cálculos para derivar la altura de lit a partir del twinkle base
-1.6818 * twinkle => flloat lit;
+1.6818 * twinkle => float lit;
 
 //más cálculos para derivar la altura de tle a partir del twinkle2
 1.2585 * twinkle2 => float tle;

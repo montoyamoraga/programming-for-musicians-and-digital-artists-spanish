@@ -308,6 +308,7 @@ El Ugen Impulse genera una salida de solo un sample cada vez que defines su mét
 Si defines la ganancia de viaje ida y vuelta por la cuerda a algo menor a 1.0 (para representar las pequeñas pérdidas) y defines el largo de la cuerda (tiempo de retraso) a un valor razonable para el tiempo de viaje ida y vuelta (el periodo de oscilación de la cuerda), entonces has construido un modelo de cuerda primitivo, como se muestra en el siguiente listado.
 
 Listado 6.7 Modelo físico simple de cuerda pulsada
+
 ```chuck
 //modelo super simple de cuerda pulsada Karplus-Strong
 Impulse imp => Delay str => dac;
@@ -328,31 +329,314 @@ Esto hace un sonido que es vagamente parecido a una cuerda, en el sentido de que
 
 ### 6.5.2 Excitando con ruido la cuerda pulsada
 
+Los inventores originales del modelo de cuerda pulsada realmente excitaron (pulsaron) su cuerda con ruido en vez de un impulso. Esto corresponde a un ataque realmente energético, pero tiene un sonido brillante y atractivo. Afortunadamente, ChucK posee un UGen Noise (ruido), pero que emite constantemente ruido, a diferencia de Impulse, que emite un pulso cada vez que se define el valor .next. Por esto, necesitas un interruptor para controlar la salida del UGen Noise para excitar la línea de retraso cuando pulsas la cuerda, luego debes abrir el interruptor después de un periodo de tiempo muy corto. Para hacer esto, debes encender el ruido (definir su ganancia como 1.0) por un número de samples igual al largo de la línea de retraso, luego apagarlo (definir la ganancia del ruido como 0.0), tña como se muestra en el siguiente listado.
 
+Listado 6.8 Modelo físico mejorado de cuerda pulsada, excitada con ruido
 
-HEREIAM
-page 128
-page 129
-page 130
-page 131
-page 132
-page 133
-page 134
-page 135
-page 136
-page 137
-page 138
+```chuck
+//modelo mejorado de cuerda pulsada Karplus-Strong
+Noise pluck => Delay str => dac;
+//conectar la cuerda a sí misma
+str => str;
+//recorrido ida y vuelta del retraso, 100 Hz a tasa de 44.1k
+441.0 :: samp => strl.delay;
+//definir la ganancia de ida y vuelta menor a 1.0
+0.98 => gain;
+//tocar la cuerda durante el periodo de tiempo correcto
+1.0 => pluck.gain;
+441.0 :: samp => now;
+//apagar el generador de ruido
+0.0 => pluck.gain;
+//dejar que la cuerda suene un rato
+5.0 :: second => now;
+```
+
+Tienes que hacer una cosa adicional para copiar lo que Karplus y Strong estaban haciendo, lo que también hará que tu modelo simple de cuerda pulsada suene aún mejor. Esto es añadir un filtro en el bucle de la cuerda (línea de retraso) para modelar el hecho de que las pérdidas experimentadas por las ondas viajando en ambas direcciones por las cuerdas son dependientes de la frecuencia, donde por cada viaje a lo largo de la cuerda, las frecuencias más altas experimentan mayores pérdidas que las frecuencias graves.
 
 ### 6.5.3 Modelamiento de decaimiento dependiente de frecuencia con un filtro
 
-### 6.5.4 Modelamiento de delay fraccional (afinación) y agregando un ADSR para la pulsación
+Para modelar el decaimiento dependiente de frecuencia, solo necesitas modificar la líea donde conectas la cuerda a sí misma por medio de la adición de un filtro pasabajos, que reduce la ganancia de las frecuencias altas en mayor magnitud que la de las frecuencias bajas.
 
-## 6.6 Introducción a Ugens de filtro: ganancia dependiente de frecuencia
+```chuck
+str => OneZero filter => str;
+```
 
-## 6.7 Más sobre delays: acústica de espacios y reverberación
+Con la adición de este filtro, tu cuerda sonará instantáneamente mejor más realísticamente. OneZero es un UGen tipo filtro, muy simple y sobre el que hablaremos más muy pronto.
 
-## 6.8 Efectos de audio basados en delay
+### 6.5.4 Modelamiento de retraso fraccional (afinación) y adición de un ADSR para la pulsación de la cuerda
+
+También puedes añadir una cosa: la línea Delay necesita soportar samples fraccionales de retraso, para que puedas afinar tu cuerda a frecuencias arbitrarias. Recuerda, en el capítulo 1 aprendiste que necesitas números de punto flotante para expresar algunas alturas porque los números enteros no son suficientes. PAra el modelo de cuerda, el retraso fraccional es especialmente importante para las frecuencias altas, porque la línea de retraso se vuelve muy corta y la diferencia entre 44 samples y 45 samples a 44.1 kHz de tasa de muestreo es de 980 Hz versus 1002.27 Hz. Si necesitas exactamente 995 Hz, entonces necesitarás tener una lína de retraso de 44.3216 samples. Afortunadamente, ChucK posee retrasos interpolantes, llamados DelayL (por interpolación linear entre samples) y delayA (por allpass, pasatodo, un tipo extraño de filtro que puede producir samples fraccionales de retraso). Entonces todo lo que tienes que hacer es reemplazar Delay por DelayL o DelayA para permitir retraso fraccional y con eso afinación arbitraria. Estos UGens de retraso aceptan un número de punto flotante, con lo que puedes definirlos de cualquier longitud, como este:
+
+```chuck
+44.3216 :: samp => str.delay;
+```
+
+También puedes usar un ADSR para permitir que tu ruido pulse la cuerda, lo que significa que no tienes que explícitamente prenderlo y apagarlo. Una vez que has configurado los parámetros attack, decay, sustain y release, puedes usar el método de ADSR .keyOn para lograr la pulsación de la cuerda. Todo esto se muestra en la figura 6.5 y en el siguiente listado.
+
+Listaod 6.9 Modelo aún mejor de cuerda pulsada, con ruido con envolente y filtro pasabajo
+
+```chuck
+//Noise a través de ADSR y a través de una línea de retraso con interpolación
+Noise nois => ADSR pluck => DelayA str => dac;
+
+//conectar la cuerda a sí misma
+//retroalimentación a través de un filtro pasabajos
+str => OneZero lowPass => str;
+
+//definir los parámetros del ADSR del Noise
+//parámetros para pulsación corta y luego mantención en cero
+pluck.set(0.002 :: second, 0.002 :: second, 0.0, 0.01 :: second);
+
+//tocar notas aleatorias para siempre
+while(true)
+{
+  //ahora puedes definir el retraso a un número de punto flotante arbitrario
+  Math.random2f(110.0, 440.0) :: samp => str.delay;
+  //pulsa enviando keyOn al ADSR, permite el paso de Noise a la cuerda
+  1 => pluck.keyOn;
+  0.3 :: second => now;
+}
+```
+
+## 6.6 Introducción a UGens de filtro: ganancia dependiente de frecuencia
+
+¿Qué fue ese UGen OneZero mágico que acabas de usar para proveer de ganancia dependiente en frecuencia a tu cuerda en bucle? El UGen OneZero usa matemáticas simples que suman su entrada de sample actual al sample de entrada más reciente y divide por 2, calculando así un promedio entre ambos samples. Otra manera de llamar a este filtro es de Promedio en Movimiento (Moving Average).
+
+```chuck
+(thisInput + lastInput) / 2 => output;
+```
+
+thisInput, por esta entrada y lastInput, por la entrada más reciente, output por salida.
+
+Promediar tiende a suavizar las señales en bruto, reduciendo frecuencias altas y enfatizando y suavizando frecuencias bajas. Esto es precisamente lo que ocurre en instrumento de cuerda real a medida que las ondas viajan a lo largo de la cuerda, ida y vuelta. La respuesta en frecuencia del UGen OneZero illustrada en la figura 6.6, muestra una ganancia de 1.0 para la frecuencia más baja (0.0 Hz),una menor ganancia para frecuencias mayores, y una ganancia de 0 para la frecuencia correspondiente a la mitad de la tasa de sampleo. Esta ganancia cero en una frecuencia es el "one zero" (un cero) del nombre del filtro.
+
+Otro tipo de filtro UGen que nos gusta usar es ResonZ, mostrado en el listado 6.10, que crea una resonancia (ganancia mayor en una frecuencia seleccionable) en cualquier señal que pasa a través de él. ResonZ responde a .freq, que define la frecuencia de resonancia y .Q que representa el factor de calidad (quality factor) y determina la cantidad de énfasis en la frecuencia resonante. Si defines .Q con un valor muy alto, ResonZ puede oscilar como una frecuencia sinusoidal; si defines Q a 100 o parecido (2) y alimentas el filtro con una excitación Impulse (1), obtienes sonido ping o pop con altura correspondiente a la frecuencia de resonancia cada vez que gatillas el impulso (3).
+
+Listado 6.10 Un impulso simple a través de un filtro resonante genera música por computador interesante
+
+```chuck
+//¡¡música por computador!! Impulso a través de un filtro resonante
+//(1) el impulso excita al filtro resonante
+Impulse imp => ResonZ filt => dac;
+
+//define la calidad (Q) a un número alto, para que genere una altura
+//(2) Q (calidad) es la cantidad de resonancia
+100.0 => filt.Q;
+
+while(1) {
+  //elige una frecuencia aleatoria
+  Math.random2f(500.0, 2500.0) => filt.freq;
+
+  //gatilla el impulso y espera un poco
+  //(3) haz que el impulso genere 100.0 de salida (solo durante el siguiente sample)
+  100.0 => imp.next;
+  0.1 :: second => now;
+}
+```
+
+Para moldear sonidos y efectos especiales, existen filtros UGens de pasaaltos (HPF, por high-pass filter), pasabajos (LPF, por low-pass filter), pasabanda (BPF, por band-pass filter) y rechazabanda (BRF, por band-reject filter). Todos ellos son controlados usando los métodos .freq y .Q. El rango de frecuencia que puede pasar a través de estos filtros es llamado la pasabanda, y las frecuencias que reciben una ganancia disminuida son llamadadas la rechazabanda. La frontera entre la pasabanda y la rechazabanda es llamada la frecuencia de corte, que es definida por el método .freq. Una vez más, Q es de "calidad" (por quality) y determine el tamaño del énfasis en la frecuencia de corte y el rolloff (la pendiente de la ganancia hacia la rechazabanda).
+
+La figura 6.7 muestra la respuesta en frecuencia (ganancia versus frecuencia) de una unidad generadora LPF con un Q igual a 1, 10 y 100. Las regiones de pasabanda, rechazabanda y rollof están etiquetadas.
+
+Fig 6.7 Respuesta en frecuencia de un filtro pasabajos LPF para Q=1, Q=10 y Q=100
+
+El siguiente listado muestra el uso de un UGen LPF (filtro pasabajos resonante, pasa todas las frecuencias bajo la frecuencia de corte definida por el método .freq) para filtrar ruido.
+
+Listado 6.11 Prueba de un filtro pasabajos resonante LPF con ruido como entrada
+
+```chuck
+//pasar ruido a través de un filtro pasabajos
+Noise nz => LPF lp => dac;
+
+//definir frecuencia y Q
+500.0 => lp.freq;
+100.0 => lp.Q;
+0.2 => lp.gain;
+
+second => now;
+```
+
+> Ejercicio
+
+> Cambia LPF por HPF en el listado 6.11 En el caso del LPF deberías escuchar frecuencias bajas hasta la frecuencia de resonancia. En el caso del HPF deberías escuchar frecuencias altas desde la frecuencia de resonancia. Prueba con BPF y BRF. ¿Qué escuchas? Cambia los valores de .freq y .Q y pon atención en cómo el sonido cambia.
+
+## 6.7 Más sobre retrasos: acústica de espacios y reverberación
+
+Cuando se produce un sonido, las ondas se propagan (viajan) desde la fuente del sonido. Los sonidos hechos en habitaciones viajan y rebotan contra las paredes, piso, techo y objetos en la habitación (ver figura 6.8). Podrías saber que un solo reflejo de un sonido contra un límite, como una pared o edificio, es llamado un eco si el tiempo de retraso es lo suficientemente largo como para que escuches el sonido reflejado por sí mismo (mayor a 50ms aproximadamente).
+
+En una habitación de un tamaño razonable, los reflejos son más cortos en tiempo que los ecos y se suman en los oídos del sujeto que escucha (o un micrófono), para crear reverberación. Como las ondas de sonido se demoran un tiempo en viajar, estos viajes alrededor de la habitación, rebotando contra las paredes y otros obstáculos, toman diferentes tiempos en eventualmente llegar a tus oídos (donde todas los reflejos son sumados). ¿Te acuerdas cuando estábamos hablando de la velocidad del sonid, longitudes de onda, y todo eso? Ahora que ya conoces los UGens Delay, puedes poner todo esto en práctica para hacer un modelo simple de la acústica de una habitación. Serás capaz de alimentar una señal (como un micrófono entrando por el adc) a través de la acústica de esta habitación y resultará en el sonido de estar ahí.
+
+Asumamos que quieres modelar una pieza que mide 40 por 50 pies, con un techo de 30 pies de alto (figura 6.8). Yo sé que es un techo alto, pero el truco de las dimensiones 3x4x5 es muy conocido por los diseñadores de parlantes, salas de conciertos y otros artefactos acústicos. Si asumes que las paredes de tu pieza son paralelas y muy reflectivas, entonces el camino entre cada par de paredes paralelas se parece mucho a la cuerda que desarrollamos en la sección 6.5.1 donde las ondas viajan ida y vuelta, siendo reflejadas y absorbidas un poco en cada viaje. Como tienes tres caminos primarios de reflejo sonoro, entre los dos pares de paredes y del techo al suelo, puedes usar tres líneas de retraso para modelar la acústica en modo grueso de la habitación con forma de caja. El tiempo total de un viaje (ida y vuelta) entre el par de paredes espaciadas por 50 pies es de 100 ms (de forma aproximada, es 1 ms por pie, y como es un viaje ida y vuelta, 2 x 50 pies), el retraso del otro par de paredes es de 80 ms, y el retraso techo/suelo es de 60 ms.
+
+El código en el listado 6.2 crea un reverb (el procesamiento de señal que modela la reverberación, es usualmente llamado un reverberador, o reverb) conectando el adc a través de tres líneas de retraso, en paralelo (2), al dac(1). Luego conectas cada línea de retraso a sí misma (3), y defines sus ganancias a algo razonable para retrasos y dimensiones de habitación típicas. Luego debes definir el tiempo de retraso para cada retraso. Las duraciones/tiempos de retraso que usan mucha memoria (más de unas pocas docenas de milisegundos) requieren que le digas al UGen Delay cuánto es lo que esperas que duren, para que pueda alocar memoria. Esto es hecho usando el método .max. Puedes definir .max y .delay en la misma línea (5). Como estás conectando el adc con el dac a través de delays, sé muy cuidadoso con la retroalimentación (usa audífonos).
+
+Listado 6.12 Reverb simple usando tres UGens Delay
+
+```chuck
+//sonido directo
+//(1) señal directa desde adc hacia el dac (a través de Gain)
+adc => Gain input => dac;
+1.0 => input.gain;
+
+//líneas de retraso para modelar paredes + techo
+//(2) adc a dac a través de tres líneas de retraso en paralelo
+input => Delay d1 => dac;
+input => Delay d2 => dac;
+input => Delay d3 => dac;
+
+//conecta las líneas de retraso a sí mismas
+//(3) cierra cada bucle de retraso (conecta la salida a la entrada)
+d1 => d1;
+d2 => d2;
+d3 => d3;
+
+//define la retroalimentación/pérdida en todas las líneas de retraso
+0.6 => d1.gain => d2.gain => d3.gain;
+
+//aloca memoria y define las duraciones de retraso
+0.06 :: second => d1.max => d1.delay;
+0.08 :: second => d2.max => d2.delay;
+0.10 :: second => d3.max => d3.delay;
+
+//¡disfruta la habitación que construiste!
+while (1) {
+  1.0 :: second => now;
+}
+```
+
+Los resultados son muy mágicos, pero quizás te das cuenta de un sonido incómodo a una altura baja. Esto es porque 60, 80 y 1000 ms comparten algunos factores en común, y estos tienden a acumularse y causar resonancias. Esto es fácil de arreglar cambiando las duraciones de retraso a números primos relativos entre sí (sin factores en común), como 61, 83 y 97 ms.
+
+> Tarea
+
+> Cambia los números a valores distintos y observa los efectos. Cambia las ganancias de retraso de 0.6 a otro número (pero nunca mayor a 1.0, porque esto causa que el sonido se acumule infinitamente). Notarás que para números más pequeños, el reverb suena por menos tiempo, y que para números más grandes, por un tiempo mayor. Esto recibe el nombre de tiempo de reverberancia, ¡y tienes el control como programador! Este reverb todavía suena brillante y resonante, pero puedes arreglar esto poniendo fitltros en los bucles de retroalimentación tal como lo hiciste con la cuerda pulsada. Prueba poniendo un filtro pasabajos simple OneZero en el bucle entre cada retraso donde se conecta a sí mismo, de esta forma: d1 => OneZero lp1 => d1;.
+
+Bueno, ahora pensarás que diseñar y construir reverberadores que suenan muy bien podría ser difícil. Lo es, pero una vez más tienes suerte, porque ChucK tiene incluidos UGens reverberadores: PRCRev (nombrado en honor a Perry R. Cook, quien lo escribió para ser el reverb más eficiente computacionalmente de sonido decente), JCRev (nombrado en honor a John Chowning, famoso por su trabajo con FM), y NREV (N de nuevo, fue nuevo en los años 1980s). Estos son realmente fáciles de usar, como se muestra en el siguiente listado.
+
+Listado 6.13 Usando el UGen NRev reverberador incluido en ChucK
+
+```chuck
+//crea un nuevo reverb y conéctalo
+//una vez más, ten cuidado con la retroalimentación
+//usa un volumen bajo o audífonos
+adc => Nrev rev => dac;
+
+//define la mezcla entre señal original y con reverb
+0.05 => rev.mix;
+
+//escucha y disfruta el espacio
+while(1) {
+  1.0 :: second => now;
+}
+```
+
+Te podrás dar cuenta que este reverb suena muy bien en comparación al nuestro con tres retrasos. Esto ocurre porque tiene muchas líneas de retraso y filtros, interconectados en formas que le dan propiedades consideradas deseables para espacios acústicos. Fue diseñado por gente muy inteligente que saben mucho sobre simulación de reverb, pero tú lo puedes usar sin preocuparte de su funcionamiento interno. Si realmente te interesa este tipo de cosas, podrías implementar un reverberador a tu gusto usando ChucK. Esa es la belleza de saber programar y tener un lenguaje poderoso y expresivo.
+
+## 6.8 Efectos de audio basados en retraso
+
+De tu experiencia hasta el momento con la cuerda pulsada, y con los modelos de ecos y reverberación usando retrasos, puedes ver que los UGens de línea de retraso son muy buenos en modelar muchos asuntos físicos interesantes. Todas estas líneas de retraso tienen un largo fijo una vez que defines el retraso inicial. No obstante, pueden pasar cosas interesantes cuando los retrasos varían en el tiempo. El efecto Doppler de cambio de altura ocurre cuando un auto, tren o avión se mueve hacia o se aleja de ti porque el tiempo de retraso entre la fuente y tú está cambiando. Entonces una línea de retraso que cambia longitud causa que la altura de lo que está pasando a través de ella cambia, hacia arriba si el retraso disminuye y hacia abajo si el retraso aumenta. Puedes usar esto para hacer un efecto de coro, que usa líneas de retraso que cambian longitud lentamente hacia arriba y abajo para crear copias retrasadas de cualquier señal de entrada, con altura levemente cambiante. La altura sube cuando la línea de retraso está acortándose y baja cuando la línea de retraso está aumentando. Todo esto ocurre cíclicamente, arriba y abajo. ChucK tiene un UGen Chorus, que puedes usar así:
+
+```chuck
+adc => Chorus chor => dac;
+```
+
+Hay parámetros de Chorus con los que puedes jugar, como .modFreq (tasa a la que la altura cambia arriba y abajo, por defecto es 0.25 Hz) y .modDepth (profundidad de modulación, por defecto es 0.5) y .mix (la misma función de los UGens de reverberación).
+
+> Ejercicio
+
+> Agrega un UGen Chorus a uno de los ejemplos de este capítulo. Pruébalo en la cuerda pulsada, violín, clarinete, Wurley, entre otros.
+
+
+Si quisieras constantemente acortar una línea de retraso para aumentar la altura de modo constante, eventualmente se te acabaría el retraso y llegaría a 0.0. Pero si hicieras un banco de líneas de retraso y hicieras crossfade
+(gradualmente aumentar el volumen de una línea mientras disminuyes el de otra) entre ellas cuando una está volviéndose muy corta, entonces podrías hacer un efecto para cambiar alturas (pitch shifter). En el siguiente listado mostramos código que demuestra cómo funciona esto.
+
+Listado 6.14
+```chuck
+//conecta la entrada de micrófono al pitch shifter
+adc => PitShift p => dac;
+//haz que la mezcla sea solo la señal con efecto (no se escucha la señal original)
+1.0 => p.mix;
+
+//modificación de altura para siempre
+while (1) {
+  //elige un cambio aleatorio de +/- 1 octava
+  Math.random2f(0.5, 2.0) => p.shift;
+  0.2 :: second => now;
+}
+```
+
+Introduciremos otro efecto muy útil llamado Dyno, para procesamiento dinámico. Dyno tiene muchas características, incluyendo:
+
+* Limitación - Hace que la señal no supere cierto nivel de volumen.
+* Compresión - Hace que los sonidos fuertes sean más suaves y que los sonidos suaves sean más fuertes, produciendo un rango dinámico menor entre lo más suave y lo más fuerte.
+* Compuerta de ruido - no permite que pasen los sonidos muy suaves, como ruido ambiental o de fondo, pero se abre sobre cierto umbral y deja que los sonidos más fuerte pasen.
+* Ducking - modifica el nivel de la señal, pero lo hace basado en el volumen de otra señal externa.
+
+Aquellos de ustedes que saben un poco sobre estos efectos encontrarán que las configuraciones son familiares, y deberías revisarlas todas en la referencia de unidades generadoras de ChucK (apéndice C). Incluso si no sabes nada sobre compresión, compuertas de ruido y ducking, una cosa para la que Dyno es perfecto es para proteger tus oídos y parlantes. El compresor y el limitador por defecto son muy buenos en hacer eso, porque si el sonido es muy fuerte, Dyno lo mantiene a raya. Muchos programadores de ChucK que conocemos siempre ponen un Dyno antes del dac en casi cada programa que escriben, especialmente los experimentales que piensan que podrían salirse de control, como en el caso de la retroalimentación. Usar Dyno es, por supuesto, tan simple como:
+
+```chuck
+adc => Dyno safety => dac;
+```
 
 ## 6.9 Ejemplo: diversión con los UGens Filter y Delay
 
+Para usar todo lo que has aprendido en este capítulo, terminaremos con un ejemplo que expande nuestro ejemplo de UGen ResonZ del listado 6.10, y nuestro reverberador de tres UGens Delay del listado 6.12. En el listado 6.15, usas los mismos UGen Impulso excitados por filtro ResonZ para resultar en ruidos cortos con sensación de altura (1). Luego haces un arreglo de tres UGens Delay (2) (sí, puedes hacer arreglos de lo que sea), y conéctalos entre tu entrada y los canales izquierdo, central y derecho del dac (3). Haz el resto de las conexiones de línea de retraso, define los tiempos de retraso y ganancias en un bucle for (4). Haz los retrasos largos, del orden de un segundo o más, para crear un efecto de eco multicanal stereo. Si revisas la matemática en (5), puedes deducir que las líneas de retraso son de 0.8, 1.1 y 1.4 segundos. Luego declara un arreglo de números de notas MIDI (6) que usarás para definir las alturas del filtro ResonZ.
+
+Después de configurar todo, entra a un bucle while infinito, que define alturas aleatorias entre las permitidas en la tabla (7) y gatilal el UGen Impulse para hacer sonido (8). Observa que existe solo un objeto que produce sonido en todo este programa (el Impulse), pero se pueden lograr resultados musicales de interesantes polifonía (multisonido) y ritmos, debido a las líneas de retraso y sus duraciones.
+
+Listado 6.15 Diversión musical con un filtro resonante y tres línas de retraso
+
+
+```chuck
+//¡diversión con UGens! Por el tipo UG, octubre 14, 2020
+//filtro resonante excitado por impulso alimenta
+//tres líneas de retraso, retroalimentadas consigo mismas
+//(1) camino directo del impulso a través del filtro resonante
+Impulse imp => ResonZ rez => Gain input => dac;
+100.0 => rez.Q;
+100 => rez.gain;
+1.0 => input.gain;
+
+//también podemos hacer arreglos de UGens
+//(2) arreglo de tres líneas de retraso
+Delay del[3];
+
+//usemos stereo
+//(3) retrasos salen por los canales izquierdo, central y derecho
+input => del[0] => dac.left;
+input => del[1] => dac;
+input => del[2] => dac.right;
+
+//(4) configura todas las líneas de retraso
+for (0 => int i; i < 3; i++) {
+  del[i] => del[i];
+  0.6 => del[i].gain;
+  //(5) cada línea de retraso es diferente pero están relacionadas
+  (0.8 + i*0.3) :: second => del[i].max => del[i].delay
+}
+
+//(6)define el arreglo de notas para la canción
+
+[60, 64, 65, 67, 70, 72] @=> int notes[];
+notes.cap() - 1 => int numNotes;
+
+//¡que la diversión comience! (y que dure para siempre)
+while(1) {
+  //(7) toca una nota aleatoria (frecuencia del filtro resonante)
+  Std.mtof(notes[Math.random2(0, numNotes)]) => rez.freq;
+  //(8) se gatilla el impulso (emite un 1 en el siguiente sample)
+  1.0 => imp.next;
+  0.4 :: second => now;
+}
+```
+
 ## 6.10 Resumen
+
+En este capítulo elevaste tus habilidades de síntesis y procesamiento de sonido a otro nivel, aprendiendo más sobre las unidades generadoras de ChucK. Los UGens están incluidos en ChucK para hacer más fácil la síntesis y el procesamiento de sonido. Los puntos importantes a recordar incluyen:
+
+* Los UGens Envelope y ADSR generan valores que cambian lentamente para controlar volumen y otras cosas.
+* Puedes generar sonido por síntesis de modulación en frecuencia desde cero, usando una onda sinusoidal para modular otra, o usando los UGens FM incluidos en ChucK.
+* Modelos físicos, como la cuerda pulsada, pueden ser implementados usando UGens Delay y se pueden refinar usando UGens de filtro, ruido y ADSR.
+* Las líneas de retraso pueden simular ecos, reverberación, efecto coro y alteración de altura (pitch shifting).
+* ¡ChucK tiene muchos UGens para hacer muchos efectos!
+
+En el siguiente capítulo, aprenderás (más) UGens de STK (Synthesis ToolKit), expandiendo tu conocimiento sobre los UGens de instrumento de ChucK, incluyendo modelos físicos y otros modelos de síntesis y de instrumento flexibles y de buen sonido.
