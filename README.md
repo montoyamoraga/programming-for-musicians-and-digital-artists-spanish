@@ -1,4 +1,5 @@
-# translation_programming_for_musicians_and_digital_artists
+# programming-for-musicians-and-digital-artists-spanish
+
 translation to spanish of book programming for musicians and digital artists, creating music with chuck, by alay kapur, perry cook, spencer salazar, ge wang
 
 * Palabras previas, prefacio, agradecimientos, acerca de este libro, acerca de los autores: [markdown](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/markdown/intro.md) [pdf](https://github.com/montoyamoraga/translation_programming_for_musicians_and_digital_artists/blob/master/pdf/intro.pdf)
