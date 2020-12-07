@@ -8,7 +8,7 @@ translation to spanish of book programming for musicians and digital artists, cr
 
 * Parte 1: [markdown](markdown/part_1.md) [pdf](pdf/part_1.pdf)
 
-* Capítulo 1:[markdown](markdown/chapter_01.md) [pdf](pdf/chapter_01.pdf)
+* Capítulo 1: [markdown](markdown/chapter_01.md) [pdf](pdf/chapter_01.pdf)
 
 * Capítulo 2: [markdown](markdown/chapter_02.md) [pdf](pdf/chapter_02.pdf)
 
@@ -29,7 +29,5 @@ translation to spanish of book programming for musicians and digital artists, cr
 * Capítulo 9: [markdown](markdown/chapter_09.md) [pdf](pdf/chapter_09.pdf)
 
 * Capítulo 10: [markdown](markdown/chapter_10.md) [pdf](pdf/chapter_10.pdf)
-
 * Capítulo 11: [markdown](markdown/chapter_11.md) [pdf](pdf/chapter_11.pdf)
-
 * Apéndice: [markdown](markdown/appendix.md) [pdf](pdf/appendix.pdf)
